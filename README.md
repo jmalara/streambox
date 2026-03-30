@@ -135,18 +135,32 @@ Once authorized, The Crew will show Real Debrid links (labeled `[RD]`) alongside
 
 By default, The Crew auto-picks a source for you, which is often not the highest quality. Change these settings to always get the best available stream.
 
-1. Open **The Crew** → **Tools** (or Settings icon) → **Playback**
-2. Change **Auto Play** to **Source Select** — this shows you the full list of sources instead of auto-picking
-3. Set **Sort by** to **File Size** (descending) — pushes the largest (highest quality) files to the top
-4. Under **Providers** or **Playback**, set the minimum quality filter to **1080p** — hides anything below 1080p
+**The Crew → Tools → Playback settings:**
 
-Then verify Real Debrid torrent support is on:
+1. **Default action** → **Dialog** — shows you the full list of sources so you can pick the best one
+2. **Max Quality** → **4K**
+3. **Screeners and Cams** → **Off**
+4. **Hosters with captchas** → **Off** — you have Real Debrid, no need for captcha hosters
+5. **Debrid Only** → **On** — hides all free links, only shows RD sources (where the quality lives)
+6. **Pre-emptive Termination** → **On** — stops searching once enough good sources are found
+7. **Pre-emptive Limit** → **3-5** — don't need 10 sources when Debrid Only is on
+8. **HEVC** → **On** — the S905X5 hardware decodes HEVC, and these files are smaller at same quality
+9. **Sort By Torrent/Premium** → **On** — pushes RD torrent results (Remuxes) above hoster links
+10. **Enable Torrent Scrapers** → **On**
+11. **Minimum Seeders** → **3** — Remuxes often have fewer seeders, don't filter them out
+12. **Verify Torrents Cache** → **On** — only shows torrents already cached on RD (instant playback)
+13. **Remove Uncached** → **On** — hides torrents that need time to download on RD's servers
 
-1. The Crew → **Tools** → **RESOLVEURL: Settings**
-2. Go to **Universal Resolvers 2** → scroll to **Real-Debrid**
-3. Make sure **Torrent Support** is **Enabled** — this is where the Remux and high-bitrate files come from
+**ResolveURL settings (The Crew → Tools → RESOLVEURL: Settings):**
 
-With these settings, when you search for a movie you'll see a list sorted by file size with RD cached torrents at the top. Pick the biggest file with "Remux" or "2160p" in the name for the best quality.
+1. **Automatically pick best quality** → **On**
+2. Go to **Universal Resolvers 2** → scroll to **Real-Debrid**:
+   - **Priority** → **90** (lower = higher priority)
+   - **Enabled** → On
+   - **Torrent Support** → **On** — this is where Remux and high-bitrate files come from
+   - **Cached torrents only** → **On** — every source plays instantly, no dead links
+
+With these settings, when you search for a movie you'll see a dialog of RD-cached sources with torrents sorted first. Pick the biggest file with "Remux" or "2160p" in the name for the best quality.
 
 ---
 
@@ -154,10 +168,28 @@ With these settings, when you search for a movie you'll see a list sorted by fil
 
 1. Kodi → **Settings** (gear icon) → **Player**
 2. Change the settings level to **Expert** (click the gear icon in the bottom left until it says Expert)
-3. Go to **Videos** section
-4. Set **Adjust display refresh rate** → **On start / stop**
 
-This matches your TV's refresh rate to the content (24fps for movies, 60fps for sports) and eliminates judder.
+**Videos section:**
+
+3. **Adjust display refresh rate** → **On start / stop** — matches TV refresh rate to content (24fps movies, 60fps sports)
+4. **Adjust display HDR mode** → **On** — switches display in/out of HDR based on content
+5. **Sync playback to display** → **Off** — this causes audio drift over time. Refresh rate matching above handles sync correctly.
+6. **Minimise black bars** → **Off** — cropping cuts off content
+
+**Processing section (scroll down in Videos):**
+
+7. **Allow hardware acceleration - MediaCodec (Surface)** → **On** — critical for 4K HDR/DV passthrough
+8. **Allow hardware acceleration - MediaCodec** → **On** — fallback decoder
+9. **Dolby Vision compatibility mode** → **Off** — your TV supports native DV, don't need compatibility mode
+10. **Allowed HDR dynamic metadata formats** → **Dolby Vision, HDR10+**
+
+**Subtitles section (left sidebar):**
+
+11. **Preferred subtitle language** → **None** — disables subtitles by default. Turn them on per-video during playback if needed.
+
+**Language section (left sidebar):**
+
+12. **Preferred audio language** → **English** (or your preference)
 
 ---
 
@@ -189,12 +221,16 @@ Check for Ugoos firmware updates: **Ugoos Settings → OTA Update**. Version **2
 
 ## Kodi Playback Settings
 
-Go to **Settings → Player → Videos** and change the settings level to **Expert** (click the gear icon in the bottom left until it says Expert).
+These are covered in Step 8 above. The key settings for reference:
 
 - **Adjust display refresh rate** → On start / stop
-- **Sync playback to display** → Off
-- **Allow hardware acceleration - MediaCodec** → On
-- **Allow hardware acceleration - MediaCodec (Surface)** → On
+- **Adjust display HDR mode** → On
+- **Sync playback to display** → **Off** (causes audio drift — refresh rate matching handles sync)
+- **MediaCodec (Surface)** → On (critical for 4K HDR/DV)
+- **MediaCodec** → On (fallback)
+- **Dolby Vision compatibility mode** → Off (TV supports native DV)
+- **Allowed HDR dynamic metadata formats** → Dolby Vision, HDR10+
+- **Preferred subtitle language** → None
 
 MediaCodec (Surface) is the critical one — it enables 4K output, HDR passthrough, and Dolby Vision. Without it, Kodi falls back to software decoding and you lose HDR entirely. The S905X5 hardware decodes HEVC, AV1, H.266, VP9, and H.264 at zero CPU cost through this setting.
 
@@ -267,8 +303,8 @@ Kodi 21 Omega moved cache settings from advancedsettings.xml to the GUI. **The X
 1. Go to **Settings** (gear icon) → **Services** → **Caching**
 2. Set the settings level to **Expert** (click the gear in the bottom left)
 3. Set these values:
-   - **Buffer mode** → **1** (buffer all filesystems — internet and local)
-   - **Memory size** → **350 MB** (Kodi uses 3x this in RAM, so ~1GB for a 4GB device)
+   - **Buffer Mode** → **Buffer all filesystems, including local files** (the last option in the list)
+   - **Memory size** → **350 MB** (Kodi uses 3x this in RAM, so ~1GB actual usage on a 4GB device)
    - **Read factor** → **20** (aggressive pre-buffering — fills the cache fast)
 
 This is the single biggest fix for buffering and audio drift on long streams.
