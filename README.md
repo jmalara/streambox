@@ -1,14 +1,15 @@
 # Streambox Setup Guide
 
-Complete setup guide for the **Ugoos AM9 Pro** running Kodi with The Crew (Real Debrid) and Mad Titan Sports.
+Complete setup guide for the **Ugoos AM9 Pro** running Kodi with POV (Real Debrid) and Mad Titan Sports.
 
 ---
 
 ## What You'll End Up With
 
-- **The Crew** — all-in-one addon for movies, TV shows, sports, and IPTV
+- **POV** — fast, clean addon for movies and TV shows with external scrapers (Torrentio, MediaFusion) and Trakt integration
 - **Mad Titan Sports** — dedicated live sports addon (NFL, NBA, MLB, NHL, soccer, motorsports)
 - **Real Debrid** — premium link service that gives you fast, reliable 4K/1080p streams (~$3/month)
+- **Trakt** — free service that tracks your watch history and progress across all addons and devices
 - **Optimized buffering** — no audio drift or buffering on long streams
 
 Everything below can be done with just the Ugoos remote. ADB (connecting the box to a computer) is optional and only needed for the advanced optimization section at the end.
@@ -69,7 +70,7 @@ This lets Kodi install third-party addons.
 
 | URL | Name |
 |-----|------|
-| `https://team-crew.github.io` | `crew` |
+| `https://kodifitzwell.github.io/repo/` | `kodifitzwell` |
 | `https://magnetic.website/repo` | `magnetic` |
 
 Add both sources while you're here to save time.
@@ -82,7 +83,7 @@ Add both sources while you're here to save time.
 2. Click **Add-ons** (left sidebar)
 3. Click the **open box icon** (top left — package installer)
 4. Click **Install from zip file**
-5. Click **crew** → select the `repository.thecrew` zip file → wait for "installed" notification
+5. Click **kodifitzwell** → select the `repository.kodifitzwell-0.0.1.zip` file → wait for "installed" notification
 6. Click **Install from zip file** again
 7. Click **magnetic** → select the repository zip file → wait for "installed" notification
 
@@ -93,7 +94,7 @@ Add both sources while you're here to save time.
 Still in the addon package manager:
 
 1. Click **Install from repository**
-2. **The Crew Repo** → Video add-ons → **The Crew** → Install (accept all dependencies)
+2. **kodifitzwell repository** → Video add-ons → **POV** → Install (accept all dependencies)
 3. Wait for "installed" notification
 4. Go back to **Install from repository**
 5. **Magnetic Repo** → Video add-ons → **Mad Titan Sports** → Install
@@ -103,64 +104,63 @@ Your addons are now at: Kodi home → Add-ons → Video add-ons
 
 ---
 
-## Step 7: Authorize Real Debrid
+## Step 7: Authorize Real Debrid and Set Up POV
 
-The Crew uses a dependency called **ResolveURL** to handle Real Debrid. You authorize through it.
+### Authorize Real Debrid in POV
 
-**Through The Crew:**
+1. Open POV → go to **Settings** (from the POV home screen)
+2. Select **SETTINGS: My Services**
+3. Tap **Real-Debrid** → **Authorize**
+4. A code will appear on screen
+5. On your phone, go to [real-debrid.com/device](https://real-debrid.com/device)
+6. Enter the code and click **Allow**
+7. Wait for the "authorized" confirmation
 
-1. Open The Crew
-2. Go to **Tools**
-3. Select **RESOLVEURL: Settings**
-4. Go to the **Universal Resolvers 2** tab
-5. Scroll down to the **Real-Debrid** section
-6. Click **(Re)Authorize My Account**
-7. A code will appear on screen
-8. On your phone, go to [real-debrid.com/device](https://real-debrid.com/device)
-9. Enter the code and click **Allow**
-10. Wait for the "authorized" confirmation
+### Enable External Scrapers
 
-**If you can't find the Tools menu:**
+This is what makes POV powerful — it pulls sources from Torrentio, MediaFusion, and other external scrapers in addition to its own built-in scrapers.
 
-1. Go to **Add-ons** → click the **open box icon**
-2. Click **My add-ons** → **All**
-3. Find **ResolveURL** (may be under Program add-ons or Dependencies)
-4. Open its **Settings** → **Universal Resolvers 2** tab
-5. Scroll to Real-Debrid → **(Re)Authorize My Account**
-6. Same authorization flow — enter the code at real-debrid.com/device
+1. Go to **Settings** → **SETTINGS: POV** → **Sources** tab (left sidebar)
+2. Under **External Scrapers**: toggle **Enable** → **On**
+3. Toggle **Remove Undesirables** → **On**
+4. Scroll down to the **Sources** list and enable:
+   - **piratebay** → On
+   - **torrentio** → On
+   - **aiostreams (comet/mediafusion)** → On
+   - **torrentsdb** → On
+   - **zilean** → On
+5. Leave bitmagnet, dmm, nyaa, torrentdownload, meteor, stremthru torz **Off**
 
-Once authorized, The Crew will show Real Debrid links (labeled `[RD]`) alongside free links.
+### Configure Real Debrid Settings in POV
 
-### Optimize The Crew for Best Quality
+1. **SETTINGS: POV** → **My Services** tab (left sidebar)
+2. Scroll to **Real Debrid** section:
+   - **Enable** → On
+   - **Use Torrent Services** → On
+   - **Search RD Cloud** → On (surfaces previously cached content as instant sources)
+   - **Priority** → **0** (lowest number = highest priority, RD resolves first)
+   - **Premium Expires Notification** → **7** days
 
-By default, The Crew auto-picks a source for you, which is often not the highest quality. Change these settings to always get the best available stream.
+### Set Up Trakt (Recommended)
 
-**The Crew → Tools → Playback settings:**
+Trakt is a free service that tracks everything you watch. It syncs your watchlist, progress, and history across all devices.
 
-1. **Default action** → **Dialog** — shows you the full list of sources so you can pick the best one
-2. **Max Quality** → **4K**
-3. **Screeners and Cams** → **Off**
-4. **Hosters with captchas** → **Off** — you have Real Debrid, no need for captcha hosters
-5. **Debrid Only** → **On** — hides all free links, only shows RD sources (where the quality lives)
-6. **Pre-emptive Termination** → **On** — stops searching once enough good sources are found
-7. **Pre-emptive Limit** → **3-5** — don't need 10 sources when Debrid Only is on
-8. **HEVC** → **On** — the S905X5 hardware decodes HEVC, and these files are smaller at same quality
-9. **Sort By Torrent/Premium** → **On** — pushes RD torrent results (Remuxes) above hoster links
-10. **Enable Torrent Scrapers** → **On**
-11. **Minimum Seeders** → **3** — Remuxes often have fewer seeders, don't filter them out
-12. **Verify Torrents Cache** → **On** — only shows torrents already cached on RD (instant playback)
-13. **Remove Uncached** → **On** — hides torrents that need time to download on RD's servers
+1. Sign up at [trakt.tv](https://trakt.tv) (free)
+2. In POV → **Settings** → **SETTINGS: My Services** → tap **Trakt** → **Authorize**
+3. Enter the code at `trakt.tv/activate` on your phone
 
-**ResolveURL settings (The Crew → Tools → RESOLVEURL: Settings):**
+### POV General Settings
 
-1. **Automatically pick best quality** → **On**
-2. Go to **Universal Resolvers 2** → scroll to **Real-Debrid**:
-   - **Priority** → **90** (lower = higher priority)
-   - **Enabled** → On
-   - **Torrent Support** → **On** — this is where Remux and high-bitrate files come from
-   - **Cached torrents only** → **On** — every source plays instantly, no dead links
+1. **SETTINGS: POV** → **General** tab:
+   - **Auto Start POV when Kodi Starts** → **On** (opens POV automatically when Kodi launches)
+   - **Enable Kodi Menu Caching** → On
+   - **Maximum threads** → **60** (balances scrape speed with device performance)
 
-With these settings, when you search for a movie you'll see a dialog of RD-cached sources with torrents sorted first. Pick the biggest file with "Remux" or "2160p" in the name for the best quality.
+2. **SETTINGS: POV** → **Features** tab:
+   - **Preferred Audio Language** → **English**
+   - **Show Release Year in Listings** → **On**
+   - **Include Unaired Episodes** → **Off**
+   - **Include Unaired Items in Watchlists** → **Off**
 
 ---
 
@@ -409,48 +409,11 @@ adb shell sysctl -w net.core.wmem_max=2097152
 
 > **Note:** These sysctl tweaks don't persist across reboots. Re-run them after a restart, or create a boot script at `/data/local/tmp/network_tweaks.sh` and run it manually.
 
-### Auto-Open The Crew on Kodi Startup
+### Auto-Open POV on Kodi Startup
 
-Makes Kodi launch straight into The Crew's main menu. This uses a Kodi service addon (more reliable than autoexec.py on Android):
+POV has a built-in autostart feature — no custom service addon needed. Enable it in POV → Settings → SETTINGS: POV → General → **Auto Start POV when Kodi Starts** → On.
 
-```bash
-adb root
-
-# Create the service addon folder
-adb shell "mkdir -p /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/addons/service.autostart.thecrew"
-
-# Create addon.xml
-adb shell 'cat > /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/addons/service.autostart.thecrew/addon.xml << EOF
-<?xml version="1.0" encoding="UTF-8"?>
-<addon id="service.autostart.thecrew" name="AutoStart The Crew" version="1.0.0" provider-name="custom">
-  <requires>
-    <import addon="xbmc.python" version="3.0.0"/>
-  </requires>
-  <extension point="xbmc.service" library="service.py" start="login"/>
-  <extension point="xbmc.addon.metadata">
-    <summary>Auto-opens The Crew on Kodi startup</summary>
-    <platform>all</platform>
-  </extension>
-</addon>
-EOF'
-
-# Create the service script
-adb shell 'cat > /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/addons/service.autostart.thecrew/service.py << EOF
-import xbmc
-xbmc.executebuiltin("RunAddon(plugin.video.thecrew)")
-EOF'
-
-# Fix permissions
-adb shell "chmod -R 644 /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/addons/service.autostart.thecrew"
-adb shell "chmod 755 /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/addons/service.autostart.thecrew"
-adb shell "chown -R media_rw:media_rw /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/addons/service.autostart.thecrew"
-```
-
-After deploying, open Kodi → **Add-ons → My add-ons → Services** → enable **AutoStart The Crew**. Restart Kodi to confirm it opens The Crew automatically.
-
-To undo: delete the addon folder via ADB or uninstall it from Kodi's addon manager.
-
-Press Back on the remote to get to the Kodi home screen — it just defaults to The Crew on launch.
+This is configured in Step 7 above. When Kodi launches, POV opens automatically to its home screen with your Trakt progress, watchlist, and trending content.
 
 ### Or Run It All at Once
 
@@ -491,7 +454,7 @@ The AM9 Pro runs Android 14 AOSP, so you can install any Android media player. H
 
 ### Kodi (recommended — what this guide uses)
 
-Best for: streaming via addons (The Crew, Mad Titan Sports), Real Debrid integration, and full customization. Kodi is the hub that ties everything together — addons scrape sources, Real Debrid resolves the links, and Kodi plays them. It handles 4K HDR, Dolby Vision, and surround audio. The downside is it takes some setup (which is what this guide is for).
+Best for: streaming via addons (POV, Mad Titan Sports), Real Debrid integration, and full customization. Kodi is the hub that ties everything together — addons scrape sources, Real Debrid resolves the links, and Kodi plays them. It handles 4K HDR, Dolby Vision, and surround audio. The downside is it takes some setup (which is what this guide is for).
 
 ### Stremio
 
@@ -515,7 +478,7 @@ Best for: local file playback with hardware acceleration. Similar to VLC but som
 
 ### What we recommend
 
-Use **Kodi** as your main streaming hub (The Crew + Mad Titan Sports + Real Debrid). Add **SmartTube** for YouTube. Add **TiviMate** if you have an IPTV subscription. That covers everything.
+Use **Kodi** as your main streaming hub (POV + Mad Titan Sports + Real Debrid + Trakt). Add **SmartTube** for YouTube. Add **TiviMate** if you have an IPTV subscription. That covers everything.
 
 ---
 
@@ -651,7 +614,7 @@ Good news: HDMI-CEC works out of the box on the Ugoos. Your TV remote (LG Magic 
 
 ### What You Gain
 
-- The Crew with Real Debrid — free 4K movies and TV
+- POV with Real Debrid — free 4K movies and TV with Trakt integration
 - Mad Titan Sports — free live sports
 - Stremio — simpler Netflix-like interface for movies/TV (install alongside Kodi)
 - SmartTube — ad-free YouTube
@@ -662,7 +625,7 @@ Good news: HDMI-CEC works out of the box on the Ugoos. Your TV remote (LG Magic 
 
 ## Understanding Stream Quality
 
-When browsing sources in The Crew, you'll see filenames with quality tags. Here's what they mean, from best to worst:
+When browsing sources in POV, you'll see filenames with quality tags. Here's what they mean, from best to worst:
 
 **REMUX** — full Blu-ray rip with no re-encoding. Lossless video and audio. 40-80GB for 4K, 20-40GB for 1080p. The best quality possible.
 
@@ -692,9 +655,9 @@ When browsing results, bigger file size generally means better quality. A 60GB 4
 
 | What | Where |
 |------|-------|
-| The Crew | Add-ons → Video add-ons → The Crew |
+| POV | Add-ons → Video add-ons → POV |
 | Mad Titan Sports | Add-ons → Video add-ons → Mad Titan Sports |
-| Real Debrid auth | The Crew → Tools → RESOLVEURL: Settings → Universal Resolvers 2 → Real-Debrid |
+| Real Debrid auth | POV → Settings → SETTINGS: My Services → Real-Debrid → Authorize |
 | Display refresh rate | Settings → Player → Videos → On start/stop |
 | Hardware acceleration | Settings → Player → Videos → MediaCodec (Surface) → On |
 | Ugoos display | Ugoos Settings → Display → YCbCr 4:2:2 12-bit |

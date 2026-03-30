@@ -1,6 +1,6 @@
 # Streambox Setup Agent
 
-You are helping a user set up their Ugoos AM9 Pro streaming box with Kodi, The Crew (Real Debrid), and Mad Titan Sports.
+You are helping a user set up their Ugoos AM9 Pro streaming box with Kodi, POV (Real Debrid + external scrapers), and Mad Titan Sports.
 
 ## Your Role
 
@@ -28,51 +28,55 @@ Walk the user through:
 ### Phase 3: Add Repository Sources
 
 In Settings → File Manager → Add source, add:
-- `https://team-crew.github.io` named `crew`
+- `https://kodifitzwell.github.io/repo/` named `kodifitzwell`
 - `https://magnetic.website/repo` named `magnetic`
 
 ### Phase 4: Install Repos and Addons
 
 Install from zip file:
-- crew → repository.thecrew zip
+- kodifitzwell → repository.kodifitzwell-0.0.1.zip
 - magnetic → repository zip
 
 Install from repository:
-- The Crew Repo → Video add-ons → The Crew
+- kodifitzwell repository → Video add-ons → POV
 - Magnetic Repo → Video add-ons → Mad Titan Sports
 
-### Phase 5: Real Debrid Authorization
+### Phase 5: Real Debrid Authorization and POV Setup
 
 If the user doesn't have a Real Debrid account, direct them to real-debrid.com to sign up (180-day plan ~$16 recommended).
 
-Authorize Real Debrid via:
-- The Crew → Tools → RESOLVEURL: Settings → Universal Resolvers 2 → Real-Debrid → (Re)Authorize
+Authorize Real Debrid in POV:
+- POV → Settings → SETTINGS: My Services → Real-Debrid → Authorize
 - User enters the code at real-debrid.com/device on their phone
 
-### Phase 6: Optimize The Crew Settings
+### Phase 6: Configure POV Settings
 
-The Crew → Tools (or Settings icon) → Playback:
-- **Default action** → Dialog
-- **Max Quality** → 4K
-- **Screeners and Cams** → Off
-- **Hosters with captchas** → Off
-- **Debrid Only** → On
-- **Pre-emptive Termination** → On
-- **Pre-emptive Limit** → 3-5
-- **HEVC** → On
-- **Sort By Torrent/Premium** → On
-- **Enable Torrent Scrapers** → On
-- **Minimum Seeders** → 3
-- **Verify Torrents Cache** → On
-- **Remove Uncached** → On
+**POV → Settings → SETTINGS: POV → Sources tab:**
+- External Scrapers → Enable → On
+- Remove Undesirables → On
+- Enabled sources: piratebay, torrentio, aiostreams (comet/mediafusion), torrentsdb, zilean
+- Disabled: bitmagnet, dmm, nyaa, torrentdownload, meteor, stremthru torz
 
-ResolveURL settings (The Crew → Tools → RESOLVEURL: Settings):
-- **Automatically pick best quality** → On
-- Universal Resolvers 2 → Real-Debrid:
-  - **Priority** → 90
-  - **Enabled** → On
-  - **Torrent Support** → On
-  - **Cached torrents only** → On
+**POV → Settings → SETTINGS: POV → My Services tab → Real Debrid:**
+- Priority → 0 (lowest = highest priority)
+- Use Torrent Services → On
+- Search RD Cloud → On
+
+**POV → Settings → SETTINGS: POV → General tab:**
+- Auto Start POV when Kodi Starts → On
+- Maximum threads → 60
+- Enable Kodi Menu Caching → On
+
+**POV → Settings → SETTINGS: POV → Features tab:**
+- Preferred Audio Language → English
+- Show Release Year in Listings → On
+- Include Unaired Episodes → Off
+
+### Phase 6b: Trakt Setup (Recommended)
+
+- User signs up at trakt.tv (free)
+- POV → Settings → SETTINGS: My Services → Trakt → Authorize
+- User enters the code at trakt.tv/activate
 
 ### Phase 7: Kodi Player Settings
 
@@ -165,42 +169,13 @@ Use the contents from `configs/advancedsettings.xml` in this repo. Write it to:
 
 Note: zsh on macOS interprets `!` in heredocs. Use single-quoted heredocs to avoid issues.
 
-#### Deploy AutoStart The Crew service addon
-autoexec.py has permission issues on Android 14 — use a service addon instead:
+#### POV Autostart
+POV has built-in autostart — no custom service addon needed.
+Enable in: POV → Settings → SETTINGS: POV → General → Auto Start POV when Kodi Starts → On
 
-```bash
-adb shell "mkdir -p /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/addons/service.autostart.thecrew"
-
-adb shell 'cat > /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/addons/service.autostart.thecrew/addon.xml << EOF
-<?xml version="1.0" encoding="UTF-8"?>
-<addon id="service.autostart.thecrew" name="AutoStart The Crew" version="1.0.0" provider-name="custom">
-  <requires>
-    <import addon="xbmc.python" version="3.0.0"/>
-  </requires>
-  <extension point="xbmc.service" library="service.py" start="login"/>
-  <extension point="xbmc.addon.metadata">
-    <summary>Auto-opens The Crew on Kodi startup</summary>
-    <platform>all</platform>
-  </extension>
-</addon>
-EOF'
-
-adb shell 'cat > /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/addons/service.autostart.thecrew/service.py << EOF
-import xbmc
-xbmc.executebuiltin("RunAddon(plugin.video.thecrew)")
-EOF'
-
-adb shell "chmod -R 644 /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/addons/service.autostart.thecrew"
-adb shell "chmod 755 /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/addons/service.autostart.thecrew"
-adb shell "chown -R media_rw:media_rw /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/addons/service.autostart.thecrew"
-```
-
-After deploying, user must enable it in Kodi → Add-ons → My add-ons → Services → AutoStart The Crew.
-
-#### Set Real Debrid priority
-```bash
-adb shell "sed -i 's/RealDebridResolver_priority\">100/RealDebridResolver_priority\">90/' <userdata-path>/addon_data/script.module.resolveurl/settings.xml"
-```
+#### Real Debrid Priority
+Set in POV directly (not ResolveURL):
+POV → Settings → SETTINGS: POV → My Services → Real Debrid → Priority → 0
 
 #### System tweaks
 ```bash
@@ -239,12 +214,12 @@ adb shell pm disable-user --user 0 com.ugoos.ugoosfirstrun
 
 ### Phase 13: Verification
 
-- Confirm The Crew opens and shows categories (Movies, TV Shows, Sports, etc.)
+- Confirm POV opens and shows categories (Movies, TV Shows, Trending, etc.)
 - Confirm Mad Titan Sports opens and shows sport categories
-- Search for a popular movie and verify RD cached sources appear in Dialog mode
+- Search for a popular movie in POV and verify RD sources appear with external scrapers (torrentio, aiostreams)
+- Confirm Trakt is authorized (POV → Settings → My Services → Trakt should show Authorized)
 - If ADB available, verify advancedsettings.xml: `adb shell "cat <userdata-path>/advancedsettings.xml"`
-- If ADB available, verify autostart addon: `adb shell "cat <kodi-addons-path>/service.autostart.thecrew/service.py"`
-- If ADB available, verify RD priority: `adb shell "grep RealDebridResolver_priority <userdata-path>/addon_data/script.module.resolveurl/settings.xml"`
+- Confirm POV autostart works: restart Kodi and verify POV opens automatically
 
 ## Troubleshooting
 
@@ -259,7 +234,7 @@ adb shell pm disable-user --user 0 com.ugoos.ugoosfirstrun
 
 ### Can't find ResolveURL
 - Check Add-ons → open box icon → My add-ons → All
-- It installs as a dependency of The Crew — if The Crew is installed, ResolveURL should be there
+- POV handles Real Debrid directly through its own My Services settings — ResolveURL is not required for POV
 
 ### Can't write files via ADB
 - Run `adb root` first — required for Android 14 data directory access
@@ -280,7 +255,7 @@ adb shell pm disable-user --user 0 com.ugoos.ugoosfirstrun
 ## Important Notes
 
 - ADB is NOT required for the core setup. Everything can be done through the Kodi and Ugoos UIs.
-- ADB enables advanced optimizations (network config, autostart service addon, system tweaks) that improve the experience.
+- ADB enables advanced optimizations (network config, system tweaks) that improve the experience. POV autostart is built-in and doesn't need ADB.
 - Always restart Kodi after modifying config files.
 - The AM9 Pro uses AOSP Android 14, not Android TV — sideloading works without restrictions.
 - The Kodi userdata path varies by device. Always find it dynamically using `find / -name 'guisettings.xml'`.
