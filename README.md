@@ -331,6 +331,50 @@ Use **Kodi** as your main streaming hub (The Crew + Mad Titan Sports + Real Debr
 
 ---
 
+## Bonus: Stream PC Games with Moonlight
+
+If you have a gaming PC, you can stream your games to the Ugoos and play them on your TV. Moonlight is a free, open-source game streaming client that uses NVIDIA's GameStream protocol (or Sunshine, which works with any GPU).
+
+### What you need
+
+- **On your PC:** [Sunshine](https://github.com/LizardByte/Sunshine) installed and running (works with NVIDIA, AMD, and Intel GPUs). If you have an NVIDIA GPU, you can also use NVIDIA GeForce Experience's built-in GameStream, but Sunshine is recommended since NVIDIA deprecated GameStream.
+- **On the Ugoos:** Moonlight app
+- **Network:** Both devices on the same network. Ethernet on both ends is strongly recommended — WiFi adds latency. The AM9 Pro's gigabit ethernet is plenty for 4K 60fps streaming.
+- **Controller:** A Bluetooth gamepad paired to the Ugoos (Xbox, PlayStation, or 8BitDo controllers all work)
+
+### Setting up Sunshine on your PC
+
+1. Download Sunshine from [github.com/LizardByte/Sunshine](https://github.com/LizardByte/Sunshine/releases)
+2. Install and run it — it starts a web UI at `https://localhost:47990`
+3. Set a username and password on first launch
+4. Sunshine will auto-detect your installed games, or you can add them manually
+
+### Installing Moonlight on the Ugoos
+
+1. On the Ugoos, open the Play Store and search for **Moonlight Game Streaming**
+2. Install it (or sideload the APK from [moonlight-stream.org](https://moonlight-stream.org))
+3. Open Moonlight — it should auto-discover your PC on the local network
+4. Click your PC → enter the PIN shown on the Ugoos into the Sunshine web UI on your PC
+5. Once paired, you'll see your game library
+
+### Recommended settings
+
+- **Resolution:** 1080p or 4K depending on your GPU (4K needs a strong GPU like RTX 3070+)
+- **Frame rate:** 60fps (or 120fps if your TV supports it)
+- **Bitrate:** 40-80 Mbps for 4K, 20-40 Mbps for 1080p — higher is better if your network handles it
+- **Codec:** H.265 (HEVC) — the AM9 Pro decodes this in hardware with no performance hit
+- **HDR:** Enable if your PC and TV both support it — the Ugoos passes HDR through
+
+### Tips
+
+- Pair a Bluetooth controller to the Ugoos before launching Moonlight: Ugoos Settings → Bluetooth → pair your controller
+- For the lowest latency, use ethernet on both the PC and the Ugoos — WiFi adds 10-30ms
+- If you see stuttering, lower the bitrate or resolution
+- Moonlight also supports mouse and keyboard input if you plug USB peripherals into the Ugoos
+- The Ugoos remote won't work as a game controller — you need a proper gamepad
+
+---
+
 ## Quick Reference
 
 | What | Where |
