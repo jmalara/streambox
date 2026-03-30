@@ -131,6 +131,23 @@ The Crew uses a dependency called **ResolveURL** to handle Real Debrid. You auth
 
 Once authorized, The Crew will show Real Debrid links (labeled `[RD]`) alongside free links.
 
+### Optimize The Crew for Best Quality
+
+By default, The Crew auto-picks a source for you, which is often not the highest quality. Change these settings to always get the best available stream.
+
+1. Open **The Crew** → **Tools** (or Settings icon) → **Playback**
+2. Change **Auto Play** to **Source Select** — this shows you the full list of sources instead of auto-picking
+3. Set **Sort by** to **File Size** (descending) — pushes the largest (highest quality) files to the top
+4. Under **Providers** or **Playback**, set the minimum quality filter to **1080p** — hides anything below 1080p
+
+Then verify Real Debrid torrent support is on:
+
+1. The Crew → **Tools** → **RESOLVEURL: Settings**
+2. Go to **Universal Resolvers 2** → scroll to **Real-Debrid**
+3. Make sure **Torrent Support** is **Enabled** — this is where the Remux and high-bitrate files come from
+
+With these settings, when you search for a movie you'll see a list sorted by file size with RD cached torrents at the top. Pick the biggest file with "Remux" or "2160p" in the name for the best quality.
+
 ---
 
 ## Step 8: Kodi Player Settings
