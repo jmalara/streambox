@@ -243,7 +243,22 @@ Everything above this point can be done with just the Ugoos remote. The steps be
 4. Connect via USB and run: `adb devices`
 5. Or connect via WiFi: `adb connect <ugoos-ip>:5555`
 
-### Deploy Buffer and Network Config
+### Configure Kodi Cache (In the Kodi GUI)
+
+Kodi 21 Omega moved cache settings from advancedsettings.xml to the GUI. **The XML cache tags are ignored in Kodi 21+.** You must set these through the Kodi interface.
+
+1. Go to **Settings** (gear icon) → **Services** → **Caching**
+2. Set the settings level to **Expert** (click the gear in the bottom left)
+3. Set these values:
+   - **Buffer mode** → **1** (buffer all filesystems — internet and local)
+   - **Memory size** → **350 MB** (Kodi uses 3x this in RAM, so ~1GB for a 4GB device)
+   - **Read factor** → **20** (aggressive pre-buffering — fills the cache fast)
+
+This is the single biggest fix for buffering and audio drift on long streams.
+
+### Deploy Network and GUI Config
+
+The network timeout and GUI rendering settings still work in advancedsettings.xml. Deploy them via ADB.
 
 First, find where Kodi stores its data:
 
@@ -255,13 +270,8 @@ adb shell "find / -name 'guisettings.xml' 2>/dev/null | head -1"
 Use the path it returns (typically `/data/media/0/Android/data/org.xbmc.kodi/files/.kodi/userdata/`). Then create the config file:
 
 ```bash
-adb shell "cat > /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/userdata/advancedsettings.xml << 'EOF'
+adb shell 'cat > /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/userdata/advancedsettings.xml << EOF
 <advancedsettings>
-  <cache>
-    <buffermode>1</buffermode>
-    <memorysize>157286400</memorysize>
-    <readfactor>20</readfactor>
-  </cache>
   <network>
     <curlclienttimeout>30</curlclienttimeout>
     <curllowspeedtime>30</curllowspeedtime>
@@ -272,10 +282,10 @@ adb shell "cat > /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/userdata/a
     <algorithmdirtyregions>3</algorithmdirtyregions>
   </gui>
 </advancedsettings>
-EOF"
+EOF'
 ```
 
-This gives Kodi a 150MB buffer (default is ~20MB), aggressive read-ahead to prevent audio drift, longer timeouts for slow sources, and auto-retry on failed connections.
+This sets longer timeouts for slow sources, auto-retry on failed connections, disables IPv6 (avoids dual-stack delays), and optimizes GUI dirty region rendering.
 
 A pre-built copy of this file is in `configs/advancedsettings.xml`.
 

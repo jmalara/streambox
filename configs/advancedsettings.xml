@@ -1,9 +1,10 @@
 <advancedsettings>
-  <cache>
-    <buffermode>1</buffermode>
-    <memorysize>157286400</memorysize>
-    <readfactor>20</readfactor>
-  </cache>
+  <!-- Cache settings are configured in Kodi GUI since Omega (v21):      -->
+  <!-- Settings → Services → Caching (set level to Expert)               -->
+  <!--   Buffer mode: 1 (all filesystems)                                -->
+  <!--   Memory size: 350 MB (safe for 4GB RAM devices)                  -->
+  <!--   Read factor: 20 (aggressive pre-buffering)                      -->
+  <!-- The <cache> XML tags are IGNORED in Kodi 21+ and have no effect.  -->
   <network>
     <curlclienttimeout>30</curlclienttimeout>
     <curllowspeedtime>30</curllowspeedtime>
