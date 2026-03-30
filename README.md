@@ -375,6 +375,63 @@ If you have a gaming PC, you can stream your games to the Ugoos and play them on
 
 ---
 
+## Replacing Your Apple TV with the Ugoos
+
+If you're switching from an Apple TV 4K, here's how to make the Ugoos feel like home.
+
+### Replace the Default Launcher
+
+The stock Ugoos home screen is cluttered. **FLauncher** is a free, open-source launcher that gives you a clean grid of apps — similar to Apple TV's layout.
+
+1. Open the **Play Store** on the Ugoos and install **FLauncher**
+2. Go to Ugoos **Settings → Apps → Default apps → Home app** → select **FLauncher**
+3. If that menu doesn't exist on your firmware, use ADB instead:
+   ```bash
+   adb shell pm disable-user --user 0 com.ugoos.launcher
+   ```
+   Next time you press Home, Android will ask you to pick a launcher — select FLauncher.
+
+To undo later: `adb shell pm enable com.ugoos.launcher`
+
+### Organize the Home Screen
+
+In FLauncher, long-press any app to move it between rows or hide it. Set it up like this:
+
+- **Row 1:** Netflix, YouTube, Disney+, Hulu, HBO Max
+- **Row 2:** Kodi, SmartTube
+- **Row 3:** Spotify, anything else you use
+
+Hide everything your household doesn't need (Settings, ResolveURL, file managers, etc.). The fewer apps visible, the easier it is for everyone.
+
+### Remote Control
+
+Good news: HDMI-CEC works out of the box on the Ugoos. Your TV remote (LG Magic Remote, Samsung OneRemote, Sony, etc.) controls the Ugoos — d-pad navigation, select, back, volume, power. No extra setup needed.
+
+### What You Keep
+
+- All major streaming apps (Netflix, Disney+, Hulu, HBO Max, YouTube, Spotify) — install from Play Store
+- TV remote controls everything via CEC
+- 4K HDR and Dolby Vision support
+- Voice control via Google Assistant (if you set it up in Ugoos Settings)
+
+### What You Lose
+
+- **AirPlay** — no native AirPlay on Android. Install **AirScreen** from the Play Store as a workaround, but it's not as seamless as Apple TV
+- **Apple TV+ app** — not available on Android. Cast from your phone or watch in a browser
+- **Siri** — your TV remote's mic button won't do universal search the way Siri does on Apple TV
+- **iCloud Photos / Apple ecosystem** — no integration with Apple services
+
+### What You Gain
+
+- The Crew with Real Debrid — free 4K movies and TV
+- Mad Titan Sports — free live sports
+- Stremio — simpler Netflix-like interface for movies/TV (install alongside Kodi)
+- SmartTube — ad-free YouTube
+- Sideloading any Android app
+- Full customization (launchers, skins, settings)
+
+---
+
 ## Quick Reference
 
 | What | Where |
