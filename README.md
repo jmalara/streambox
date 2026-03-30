@@ -307,7 +307,7 @@ Best for: streaming via addons (The Crew, Mad Titan Sports), Real Debrid integra
 
 ### Stremio
 
-Best for: people who want something simpler than Kodi. Stremio has a cleaner UI and supports Real Debrid through community addons (like Torrentio). Less customizable than Kodi but faster to set up. Install it from the Play Store or sideload the APK. Good alternative if Kodi feels too complex.
+Best for: people who want something simpler than Kodi for movies and TV. Stremio has a cleaner, Netflix-like UI and supports Real Debrid through community addons (like Torrentio). Setup takes about 5 minutes vs an hour for Kodi. Install it from the Play Store or sideload the APK. The main limitation is live sports — Stremio has almost no sports coverage compared to Kodi's Mad Titan Sports. If you only watch movies and TV, Stremio is the easier path. If you want sports too, you need Kodi. You can run both on the AM9 Pro.
 
 ### TiviMate
 
