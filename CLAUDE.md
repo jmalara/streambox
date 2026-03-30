@@ -9,7 +9,7 @@ This repo contains setup instructions and configuration files for a Ugoos AM9 Pr
 - **Primary Addons:** The Crew (movies/TV via Real Debrid), Mad Titan Sports (live sports)
 - **Real Debrid:** Premium link aggregator — authorized via ResolveURL dependency
 - **Target Display:** LG C5 OLED (Dolby Vision, HDR10, eARC)
-- **Launcher:** FLauncher (replaces stock Ugoos launcher, package: `com.uapplication.launcher`)
+- **Launcher:** FLauncher (package: `me.efesser.flauncher`, replaces stock Ugoos launcher `com.uapplication.launcher`)
 - **Audio Receiver:** Onkyo RZ900 (ARC only, no eARC)
 
 ## What This Repo Contains
@@ -29,7 +29,7 @@ The Ugoos AM9 Pro supports ADB over USB and WiFi. When connected via ADB, Claude
 3. **Find Kodi userdata path:** `adb shell "find / -name 'guisettings.xml' 2>/dev/null | head -1"`
    - Typical path: `/data/media/0/Android/data/org.xbmc.kodi/files/.kodi/userdata/`
 4. **Deploy advancedsettings.xml** to the userdata directory
-5. **Deploy autoexec.py** to auto-open The Crew on Kodi startup
+5. **Deploy service.autostart.thecrew** addon to auto-open The Crew on Kodi startup
 6. **Set Real Debrid priority** in ResolveURL settings
 7. **Apply system tweaks** (animations, DNS, telemetry, HDR passthrough, network optimization)
 8. **Swap launcher:** disable `com.uapplication.launcher`, set FLauncher as default
@@ -135,8 +135,8 @@ Applied via `scripts/setup-adb.sh`:
 - TCP slow start after idle disabled
 - TCP buffer sizes increased (rmem_max/wmem_max → 2MB)
 - Bloatware disabled (printspooler, ugoosfirstrun)
-- FLauncher as default launcher (com.uapplication.launcher disabled)
-- autoexec.py deployed (auto-opens The Crew)
+- FLauncher as default launcher (com.uapplication.launcher disabled, FLauncher sideloaded via APKPure — Play Store shows incompatible on AOSP)
+- service.autostart.thecrew addon deployed (auto-opens The Crew — more reliable than autoexec.py on Android 14)
 
 ## TV Picture Settings (LG C5 OLED)
 
@@ -158,4 +158,8 @@ Applied via `scripts/setup-adb.sh`:
 - **ResolveURL not visible in addon list:** Check under My add-ons → All, or Program add-ons, or Dependencies
 - **Sync playback to display causes audio drift:** Turn it OFF — use Adjust display refresh rate instead
 - **advancedsettings.xml cache settings ignored:** Kodi 21 Omega moved cache to GUI. Use Settings → Services → Caching.
-- **FLauncher package name:** Stock Ugoos launcher is `com.uapplication.launcher` (NOT `com.ugoos.launcher`)
+- **FLauncher package name:** Stock Ugoos launcher is `com.uapplication.launcher` (NOT `com.ugoos.launcher`). FLauncher package is `me.efesser.flauncher`.
+- **FLauncher Play Store incompatible:** Play Store shows "Your device isn't compatible" on AOSP Android 14. Sideload via device browser from `apkpure.com/flauncher/me.efesser.flauncher` instead.
+- **FLauncher wallpapers:** Built-in wallpaper picker may not work on AOSP. Download images through Chrome on the device, then pick from FLauncher's wallpaper settings.
+- **FLauncher app visibility:** Only apps with Android TV leanback intent appear in the TV Applications row. Phone/tablet app versions (e.g., `com.google.android.youtube`) only show in Non-TV Applications. Install Android TV versions of apps for them to appear in the TV row.
+- **ADB media scanner unreliable on AOSP:** Pushing images via ADB and running `MEDIA_SCANNER_SCAN_FILE` broadcast doesn't reliably index files on this AOSP build. Download files through Chrome on the device instead.
