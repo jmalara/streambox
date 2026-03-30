@@ -32,8 +32,8 @@ for arg in "$@"; do
       echo "Usage: $0 [--skip-system-tweaks] [--skip-kodi-config] [--dry-run]"
       echo ""
       echo "Options:"
-      echo "  --skip-system-tweaks  Skip Android animation and WiFi tweaks"
-      echo "  --skip-kodi-config    Skip advancedsettings.xml and ResolveURL priority"
+      echo "  --skip-system-tweaks  Skip Android system tweaks (animations, DNS, telemetry)"
+      echo "  --skip-kodi-config    Skip advancedsettings.xml, ResolveURL priority, and autoexec"
       echo "  --dry-run             Show commands without executing"
       exit 0
       ;;
@@ -133,6 +133,22 @@ XMLEOF\""
         fi
       fi
     fi
+
+    # Deploy autoexec.py — auto-opens The Crew on Kodi startup
+    echo ""
+    echo "Setting up auto-open The Crew on Kodi startup..."
+    run "adb shell 'cat > $USERDATA_DIR/autoexec.py << EOF
+import xbmc
+xbmc.executebuiltin(\"ActivateWindow(Videos,plugin://plugin.video.thecrew/)\")
+EOF'"
+
+    if ! $DRY_RUN; then
+      if adb shell "test -f $USERDATA_DIR/autoexec.py" 2>/dev/null; then
+        echo "  ✓ autoexec.py deployed — Kodi will open The Crew on startup"
+      else
+        echo "  ✗ Failed to create autoexec.py"
+      fi
+    fi
   fi
 
   echo ""
@@ -143,16 +159,52 @@ fi
 if ! $SKIP_SYSTEM; then
   echo "=== System Tweaks ==="
 
-  echo "Reducing UI animations..."
-  run 'adb shell "settings put global window_animation_scale 0.5"'
-  run 'adb shell "settings put global transition_animation_scale 0.5"'
-  run 'adb shell "settings put global animator_duration_scale 0.5"'
-  echo "  ✓ Animations set to 0.5x"
+  echo "Disabling UI animations (instant menus)..."
+  run 'adb shell "settings put global window_animation_scale 0"'
+  run 'adb shell "settings put global transition_animation_scale 0"'
+  run 'adb shell "settings put global animator_duration_scale 0"'
+  echo "  ✓ Animations disabled"
 
   echo ""
   echo "Setting WiFi to stay alive during sleep..."
   run 'adb shell "settings put global wifi_sleep_policy 2"'
   echo "  ✓ WiFi sleep policy set to never"
+
+  echo ""
+  echo "Setting Cloudflare DNS-over-TLS..."
+  run 'adb shell "settings put global private_dns_mode hostname"'
+  run 'adb shell "settings put global private_dns_specifier 1dot1dot1dot1.cloudflare-dns.com"'
+  echo "  ✓ DNS set to Cloudflare (1.1.1.1) with TLS"
+
+  echo ""
+  echo "Disabling telemetry and diagnostic reporting..."
+  run 'adb shell "settings put global send_action_app_error 0"'
+  run 'adb shell "settings put global netstats_enabled 0"'
+  run 'adb shell "settings put global app_standby_enabled 0"'
+  echo "  ✓ Telemetry disabled"
+
+  echo ""
+  echo "Disabling popup notifications during video..."
+  run 'adb shell "settings put global heads_up_notifications_enabled 0"'
+  echo "  ✓ Heads-up notifications disabled"
+
+  echo ""
+  echo "Disabling Android HDR tone mapping (let the TV handle it)..."
+  run 'adb shell "settings put global hdr_conversion_mode 0"'
+  echo "  ✓ HDR passthrough enabled"
+
+  echo ""
+  echo "Applying network streaming optimizations..."
+  run 'adb shell "sysctl -w net.ipv4.tcp_slow_start_after_idle=0"' 2>/dev/null || true
+  run 'adb shell "sysctl -w net.core.rmem_max=2097152"' 2>/dev/null || true
+  run 'adb shell "sysctl -w net.core.wmem_max=2097152"' 2>/dev/null || true
+  echo "  ✓ TCP optimizations applied (note: these don't persist across reboots)"
+
+  echo ""
+  echo "Disabling bloatware..."
+  run 'adb shell "pm disable-user --user 0 com.android.printspooler"' 2>/dev/null || true
+  run 'adb shell "pm disable-user --user 0 com.ugoos.ugoosfirstrun"' 2>/dev/null || true
+  echo "  ✓ Print service and first-run wizard disabled"
 
   echo ""
 fi
@@ -166,4 +218,5 @@ echo "  1. Restart Kodi for config changes to take effect"
 echo "  2. If you haven't already, install The Crew and Mad Titan Sports through the Kodi UI"
 echo "  3. Authorize Real Debrid in The Crew → Tools → RESOLVEURL: Settings"
 echo "  4. Check for Ugoos firmware updates (Settings → OTA Update)"
+echo "  5. Install FLauncher from the Play Store and set it as default launcher"
 echo ""

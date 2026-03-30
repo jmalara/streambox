@@ -170,6 +170,47 @@ Check for Ugoos firmware updates: **Ugoos Settings → OTA Update**. Version **2
 
 ---
 
+## Kodi Playback Settings
+
+Go to **Settings → Player → Videos** and change the settings level to **Expert** (click the gear icon in the bottom left until it says Expert).
+
+- **Adjust display refresh rate** → On start / stop
+- **Sync playback to display** → Off
+- **Allow hardware acceleration - MediaCodec** → On
+- **Allow hardware acceleration - MediaCodec (Surface)** → On
+
+MediaCodec (Surface) is the critical one — it enables 4K output, HDR passthrough, and Dolby Vision. Without it, Kodi falls back to software decoding and you lose HDR entirely. The S905X5 hardware decodes HEVC, AV1, H.266, VP9, and H.264 at zero CPU cost through this setting.
+
+---
+
+## TV Picture Settings (for Best HDR/Dolby Vision)
+
+These settings apply to the HDMI input your Ugoos is plugged into. Adjust them on your TV.
+
+**Critical settings:**
+
+- **HDMI Deep Colour** (or HDMI Ultra HD Deep Color) → **On** — without this, the TV caps the signal at 8-bit and blocks all HDR/DV
+- **Picture Mode** → **Filmmaker Mode** (most accurate) or **Cinema**
+- **Dynamic Tone Mapping** → **On** — maps HDR metadata to your panel's actual peak brightness
+
+**For OLED TVs — maximize HDR brightness:**
+
+- **OLED Pixel Brightness** → **100** for HDR content
+- **AI Brightness** → **Off** (prevents the panel from dimming based on room lighting)
+- **Energy Saving** → **Off** (same issue — limits peak brightness)
+
+**Disable all processing:**
+
+- **TruMotion / Motion Smoothing** → **Off** (eliminates soap opera effect on movies)
+- **Super Resolution** → **Off**
+- **Noise Reduction** → **Off**
+- **MPEG Noise Reduction** → **Off**
+- **Sharpness** → **0**
+
+These processing features add latency and artifacts. Your content quality comes from the source file (Remux > WEB-DL > BRRip), not TV upscaling.
+
+---
+
 ## Audio Sync Troubleshooting
 
 ### Delay is constant from the start
@@ -246,14 +287,14 @@ Sets Real Debrid to resolve before free sources:
 adb shell "sed -i 's/RealDebridResolver_priority\">100/RealDebridResolver_priority\">90/' /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/userdata/addon_data/script.module.resolveurl/settings.xml"
 ```
 
-### Reduce UI Animations
+### Disable UI Animations
 
-Makes the interface feel snappier:
+Makes every menu and app switch instant — zero delay:
 
 ```bash
-adb shell "settings put global window_animation_scale 0.5"
-adb shell "settings put global transition_animation_scale 0.5"
-adb shell "settings put global animator_duration_scale 0.5"
+adb shell settings put global window_animation_scale 0
+adb shell settings put global transition_animation_scale 0
+adb shell settings put global animator_duration_scale 0
 ```
 
 ### Keep WiFi Alive During Sleep
@@ -261,8 +302,65 @@ adb shell "settings put global animator_duration_scale 0.5"
 Prevents streams from dropping:
 
 ```bash
-adb shell "settings put global wifi_sleep_policy 2"
+adb shell settings put global wifi_sleep_policy 2
 ```
+
+### Set Cloudflare DNS (Faster + Private)
+
+Uses DNS-over-TLS with Cloudflare instead of your ISP's DNS. Faster lookups and no DNS logging:
+
+```bash
+adb shell settings put global private_dns_mode hostname
+adb shell settings put global private_dns_specifier "1dot1dot1dot1.cloudflare-dns.com"
+```
+
+### Disable Telemetry and Notifications
+
+Stops diagnostic data collection and prevents popup notifications from interrupting video playback:
+
+```bash
+adb shell settings put global send_action_app_error 0
+adb shell settings put global netstats_enabled 0
+adb shell settings put global heads_up_notifications_enabled 0
+adb shell settings put global app_standby_enabled 0
+```
+
+### Prevent Android HDR Tone Mapping
+
+Forces HDR content to pass through to your TV without Android processing it. Let your TV handle tone mapping — it does it better:
+
+```bash
+adb shell settings put global hdr_conversion_mode 0
+```
+
+### Network Streaming Optimization
+
+Disables TCP slow start after idle connections and increases buffer sizes for smoother 4K streaming:
+
+```bash
+adb root
+adb shell sysctl -w net.ipv4.tcp_slow_start_after_idle=0
+adb shell sysctl -w net.core.rmem_max=2097152
+adb shell sysctl -w net.core.wmem_max=2097152
+```
+
+> **Note:** These sysctl tweaks don't persist across reboots. Re-run them after a restart, or create a boot script at `/data/local/tmp/network_tweaks.sh` and run it manually.
+
+### Auto-Open The Crew on Kodi Startup
+
+Makes Kodi launch straight into The Crew's main menu:
+
+```bash
+adb root
+adb shell 'cat > /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/userdata/autoexec.py << EOF
+import xbmc
+xbmc.executebuiltin("ActivateWindow(Videos,plugin://plugin.video.thecrew/)")
+EOF'
+```
+
+To undo: `adb shell rm /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/userdata/autoexec.py`
+
+She can still press Back on the remote to get to the Kodi home screen — it just defaults to The Crew on launch.
 
 ### Or Run It All at Once
 
@@ -384,14 +482,15 @@ If you're switching from an Apple TV 4K, here's how to make the Ugoos feel like 
 The stock Ugoos home screen is cluttered. **FLauncher** is a free, open-source launcher that gives you a clean grid of apps — similar to Apple TV's layout.
 
 1. Open the **Play Store** on the Ugoos and install **FLauncher**
+   - Or via ADB: `adb shell am start -a android.intent.action.VIEW -d "market://details?id=me.efesser.flauncher"`
 2. Go to Ugoos **Settings → Apps → Default apps → Home app** → select **FLauncher**
 3. If that menu doesn't exist on your firmware, use ADB instead:
    ```bash
-   adb shell pm disable-user --user 0 com.ugoos.launcher
+   adb shell pm disable-user --user 0 com.uapplication.launcher
    ```
    Next time you press Home, Android will ask you to pick a launcher — select FLauncher.
 
-To undo later: `adb shell pm enable com.ugoos.launcher`
+To undo later: `adb shell pm enable com.uapplication.launcher`
 
 ### Organize the Home Screen
 
@@ -432,6 +531,34 @@ Good news: HDMI-CEC works out of the box on the Ugoos. Your TV remote (LG Magic 
 
 ---
 
+## Understanding Stream Quality
+
+When browsing sources in The Crew, you'll see filenames with quality tags. Here's what they mean, from best to worst:
+
+**REMUX** — full Blu-ray rip with no re-encoding. Lossless video and audio. 40-80GB for 4K, 20-40GB for 1080p. The best quality possible.
+
+**WEB-DL** — pulled directly from a streaming service (Netflix, Amazon) without re-encoding. Slightly compressed vs Remux but visually near-identical. 10-20GB for 4K.
+
+**BDRip / BRRip** — re-encoded from a Blu-ray. Smaller file size, slight quality loss. 2-8GB. Fine for casual watching.
+
+**WEBRip** — screen-captured from a streaming service. Slightly worse than WEB-DL.
+
+**HDRip / HDTV** — lower quality. Avoid if Real Debrid links are available.
+
+**CAM / TS / TC** — filmed in a theater. Never watch these.
+
+**Tags to look for:**
+
+- **2160p** = 4K, **1080p** = Full HD
+- **HDR10** or **DV** (Dolby Vision) = HDR content, looks great on OLED
+- **Atmos** or **DTS-HD MA** or **TrueHD** = lossless surround audio
+- **x265/HEVC** = efficient codec, smaller files at same quality vs x264
+- **[RD]** = Real Debrid cached link, fast and reliable
+
+When browsing results, bigger file size generally means better quality. A 60GB 4K Remux with Atmos will look and sound noticeably better than a 4GB 1080p BRRip.
+
+---
+
 ## Quick Reference
 
 | What | Where |
@@ -440,5 +567,9 @@ Good news: HDMI-CEC works out of the box on the Ugoos. Your TV remote (LG Magic 
 | Mad Titan Sports | Add-ons → Video add-ons → Mad Titan Sports |
 | Real Debrid auth | The Crew → Tools → RESOLVEURL: Settings → Universal Resolvers 2 → Real-Debrid |
 | Display refresh rate | Settings → Player → Videos → On start/stop |
+| Hardware acceleration | Settings → Player → Videos → MediaCodec (Surface) → On |
 | Ugoos display | Ugoos Settings → Display → YCbCr 4:2:2 12-bit |
+| Ugoos HDR / DV | Ugoos Settings → Display → HDR On, Dolby Vision On |
+| TV HDMI Deep Colour | TV Settings → HDMI → Deep Colour → On |
+| FLauncher | Play Store → FLauncher (set as default in Settings → Apps) |
 | Firmware update | Ugoos Settings → OTA Update |
