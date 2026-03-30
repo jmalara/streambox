@@ -411,19 +411,46 @@ adb shell sysctl -w net.core.wmem_max=2097152
 
 ### Auto-Open The Crew on Kodi Startup
 
-Makes Kodi launch straight into The Crew's main menu:
+Makes Kodi launch straight into The Crew's main menu. This uses a Kodi service addon (more reliable than autoexec.py on Android):
 
 ```bash
 adb root
-adb shell 'cat > /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/userdata/autoexec.py << EOF
-import xbmc
-xbmc.executebuiltin("ActivateWindow(Videos,plugin://plugin.video.thecrew/)")
+
+# Create the service addon folder
+adb shell "mkdir -p /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/addons/service.autostart.thecrew"
+
+# Create addon.xml
+adb shell 'cat > /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/addons/service.autostart.thecrew/addon.xml << EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="service.autostart.thecrew" name="AutoStart The Crew" version="1.0.0" provider-name="custom">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.service" library="service.py" start="login"/>
+  <extension point="xbmc.addon.metadata">
+    <summary>Auto-opens The Crew on Kodi startup</summary>
+    <platform>all</platform>
+  </extension>
+</addon>
 EOF'
+
+# Create the service script
+adb shell 'cat > /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/addons/service.autostart.thecrew/service.py << EOF
+import xbmc
+xbmc.executebuiltin("RunAddon(plugin.video.thecrew)")
+EOF'
+
+# Fix permissions
+adb shell "chmod -R 644 /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/addons/service.autostart.thecrew"
+adb shell "chmod 755 /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/addons/service.autostart.thecrew"
+adb shell "chown -R media_rw:media_rw /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/addons/service.autostart.thecrew"
 ```
 
-To undo: `adb shell rm /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/userdata/autoexec.py`
+After deploying, open Kodi → **Add-ons → My add-ons → Services** → enable **AutoStart The Crew**. Restart Kodi to confirm it opens The Crew automatically.
 
-She can still press Back on the remote to get to the Kodi home screen — it just defaults to The Crew on launch.
+To undo: delete the addon folder via ADB or uninstall it from Kodi's addon manager.
+
+Press Back on the remote to get to the Kodi home screen — it just defaults to The Crew on launch.
 
 ### Or Run It All at Once
 
