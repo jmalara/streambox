@@ -571,10 +571,28 @@ If you're switching from an Apple TV 4K, here's how to make the Ugoos feel like 
 
 The stock Ugoos home screen is cluttered. **FLauncher** is a free, open-source launcher that gives you a clean grid of apps — similar to Apple TV's layout.
 
-1. Open the **Play Store** on the Ugoos and install **FLauncher**
-   - Or via ADB: `adb shell am start -a android.intent.action.VIEW -d "market://details?id=me.efesser.flauncher"`
-2. Go to Ugoos **Settings → Apps → Default apps → Home app** → select **FLauncher**
-3. If that menu doesn't exist on your firmware, use ADB instead:
+> **Important:** The Play Store shows FLauncher as "incompatible" on AOSP Android 14 devices. You must sideload it via the device browser or ADB.
+
+**Install via the device browser (easiest):**
+
+1. Open **Chrome** on the Ugoos
+2. Go to `apkpure.com/flauncher/me.efesser.flauncher`
+3. Tap **Download APK** and install it
+4. If Android blocks the install, allow "Unknown Sources" for Chrome when prompted
+
+**Or install via ADB:**
+
+```bash
+# Download on your Mac
+curl -L -o ~/Downloads/flauncher.apk "https://apkpure.com/flauncher/me.efesser.flauncher/download"
+# If curl gets an HTML page instead of the APK, download manually from the APKPure site
+adb install ~/Downloads/flauncher.apk
+```
+
+**Set FLauncher as default:**
+
+1. Go to Ugoos **Settings → Apps → Default apps → Home app** → select **FLauncher**
+2. If that menu doesn't exist on your firmware, use ADB instead:
    ```bash
    adb shell pm disable-user --user 0 com.uapplication.launcher
    ```
@@ -582,15 +600,36 @@ The stock Ugoos home screen is cluttered. **FLauncher** is a free, open-source l
 
 To undo later: `adb shell pm enable com.uapplication.launcher`
 
+### Set a Wallpaper
+
+FLauncher's built-in wallpaper picker may not work on AOSP Android 14. The workaround is to download an image through Chrome on the device:
+
+1. Open **Chrome** on the Ugoos and browse to any wallpaper site (e.g., `unsplash.com/s/photos/dark-abstract`)
+2. Long press an image → **Download image**
+3. Go back to FLauncher home screen → long press the background → **Wallpaper** → **Pick a photo**
+4. Select the image from Chrome's Downloads folder
+
+> **Note:** Pushing images via ADB and running media scanner doesn't work reliably on this AOSP build. Always download through Chrome on the device.
+
 ### Organize the Home Screen
 
-In FLauncher, long-press any app to move it between rows or hide it. Set it up like this:
+FLauncher auto-populates apps into two rows: **TV Applications** (apps with Android TV leanback intent) and **Non-TV Applications** (everything else). To manage apps:
 
-- **Row 1:** Netflix, YouTube, Disney+, Hulu, HBO Max
-- **Row 2:** Kodi, SmartTube
-- **Row 3:** Spotify, anything else you use
+1. Tap the **gear icon** (top right) to open FLauncher settings
+2. Select a category (TV Applications or Non-TV Applications)
+3. Use the three tabs: TV icon (TV apps), Android icon (non-TV apps), eye-slash icon (hidden apps)
+4. Tap the **[+]** button next to an app to add it to the home screen row
+5. Long press any app tile on the home screen to move or remove it
 
-Hide everything your household doesn't need (Settings, ResolveURL, file managers, etc.). The fewer apps visible, the easier it is for everyone.
+> **Note:** Only apps with an Android TV "leanback" intent appear in the TV Applications row. Phone/tablet versions of apps (like regular YouTube) only appear in Non-TV Applications. Install the **Android TV version** of apps (e.g., YouTube for Android TV) for them to show in the TV row.
+
+Suggested layout:
+
+- **Row 1 (TV Apps):** Kodi, Netflix, YouTube (Android TV version), Disney+, HBO Max
+- **Row 2 (Non-TV Apps):** Chrome, Settings
+- **Hide everything else:** Clock, Files, Gallery, File Browser, Total Commander, etc.
+
+The fewer apps visible, the easier it is for everyone.
 
 ### Remote Control
 
@@ -661,5 +700,5 @@ When browsing results, bigger file size generally means better quality. A 60GB 4
 | Ugoos display | Ugoos Settings → Display → YCbCr 4:2:2 12-bit |
 | Ugoos HDR / DV | Ugoos Settings → Display → HDR On, Dolby Vision On |
 | TV HDMI Deep Colour | TV Settings → HDMI → Deep Colour → On |
-| FLauncher | Play Store → FLauncher (set as default in Settings → Apps) |
+| FLauncher | Sideload APK from APKPure (Play Store incompatible on AOSP) |
 | Firmware update | Ugoos Settings → OTA Update |

@@ -124,17 +124,30 @@ For the HDMI input the Ugoos is connected to:
 
 ### Phase 11: FLauncher (Optional)
 
-Install FLauncher from Play Store or via ADB:
+> **Important:** The Play Store shows FLauncher as "incompatible" on AOSP Android 14. Must sideload.
+
+**Install via device browser (recommended):**
+Walk the user through opening Chrome on the Ugoos, navigating to `apkpure.com/flauncher/me.efesser.flauncher`, and downloading/installing the APK.
+
+**Install via ADB (if APK already downloaded on Mac):**
 ```bash
-adb shell am start -a android.intent.action.VIEW -d "market://details?id=me.efesser.flauncher"
+adb install ~/Downloads/flauncher.apk
 ```
 
-Set as default launcher:
+**Set as default launcher:**
 ```bash
 adb shell pm disable-user --user 0 com.uapplication.launcher
 ```
 
-Organize home screen: Row 1 streaming apps, Row 2 Kodi/SmartTube, Row 3 everything else. Hide unnecessary apps.
+**Wallpaper setup:**
+FLauncher's built-in wallpaper picker may not work on AOSP. Instruct the user to download a wallpaper through Chrome on the device, then pick it in FLauncher (long press background → Wallpaper → Pick a photo → select from Downloads).
+
+> **Note:** ADB push + media scanner broadcast does NOT reliably index files on this AOSP build. Always use Chrome on the device for downloads.
+
+**Home screen organization:**
+FLauncher auto-populates apps into TV Applications (leanback) and Non-TV Applications rows. Use the gear icon (top right) to manage categories. Only Android TV versions of apps appear in the TV row — phone/tablet versions go to Non-TV.
+
+Suggested layout: Row 1 streaming apps (Kodi, Netflix, YouTube TV version), Row 2 other (Chrome, Settings). Hide everything else via FLauncher settings → category → eye-slash tab.
 
 ### Phase 12: ADB Optimizations (only if ADB is available)
 
@@ -230,7 +243,7 @@ adb shell pm disable-user --user 0 com.ugoos.ugoosfirstrun
 - Confirm Mad Titan Sports opens and shows sport categories
 - Search for a popular movie and verify RD cached sources appear in Dialog mode
 - If ADB available, verify advancedsettings.xml: `adb shell "cat <userdata-path>/advancedsettings.xml"`
-- If ADB available, verify autoexec.py: `adb shell "cat <userdata-path>/autoexec.py"`
+- If ADB available, verify autostart addon: `adb shell "cat <kodi-addons-path>/service.autostart.thecrew/service.py"`
 - If ADB available, verify RD priority: `adb shell "grep RealDebridResolver_priority <userdata-path>/addon_data/script.module.resolveurl/settings.xml"`
 
 ## Troubleshooting
@@ -267,7 +280,7 @@ adb shell pm disable-user --user 0 com.ugoos.ugoosfirstrun
 ## Important Notes
 
 - ADB is NOT required for the core setup. Everything can be done through the Kodi and Ugoos UIs.
-- ADB enables advanced optimizations (network config, autoexec, system tweaks) that improve the experience.
+- ADB enables advanced optimizations (network config, autostart service addon, system tweaks) that improve the experience.
 - Always restart Kodi after modifying config files.
 - The AM9 Pro uses AOSP Android 14, not Android TV — sideloading works without restrictions.
 - The Kodi userdata path varies by device. Always find it dynamically using `find / -name 'guisettings.xml'`.
