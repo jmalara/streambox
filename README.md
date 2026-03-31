@@ -544,12 +544,15 @@ adb install ~/Downloads/flauncher.apk
 
 **Set FLauncher as default:**
 
-1. Go to Ugoos **Settings → Apps → Default apps → Home app** → select **FLauncher**
-2. If that menu doesn't exist on your firmware, use ADB instead:
+1. Use ADB to set FLauncher as the home activity directly:
+   ```bash
+   adb shell cmd package set-home-activity me.efesser.flauncher/.MainActivity
+   ```
+2. If that doesn't work, disable the stock launcher instead (forces Android to use FLauncher):
    ```bash
    adb shell pm disable-user --user 0 com.uapplication.launcher
+   adb shell reboot
    ```
-   Next time you press Home, Android will ask you to pick a launcher — select FLauncher.
 
 To undo later: `adb shell pm enable com.uapplication.launcher`
 

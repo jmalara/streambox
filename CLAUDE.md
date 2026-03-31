@@ -34,7 +34,7 @@ The Ugoos AM9 Pro supports ADB over USB and WiFi. When connected via ADB, Claude
 5. **POV autostart** is built-in (Settings → General → Auto Start POV when Kodi Starts)
 6. **Set Real Debrid priority** in POV's My Services settings (priority 0)
 7. **Apply system tweaks** (animations, DNS, telemetry, HDR passthrough, network optimization)
-8. **Swap launcher:** disable `com.uapplication.launcher`, set FLauncher as default
+8. **Swap launcher:** `adb shell cmd package set-home-activity me.efesser.flauncher/.MainActivity` (or disable `com.uapplication.launcher` as fallback)
 9. **TiviMate-only mode:** `./scripts/setup-adb.sh --tivimate-only` (system tweaks only, skip Kodi)
 10. **Check firmware version:** `adb shell "getprop ro.build.display.id"`
 

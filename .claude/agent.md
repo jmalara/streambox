@@ -137,9 +137,15 @@ Walk the user through opening Chrome on the Ugoos, navigating to `apkpure.com/fl
 adb install ~/Downloads/flauncher.apk
 ```
 
-**Set as default launcher:**
+**Set as default launcher (preferred method):**
+```bash
+adb shell cmd package set-home-activity me.efesser.flauncher/.MainActivity
+```
+
+**If that doesn't work, disable the stock launcher instead:**
 ```bash
 adb shell pm disable-user --user 0 com.uapplication.launcher
+adb shell reboot
 ```
 
 **Wallpaper setup:**
