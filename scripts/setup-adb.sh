@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Streambox ADB Setup Script
-# Applies Kodi optimizations and system tweaks to Ugoos AM9 Pro via ADB.
+# Applies system tweaks and optional Kodi config to Ugoos AM9 Pro via ADB.
 #
 # Prerequisites:
 #   - ADB installed (brew install scrcpy includes it)
@@ -10,7 +10,8 @@ set -euo pipefail
 #   - adb root supported (Ugoos AOSP allows this)
 #
 # Usage:
-#   ./scripts/setup-adb.sh
+#   ./scripts/setup-adb.sh                    # Full setup (system tweaks + Kodi config)
+#   ./scripts/setup-adb.sh --tivimate-only    # System tweaks only, skip Kodi (for IPTV-only boxes)
 #   ./scripts/setup-adb.sh --skip-system-tweaks
 #   ./scripts/setup-adb.sh --skip-kodi-config
 #   ./scripts/setup-adb.sh --dry-run
@@ -26,14 +27,15 @@ DRY_RUN=false
 for arg in "$@"; do
   case $arg in
     --skip-system-tweaks) SKIP_SYSTEM=true ;;
-    --skip-kodi-config) SKIP_KODI=true ;;
+    --skip-kodi-config|--tivimate-only) SKIP_KODI=true ;;
     --dry-run) DRY_RUN=true ;;
     --help|-h)
-      echo "Usage: $0 [--skip-system-tweaks] [--skip-kodi-config] [--dry-run]"
+      echo "Usage: $0 [--skip-system-tweaks] [--skip-kodi-config] [--tivimate-only] [--dry-run]"
       echo ""
       echo "Options:"
       echo "  --skip-system-tweaks  Skip Android system tweaks (animations, DNS, telemetry)"
-      echo "  --skip-kodi-config    Skip advancedsettings.xml, ResolveURL priority, and autoexec"
+      echo "  --skip-kodi-config    Skip Kodi advancedsettings.xml deployment"
+      echo "  --tivimate-only       Alias for --skip-kodi-config (for IPTV-only setups)"
       echo "  --dry-run             Show commands without executing"
       exit 0
       ;;
@@ -91,9 +93,9 @@ if ! $SKIP_KODI; then
     USERDATA_DIR=$(dirname "$KODI_USERDATA")
     echo "Found userdata at: $USERDATA_DIR"
 
-    # Deploy advancedsettings.xml
+    # Deploy advancedsettings.xml (network timeouts + GUI rendering only — cache is in Kodi GUI)
     echo ""
-    echo "Deploying advancedsettings.xml..."
+    echo "Deploying advancedsettings.xml (network timeouts + GUI config)..."
     if [ ! -f "$ADVANCEDSETTINGS" ]; then
       echo "ERROR: $ADVANCEDSETTINGS not found"
       exit 1
@@ -113,42 +115,11 @@ XMLEOF\""
       fi
     fi
 
-    # Set Real Debrid priority
     echo ""
-    echo "Setting Real Debrid priority in ResolveURL..."
-    RESOLVEURL_SETTINGS="$USERDATA_DIR/addon_data/script.module.resolveurl/settings.xml"
-
-    if ! $DRY_RUN && ! adb shell "test -f $RESOLVEURL_SETTINGS" 2>/dev/null; then
-      echo "  ResolveURL settings not found. Real Debrid may not be authorized yet."
-      echo "  Authorize Real Debrid in The Crew first, then re-run this script."
-    else
-      run "adb shell \"sed -i 's/RealDebridResolver_priority\\\">100/RealDebridResolver_priority\\\">90/' $RESOLVEURL_SETTINGS\""
-
-      if ! $DRY_RUN; then
-        PRIORITY=$(adb shell "grep RealDebridResolver_priority $RESOLVEURL_SETTINGS" 2>/dev/null | tr -d '\r')
-        if echo "$PRIORITY" | grep -q '90'; then
-          echo "  ✓ Real Debrid priority set to 90"
-        else
-          echo "  ✗ Could not verify priority change. Current: $PRIORITY"
-        fi
-      fi
-    fi
-
-    # Deploy autoexec.py — auto-opens The Crew on Kodi startup
-    echo ""
-    echo "Setting up auto-open The Crew on Kodi startup..."
-    run "adb shell 'cat > $USERDATA_DIR/autoexec.py << EOF
-import xbmc
-xbmc.executebuiltin(\"ActivateWindow(Videos,plugin://plugin.video.thecrew/)\")
-EOF'"
-
-    if ! $DRY_RUN; then
-      if adb shell "test -f $USERDATA_DIR/autoexec.py" 2>/dev/null; then
-        echo "  ✓ autoexec.py deployed — Kodi will open The Crew on startup"
-      else
-        echo "  ✗ Failed to create autoexec.py"
-      fi
-    fi
+    echo "NOTE: Real Debrid and POV autostart are configured through the POV UI, not ADB."
+    echo "  - Real Debrid: POV → Settings → My Services → Real Debrid → Authorize (priority 0)"
+    echo "  - Autostart: POV → Settings → General → Auto Start POV when Kodi Starts → On"
+    echo "  - Cache: Kodi → Settings → Services → Caching (Expert) → 350MB, readfactor 20"
   fi
 
   echo ""
@@ -213,10 +184,27 @@ fi
 
 echo "=== Setup Complete ==="
 echo ""
-echo "Next steps:"
-echo "  1. Restart Kodi for config changes to take effect"
-echo "  2. If you haven't already, install The Crew and Mad Titan Sports through the Kodi UI"
-echo "  3. Authorize Real Debrid in The Crew → Tools → RESOLVEURL: Settings"
-echo "  4. Check for Ugoos firmware updates (Settings → OTA Update)"
-echo "  5. Install FLauncher from the Play Store and set it as default launcher"
+if $SKIP_KODI; then
+  echo "Next steps (TiviMate-only setup):"
+  echo "  1. Sideload TiviMate via Chrome: tivimate.en.uptodown.com/android/download"
+  echo "  2. Add IPTV playlist: TiviMate → Add Playlist → Xtream Codes → enter credentials"
+  echo "  3. Player settings: Tunneled Playback OFF, Audio Passthrough OFF, Buffer Small"
+  echo "  4. Player settings: AFR ON, AFR on VOD OFF, Switch 50/60fps only ON"
+  echo "  5. EPG: Settings → EPG → Update Interval → 4 hours"
+  echo "  6. Clean up: Settings → Playlists → Manage Groups → hide unwanted language groups"
+  echo "  7. Ugoos display: 4K 60Hz, YCbCr 4:2:2 12-bit, AFR on, HDR on, DV on"
+  echo "  8. Check for Ugoos firmware updates (Settings → OTA Update)"
+else
+  echo "Next steps:"
+  echo "  1. Restart Kodi for config changes to take effect"
+  echo "  2. Install POV: Add-ons → Install from zip → kodifitzwell → Install from repo → POV"
+  echo "  3. Authorize Real Debrid: POV → Settings → My Services → Real Debrid → Authorize"
+  echo "  4. Set Real Debrid priority to 0 in POV → Settings → My Services → Real Debrid"
+  echo "  5. Enable external scrapers: POV → Settings → Sources → External Scrapers → On"
+  echo "  6. Enable POV autostart: POV → Settings → General → Auto Start POV → On"
+  echo "  7. Configure Kodi cache: Settings → Services → Caching → 350MB, readfactor 20"
+  echo "  8. Optional: Sideload TiviMate for live sports (tivimate.en.uptodown.com/android/download)"
+  echo "  9. Optional: Install FLauncher from APKPure (Play Store incompatible on AOSP)"
+  echo " 10. Check for Ugoos firmware updates (Settings → OTA Update)"
+fi
 echo ""
