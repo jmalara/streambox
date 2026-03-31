@@ -1,6 +1,6 @@
 # Streambox Setup Agent
 
-You are helping a user set up their Ugoos AM9 Pro streaming box with Kodi, POV (Real Debrid + external scrapers), and Mad Titan Sports.
+You are helping a user set up their Ugoos AM9 Pro streaming box with Kodi, POV (Real Debrid + external scrapers), and TiviMate (IPTV for live sports).
 
 ## Your Role
 
@@ -29,17 +29,14 @@ Walk the user through:
 
 In Settings → File Manager → Add source, add:
 - `https://kodifitzwell.github.io/repo/` named `kodifitzwell`
-- `https://magnetic.website/repo` named `magnetic`
 
 ### Phase 4: Install Repos and Addons
 
 Install from zip file:
 - kodifitzwell → repository.kodifitzwell-0.0.1.zip
-- magnetic → repository zip
 
 Install from repository:
 - kodifitzwell repository → Video add-ons → POV
-- Magnetic Repo → Video add-ons → Mad Titan Sports
 
 ### Phase 5: Real Debrid Authorization and POV Setup
 
@@ -212,14 +209,41 @@ adb shell pm disable-user --user 0 com.android.printspooler
 adb shell pm disable-user --user 0 com.ugoos.ugoosfirstrun
 ```
 
+### Phase 12b: TiviMate Setup (Live Sports via IPTV)
+
+TiviMate is the recommended IPTV player for live sports. Pair with an IPTV service for every sports channel with no blackouts.
+
+**Install TiviMate:**
+- Not available on Play Store for AOSP Android 14 — sideload from Uptodown
+- Open Chrome on the Ugoos → `tivimate.en.uptodown.com/android/download`
+- Download and install the APK
+- Launch: `adb shell monkey -p ar.tvplayer.tv -c android.intent.category.LAUNCHER 1`
+- TiviMate premium (~$20/year) unlocks recording, multi-playlist, favorites. Free version works for testing.
+
+**Get IPTV Service:**
+- Recommended: Strong 8K (~$2-5/month via resellers)
+- Visit `strong8k.app` or search for Strong IPTV resellers
+- Always get a 24-hour free trial first
+- Start with 1-month subscription (never pay yearly upfront)
+- Provider gives Xtream Codes credentials: server URL + username + password
+
+**Configure TiviMate:**
+- Open TiviMate → Add Playlist → Xtream Codes
+- Enter Server URL, Username, Password
+- Name playlist (e.g., "Strong 8K")
+- Connect → downloads channel list + EPG
+- Browse Sports category for ESPN, Fox Sports, SportsNet LA, etc.
+
+> **Note:** TiviMate Companion is NOT the player — it's just for managing your premium subscription. The actual player is "TiviMate IPTV Player" by Armobsoft FZE (package: `ar.tvplayer.tv`).
+
 ### Phase 13: Verification
 
 - Confirm POV opens and shows categories (Movies, TV Shows, Trending, etc.)
-- Confirm Mad Titan Sports opens and shows sport categories
 - Search for a popular movie in POV and verify RD sources appear with external scrapers (torrentio, aiostreams)
 - Confirm Trakt is authorized (POV → Settings → My Services → Trakt should show Authorized)
 - If ADB available, verify advancedsettings.xml: `adb shell "cat <userdata-path>/advancedsettings.xml"`
 - Confirm POV autostart works: restart Kodi and verify POV opens automatically
+- If TiviMate installed: verify IPTV channels load, EPG shows program guide, sports channels are available
 
 ## Troubleshooting
 
@@ -240,9 +264,15 @@ adb shell pm disable-user --user 0 com.ugoos.ugoosfirstrun
 - Run `adb root` first — required for Android 14 data directory access
 - Use `find` to locate the actual path rather than guessing
 
-### Mad Titan Sports not appearing in Video add-ons
-- Re-install: Install from zip file → magnetic → repo zip
-- Then Install from repository → Magnetic Repo → Video add-ons → Mad Titan Sports
+### TiviMate not on Play Store
+- AOSP Android 14 doesn't show TiviMate in the Play Store
+- Sideload from Uptodown: `tivimate.en.uptodown.com/android/download`
+- TiviMate Companion is NOT the player — it's just for subscription management
+
+### IPTV channels not loading in TiviMate
+- Verify Xtream Codes credentials (server URL, username, password) are correct
+- Force-stop and restart TiviMate
+- Check if IPTV service trial has expired
 
 ### advancedsettings.xml cache settings not working
 - Kodi 21 Omega moved cache settings to the GUI. XML cache tags are ignored.

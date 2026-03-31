@@ -1,12 +1,13 @@
 # Streambox — Claude Code Project Instructions
 
-This repo contains setup instructions and configuration files for a Ugoos AM9 Pro streaming box running Kodi with POV (Real Debrid) and Mad Titan Sports addons.
+This repo contains setup instructions and configuration files for a Ugoos AM9 Pro streaming box running Kodi with POV (Real Debrid) and TiviMate (IPTV for live sports).
 
 ## Project Context
 
 - **Device:** Ugoos AM9 Pro (Amlogic S905X5-J, Android 14 AOSP, 4GB RAM, 64GB storage)
 - **Media Player:** Kodi 21.x Omega (ARMV8A 64-bit)
-- **Primary Addons:** POV (movies/TV via Real Debrid + external scrapers), Mad Titan Sports (live sports)
+- **Primary Addons:** POV (movies/TV via Real Debrid + external scrapers)
+- **Live Sports:** TiviMate (ar.tvplayer.tv) with IPTV service (Strong 8K recommended, ~$2-5/month via resellers)
 - **Real Debrid:** Premium link aggregator — authorized directly in POV's My Services settings
 - **Trakt:** Watch history and progress tracking — authorized in POV's My Services settings
 - **Target Display:** LG C5 OLED (Dolby Vision, HDR10, eARC)
@@ -85,12 +86,46 @@ POV → Settings → SETTINGS: POV → Sources:
 - Enabled sources: piratebay, torrentio, aiostreams (comet/mediafusion), torrentsdb, zilean
 - Disabled: bitmagnet, dmm, nyaa, torrentdownload, meteor, stremthru torz
 
+## TiviMate Setup (Live Sports via IPTV)
+
+- **Package:** `ar.tvplayer.tv`
+- **APK:** Sideload from Uptodown (`tivimate.en.uptodown.com/android/download`) — not available on Play Store for AOSP
+- **Launch:** `adb shell monkey -p ar.tvplayer.tv -c android.intent.category.LAUNCHER 1`
+- **Premium:** ~$20/year — unlocks recording, multi-playlist, favorites management
+- **IPTV Service:** Strong 8K recommended (~$2-5/month via resellers, trial available)
+
+### TiviMate Configuration
+
+1. Open TiviMate → Add Playlist → Xtream Codes
+2. Enter Server URL, Username, Password from IPTV provider
+3. Name the playlist (e.g., "Strong 8K")
+4. Connect → downloads channel list + EPG automatically
+5. Browse Sports category for ESPN, Fox Sports, SportsNet LA, etc.
+
+### Why IPTV Instead of Kodi Sports Addons
+
+Free Kodi sports addons (Mad Titan Sports, The Loop, SportHD, Winner 2) are almost all abandoned as of 2026. IPTV services provide maintained infrastructure, reliable streams, EPG, and every sports channel for ~$2-15/month. No blackouts on regional sports networks.
+
+### TiviMate Player Settings
+
+- **Buffer Size** → Small (fast channel switching; bump to Medium if stuttering)
+- **Audio Passthrough** → Off (causes decoder errors on some IPTV streams)
+- **Tunneled Playback** → Off (causes DecoderInitializationException on S905X5 with IPTV streams)
+- **AFR (Auto Frame Rate)** → On
+- **AFR on VOD** → Off (unnecessary flicker, movies handled by Kodi)
+- **Switch 50/60fps only** → On (only switches for sports broadcasts, avoids flicker on other content)
+
+### IPTV Quality Notes
+
+- Live sports channels: 720p-1080p at source (ESPN = 720p, Fox Sports = 1080p)
+- "8K/4K" branding on IPTV services applies to VOD content, not live sports
+- Needs 50+ Mbps bandwidth (AM9 Pro's WiFi 6 at 850+ Mbps is more than enough)
+
 ## Addon Repository Sources
 
 | Addon | Repo URL | Repo Name |
 |-------|----------|-----------|
 | POV | `https://kodifitzwell.github.io/repo/` | `kodifitzwell` |
-| Mad Titan Sports | `https://magnetic.website/repo` | `magnetic` |
 
 ## POV Optimal Settings
 
@@ -175,3 +210,10 @@ Applied via `scripts/setup-adb.sh`:
 - **FLauncher wallpapers:** Built-in wallpaper picker may not work on AOSP. Download images through Chrome on the device, then pick from FLauncher's wallpaper settings.
 - **FLauncher app visibility:** Only apps with Android TV leanback intent appear in the TV Applications row. Phone/tablet app versions (e.g., `com.google.android.youtube`) only show in Non-TV Applications. Install Android TV versions of apps for them to appear in the TV row.
 - **ADB media scanner unreliable on AOSP:** Pushing images via ADB and running `MEDIA_SCANNER_SCAN_FILE` broadcast doesn't reliably index files on this AOSP build. Download files through Chrome on the device instead.
+- **TiviMate not on Play Store:** AOSP Android 14 doesn't have TiviMate in the Play Store. Sideload from Uptodown: `tivimate.en.uptodown.com/android/download`.
+- **TiviMate package name:** Package is `ar.tvplayer.tv`. TiviMate Companion is a separate app for subscription management only — NOT the player.
+- **IPTV channels not loading:** Verify Xtream Codes credentials (server URL, username, password) are correct. Try force-stopping and restarting TiviMate.
+- **Live sports quality:** ESPN streams at 720p, Fox Sports at 1080p — this is the source broadcast quality, not an IPTV limitation. "8K/4K" IPTV branding refers to VOD content.
+- **TiviMate DecoderInitializationException:** Turn off Tunneled Playback and Audio Passthrough in Settings → Player. The S905X5 doesn't handle tunneled playback well with IPTV streams.
+- **TiviMate EPG empty/no program data:** Check Settings → Playlists → playlist → EPG URL is populated. Force refresh via Settings → EPG → Update EPG. Some IPTV providers need a separate EPG URL — contact provider support.
+- **TiviMate Companion vs TiviMate:** Companion is only for managing your premium subscription/account. The actual player is "TiviMate IPTV Player" (ar.tvplayer.tv).

@@ -1,13 +1,13 @@
 # Streambox Setup Guide
 
-Complete setup guide for the **Ugoos AM9 Pro** running Kodi with POV (Real Debrid) and Mad Titan Sports.
+Complete setup guide for the **Ugoos AM9 Pro** running Kodi with POV (Real Debrid) and TiviMate (IPTV for live sports).
 
 ---
 
 ## What You'll End Up With
 
 - **POV** — fast, clean addon for movies and TV shows with external scrapers (Torrentio, MediaFusion) and Trakt integration
-- **Mad Titan Sports** — dedicated live sports addon (NFL, NBA, MLB, NHL, soccer, motorsports)
+- **TiviMate + IPTV** — cable-TV-like experience for live sports (NFL, NBA, MLB, NHL, soccer) with EPG, no blackouts
 - **Real Debrid** — premium link service that gives you fast, reliable 4K/1080p streams (~$3/month)
 - **Trakt** — free service that tracks your watch history and progress across all addons and devices
 - **Optimized buffering** — no audio drift or buffering on long streams
@@ -71,9 +71,6 @@ This lets Kodi install third-party addons.
 | URL | Name |
 |-----|------|
 | `https://kodifitzwell.github.io/repo/` | `kodifitzwell` |
-| `https://magnetic.website/repo` | `magnetic` |
-
-Add both sources while you're here to save time.
 
 ---
 
@@ -84,8 +81,6 @@ Add both sources while you're here to save time.
 3. Click the **open box icon** (top left — package installer)
 4. Click **Install from zip file**
 5. Click **kodifitzwell** → select the `repository.kodifitzwell-0.0.1.zip` file → wait for "installed" notification
-6. Click **Install from zip file** again
-7. Click **magnetic** → select the repository zip file → wait for "installed" notification
 
 ---
 
@@ -96,11 +91,8 @@ Still in the addon package manager:
 1. Click **Install from repository**
 2. **kodifitzwell repository** → Video add-ons → **POV** → Install (accept all dependencies)
 3. Wait for "installed" notification
-4. Go back to **Install from repository**
-5. **Magnetic Repo** → Video add-ons → **Mad Titan Sports** → Install
-6. Wait for "installed" notification
 
-Your addons are now at: Kodi home → Add-ons → Video add-ons
+Your addon is now at: Kodi home → Add-ons → Video add-ons
 
 ---
 
@@ -454,15 +446,11 @@ The AM9 Pro runs Android 14 AOSP, so you can install any Android media player. H
 
 ### Kodi (recommended — what this guide uses)
 
-Best for: streaming via addons (POV, Mad Titan Sports), Real Debrid integration, and full customization. Kodi is the hub that ties everything together — addons scrape sources, Real Debrid resolves the links, and Kodi plays them. It handles 4K HDR, Dolby Vision, and surround audio. The downside is it takes some setup (which is what this guide is for).
+Best for: streaming via addons (POV + Real Debrid) and full customization. Kodi is the hub that ties everything together — addons scrape sources, Real Debrid resolves the links, and Kodi plays them. It handles 4K HDR, Dolby Vision, and surround audio. Best buffering of any player (350MB configurable cache). The downside is it takes some setup (which is what this guide is for).
 
-### Stremio
+### TiviMate (recommended for live sports)
 
-Best for: people who want something simpler than Kodi for movies and TV. Stremio has a cleaner, Netflix-like UI and supports Real Debrid through community addons (like Torrentio). Setup takes about 5 minutes vs an hour for Kodi. Install it from the Play Store or sideload the APK. The main limitation is live sports — Stremio has almost no sports coverage compared to Kodi's Mad Titan Sports. If you only watch movies and TV, Stremio is the easier path. If you want sports too, you need Kodi. You can run both on the AM9 Pro.
-
-### TiviMate
-
-Best for: IPTV. If you have an IPTV subscription with an M3U playlist, TiviMate is the gold standard for live TV on Android boxes. It has an EPG (electronic program guide), catch-up TV, and recording. Kodi can do IPTV too, but TiviMate's interface is purpose-built for it.
+Best for: live sports and live TV via IPTV. TiviMate is the gold standard IPTV player for Android boxes. It has an EPG (electronic program guide), catch-up TV, recording, favorites, and multi-playlist support. Pair it with an IPTV service like Strong 8K (~$2-5/month) and you get every sports channel (ESPN, Fox Sports, regional sports networks like SportsNet LA) with no blackouts. This is the best way to watch live sports on the Ugoos — far more reliable than free Kodi sports addons which are constantly dying. See the TiviMate Setup section below for full instructions.
 
 ### SmartTube
 
@@ -478,7 +466,7 @@ Best for: local file playback with hardware acceleration. Similar to VLC but som
 
 ### What we recommend
 
-Use **Kodi** as your main streaming hub (POV + Mad Titan Sports + Real Debrid + Trakt). Add **SmartTube** for YouTube. Add **TiviMate** if you have an IPTV subscription. That covers everything.
+Use **Kodi + POV** as your main streaming hub for movies and TV (Real Debrid + Trakt). Add **TiviMate + IPTV** for live sports (no blackouts, every channel). Add **SmartTube** for ad-free YouTube. That covers everything.
 
 ---
 
@@ -615,11 +603,74 @@ Good news: HDMI-CEC works out of the box on the Ugoos. Your TV remote (LG Magic 
 ### What You Gain
 
 - POV with Real Debrid — free 4K movies and TV with Trakt integration
-- Mad Titan Sports — free live sports
-- Stremio — simpler Netflix-like interface for movies/TV (install alongside Kodi)
+- TiviMate + IPTV — live sports with EPG, no blackouts (~$2-5/month)
 - SmartTube — ad-free YouTube
 - Sideloading any Android app
 - Full customization (launchers, skins, settings)
+
+---
+
+## TiviMate Setup (Live Sports via IPTV)
+
+TiviMate turns your Ugoos into a cable TV replacement for live sports. Pair it with an IPTV service and you get every sports channel (ESPN, Fox Sports, SportsNet LA, Sky Sports, beIN, regional networks) with no blackouts, plus an EPG (electronic program guide) so you can browse what's on.
+
+### Why IPTV Instead of Kodi Sports Addons?
+
+Free Kodi sports addons (Mad Titan Sports, The Loop, SportHD, Winner 2) are almost all abandoned or dying as of 2026. They depend on volunteer devs maintaining scrapers for streams that constantly move — it's fundamentally fragile. A paid IPTV service (~$2-15/month) gives you maintained infrastructure, reliable streams, and every channel. Think of it as the Real Debrid equivalent for live TV.
+
+### Install TiviMate
+
+TiviMate is not available on the Play Store for AOSP Android 14. Sideload it via Uptodown:
+
+1. Open **Chrome** on the Ugoos
+2. Go to `tivimate.en.uptodown.com/android/download`
+3. Download the APK and install it
+4. If Android blocks the install, allow "Unknown Sources" for Chrome
+
+> **Package:** `ar.tvplayer.tv` — TiviMate premium (~$20/year) unlocks recording, multi-playlist, and favorites. The free version works fine for testing.
+
+### Get an IPTV Service
+
+You need an IPTV service that provides Xtream Codes credentials (server URL + username + password). The Troypoint community recommends **Strong 8K** as a reliable, affordable option:
+
+1. Visit `strong8k.app` or search for Strong IPTV resellers
+2. **Always get a 24-hour free trial first** — test during a live game before paying
+3. Start with a **1-month subscription** (never pay yearly upfront with IPTV — services can disappear)
+4. They'll provide you with an Xtream Codes login: server URL, username, and password
+
+Other well-reviewed IPTV services include Citizen IPTV (known for stability during live sports) and StreamHut TV.
+
+> **Pricing:** Strong 8K runs ~$2-5/month through resellers, $10-15/month direct. Most IPTV services are $8-15/month.
+
+> **Quality:** Live sports channels are typically 720p-1080p at the source (ESPN broadcasts at 720p, Fox Sports at 1080p). The "8K/4K" branding applies to some VOD content, not live sports. Still looks great on an OLED.
+
+### Configure TiviMate
+
+1. Open TiviMate → it will prompt you to **Add Playlist**
+2. Select **Xtream Codes**
+3. Enter the **Server URL**, **Username**, and **Password** from your IPTV provider
+4. Name the playlist (e.g., "Strong 8K")
+5. Hit **Connect** — it will download the channel list and EPG
+6. Browse channels by category → find **Sports** → look for **SportsNet LA**, **ESPN**, **Fox Sports**, etc.
+
+### TiviMate Player Settings
+
+In TiviMate → Settings → Player:
+
+- **Buffer Size** → **Small** (fast channel switching with minimal delay. Bump to Medium if you see stuttering)
+- **Audio Passthrough** → **Off** (can cause decoder errors with some IPTV streams)
+- **Tunneled Playback** → **Off** (causes DecoderInitializationException on the AM9 Pro's S905X5 chip with IPTV streams. Leave this off.)
+- **AFR (Auto Frame Rate)** → **On** (matches TV refresh rate to the stream — important for 60fps sports)
+- **AFR on VOD** → **Off** (causes unnecessary screen flicker; movies are handled by Kodi anyway)
+- **Switch 50/60fps only** → **On** (only switches refresh rate for sports broadcasts, avoids flicker on everything else)
+
+### Tips
+
+- **No blackouts** — IPTV services carry regional sports networks directly, not through MLB/NFL infrastructure, so there are no in-market blackouts
+- **EPG** — TiviMate shows a full TV guide so you can see what's on across all channels. If the guide is empty, check Settings → Playlists → your playlist → EPG URL is populated. Force refresh via Settings → EPG → Update EPG.
+- **Favorites** — star your most-watched channels (SportsNet LA, ESPN, etc.) for quick access
+- **Recording** (premium) — record live games to watch later
+- **Premium recommended** (~$20/year or ~$34 lifetime via TiviMate Companion app) — unlocks auto EPG updates, favorites, recording, multi-playlist, and channel hiding
 
 ---
 
@@ -656,7 +707,8 @@ When browsing results, bigger file size generally means better quality. A 60GB 4
 | What | Where |
 |------|-------|
 | POV | Add-ons → Video add-ons → POV |
-| Mad Titan Sports | Add-ons → Video add-ons → Mad Titan Sports |
+| TiviMate | Sideload from Uptodown (tivimate.en.uptodown.com/android/download) |
+| IPTV setup | TiviMate → Add Playlist → Xtream Codes → enter credentials |
 | Real Debrid auth | POV → Settings → SETTINGS: My Services → Real-Debrid → Authorize |
 | Display refresh rate | Settings → Player → Videos → On start/stop |
 | Hardware acceleration | Settings → Player → Videos → MediaCodec (Surface) → On |
