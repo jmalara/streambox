@@ -9,8 +9,10 @@ You are a setup assistant. You can help the user configure their streaming box e
 ## Before You Start
 
 1. Ask the user if they have ADB connected to the Ugoos. If yes, verify with `adb devices`.
-2. Ask if Kodi is already installed.
-3. Ask if they already have a Real Debrid account.
+2. Ask if they want the **full setup** (Kodi + POV + TiviMate) or **TiviMate-only** (IPTV only, no Kodi).
+3. If full setup: ask if Kodi is already installed, and if they have a Real Debrid account.
+
+For TiviMate-only setups, run `./scripts/setup-adb.sh --tivimate-only` and skip to Phase 9 (Ugoos Settings), then Phase 12b (TiviMate Setup).
 
 ## Setup Flow
 
@@ -152,29 +154,34 @@ Suggested layout: Row 1 streaming apps (Kodi, Netflix, YouTube TV version), Row 
 
 ### Phase 12: ADB Optimizations (only if ADB is available)
 
-If the user has ADB connected:
+If the user has ADB connected, the easiest approach is to run the setup script:
 
-#### Find Kodi userdata path
+```bash
+./scripts/setup-adb.sh                    # Full setup (system tweaks + Kodi config)
+./scripts/setup-adb.sh --tivimate-only    # System tweaks only (for IPTV-only boxes)
+```
+
+For TiviMate-only setups, `--tivimate-only` applies all system tweaks and skips Kodi configuration.
+
+If running individual commands instead:
+
+#### Find Kodi userdata path (full setup only)
 ```bash
 adb root
 adb shell "find / -name 'guisettings.xml' 2>/dev/null | head -1"
 ```
 
-#### Deploy advancedsettings.xml (network/GUI config only — cache is in Kodi GUI)
+#### Deploy advancedsettings.xml (full setup only — network/GUI config, cache is in Kodi GUI)
 Use the contents from `configs/advancedsettings.xml` in this repo. Write it to:
 `<userdata-path>/advancedsettings.xml`
 
 Note: zsh on macOS interprets `!` in heredocs. Use single-quoted heredocs to avoid issues.
 
-#### POV Autostart
-POV has built-in autostart — no custom service addon needed.
-Enable in: POV → Settings → SETTINGS: POV → General → Auto Start POV when Kodi Starts → On
+#### POV Settings (configured through UI, not ADB)
+- POV Autostart: POV → Settings → General → Auto Start POV when Kodi Starts → On
+- Real Debrid Priority: POV → Settings → My Services → Real Debrid → Priority → 0
 
-#### Real Debrid Priority
-Set in POV directly (not ResolveURL):
-POV → Settings → SETTINGS: POV → My Services → Real Debrid → Priority → 0
-
-#### System tweaks
+#### System tweaks (applied in both modes)
 ```bash
 # Instant UI (zero animations)
 adb shell settings put global window_animation_scale 0
@@ -234,7 +241,26 @@ TiviMate is the recommended IPTV player for live sports. Pair with an IPTV servi
 - Connect → downloads channel list + EPG
 - Browse Sports category for ESPN, Fox Sports, SportsNet LA, etc.
 
+**TiviMate Player Settings** (Settings → Player):
+- Buffer Size → **Small** (fast channel switching; bump to Medium if stuttering)
+- Audio Passthrough → **Off** (causes decoder errors on some IPTV streams)
+- Tunneled Playback → **Off** (causes DecoderInitializationException on S905X5)
+- AFR (Auto Frame Rate) → **On** (matches refresh rate for sports)
+- AFR on VOD → **Off** (unnecessary flicker, movies handled by Kodi)
+- Switch 50/60fps only → **On** (avoids flicker on non-sports content)
+
+**TiviMate EPG & Playlist Settings:**
+- Settings → EPG → Update Interval → **4 hours**
+- Settings → Playlists → [playlist] → Update Interval → **4 hours**
+
+**TiviMate Channel Cleanup:**
+- Settings → Playlists → [playlist] → Manage Groups → hide unwanted language groups
+- Create Favorites groups for quick access (long-press channel → Add to Favorites → Create Group)
+- Set startup to Favorites: Settings → General → Startup → Favorites
+
 > **Note:** TiviMate Companion is NOT the player — it's just for managing your premium subscription. The actual player is "TiviMate IPTV Player" by Armobsoft FZE (package: `ar.tvplayer.tv`).
+
+> **Note:** Strong 8K also has their own app (rebranded TiviMate v5.1.6) with pre-configured EPG. If EPG doesn't populate in standalone TiviMate, try the Strong 8K app or grab its EPG URL from Settings → Playlists → EPG.
 
 ### Phase 13: Verification
 
@@ -273,6 +299,19 @@ TiviMate is the recommended IPTV player for live sports. Pair with an IPTV servi
 - Verify Xtream Codes credentials (server URL, username, password) are correct
 - Force-stop and restart TiviMate
 - Check if IPTV service trial has expired
+
+### TiviMate DecoderInitializationException
+- Turn off **Tunneled Playback** in Settings → Player
+- Turn off **Audio Passthrough** in Settings → Player
+- The S905X5 doesn't handle tunneled playback well with IPTV streams
+
+### TiviMate EPG empty / no program data
+- Some channels (especially "8K", "BK", and international channels) may not have EPG data from the provider
+- Check Settings → Playlists → [playlist] → EPG URL — should be auto-populated with Xtream Codes
+- Force refresh: Settings → EPG → Clear EPG, then Update EPG
+- Try the Strong 8K app (pre-configured TiviMate with EPG baked in) to test if EPG works
+- Third-party EPG: myepg.top supports Strong 8K — add their URL as an additional EPG source
+- Long-press a channel with missing EPG → EPG Source → search for the correct channel to manually map it
 
 ### advancedsettings.xml cache settings not working
 - Kodi 21 Omega moved cache settings to the GUI. XML cache tags are ignored.

@@ -336,11 +336,9 @@ A pre-built copy of this file is in `configs/advancedsettings.xml`.
 
 ### Prioritize Real Debrid Links
 
-Sets Real Debrid to resolve before free sources:
+Set Real Debrid priority directly in the POV UI (not via ADB):
 
-```bash
-adb shell "sed -i 's/RealDebridResolver_priority\">100/RealDebridResolver_priority\">90/' /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/userdata/addon_data/script.module.resolveurl/settings.xml"
-```
+POV → Settings → SETTINGS: POV → My Services → Real Debrid → **Priority → 0** (lowest number = highest priority, resolves before free sources).
 
 ### Disable UI Animations
 
@@ -409,13 +407,17 @@ This is configured in Step 7 above. When Kodi launches, POV opens automatically 
 
 ### Or Run It All at Once
 
-A script that does everything above is included in this repo:
+A script that applies system tweaks and deploys Kodi config is included in this repo:
 
 ```bash
-./scripts/setup-adb.sh
+./scripts/setup-adb.sh                    # Full setup (system tweaks + Kodi config)
+./scripts/setup-adb.sh --tivimate-only    # System tweaks only, skip Kodi (for IPTV-only boxes)
+./scripts/setup-adb.sh --dry-run          # Preview commands without executing
 ```
 
-Restart Kodi after running any of the above.
+The `--tivimate-only` flag is useful when setting up a box with just TiviMate and no Kodi (e.g., a second box for a family member). It applies all the Android system optimizations but skips Kodi-specific configuration.
+
+Restart Kodi after running (if Kodi is installed).
 
 ---
 
@@ -428,7 +430,7 @@ cd streambox
 claude
 ```
 
-Claude will detect your Ugoos via ADB, deploy configs, set Real Debrid priority, and apply system tweaks. See `CLAUDE.md` for details.
+Claude will detect your Ugoos via ADB, deploy configs, and apply system tweaks. See `CLAUDE.md` for details.
 
 ---
 

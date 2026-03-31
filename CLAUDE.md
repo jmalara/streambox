@@ -35,7 +35,8 @@ The Ugoos AM9 Pro supports ADB over USB and WiFi. When connected via ADB, Claude
 6. **Set Real Debrid priority** in POV's My Services settings (priority 0)
 7. **Apply system tweaks** (animations, DNS, telemetry, HDR passthrough, network optimization)
 8. **Swap launcher:** disable `com.uapplication.launcher`, set FLauncher as default
-9. **Check firmware version:** `adb shell "getprop ro.build.display.id"`
+9. **TiviMate-only mode:** `./scripts/setup-adb.sh --tivimate-only` (system tweaks only, skip Kodi)
+10. **Check firmware version:** `adb shell "getprop ro.build.display.id"`
 
 ### Important ADB Notes
 
@@ -173,6 +174,14 @@ Configured through POV → Settings → SETTINGS: POV:
 
 Applied via `scripts/setup-adb.sh`:
 
+```bash
+./scripts/setup-adb.sh                    # Full setup (system tweaks + Kodi config)
+./scripts/setup-adb.sh --tivimate-only    # System tweaks only, skip Kodi (for IPTV-only boxes)
+./scripts/setup-adb.sh --skip-system-tweaks
+./scripts/setup-adb.sh --dry-run
+```
+
+System tweaks applied (both modes):
 - Animations → 0 (instant UI)
 - WiFi sleep policy → never
 - Cloudflare DNS-over-TLS (`1dot1dot1dot1.cloudflare-dns.com`)
@@ -182,8 +191,15 @@ Applied via `scripts/setup-adb.sh`:
 - TCP slow start after idle disabled
 - TCP buffer sizes increased (rmem_max/wmem_max → 2MB)
 - Bloatware disabled (printspooler, ugoosfirstrun)
-- FLauncher as default launcher (com.uapplication.launcher disabled, FLauncher sideloaded via APKPure — Play Store shows incompatible on AOSP)
-- POV autostart enabled (built-in setting, no custom addon needed)
+
+Kodi config (full mode only):
+- Deploys advancedsettings.xml (network timeouts + GUI rendering)
+- Reminds to configure POV and cache through the UI
+
+Not handled by script (manual UI setup):
+- FLauncher sideload + launcher swap (optional — stock launcher works fine)
+- POV autostart (built-in setting: POV → Settings → General → Auto Start POV)
+- TiviMate player settings (tunneled playback off, audio passthrough off, buffer small, AFR on)
 
 ## TV Picture Settings (LG C5 OLED)
 
