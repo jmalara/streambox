@@ -163,6 +163,10 @@ If you need to update your IPTV credentials later (e.g., new server URL, passwor
 - **Channels load but won't play:** Check that your Xtream Codes credentials match between your working Strong 8K playlist and the EPGenius playlist. Verify with the Edit Credentials tool.
 - **EPG missing on some channels:** Some channels (especially "8K", "BK", and international variants) may not have EPG data mapped. Long-press the channel → EPG Source → search for the correct channel to manually map it.
 
+### Support EPGenius
+
+EPGenius is a community project maintained by volunteers. Consider donating and becoming a supporter via their Discord — supporters get faster playlist updates and priority help in the support channels.
+
 ### Using Both Playlists
 
 Keep your original Strong 8K Xtream Codes playlist as a fallback. TiviMate Premium supports multiple playlists. Use EPGenius as your daily driver for better organization and EPG, and switch to the raw Strong 8K playlist if a specific channel isn't in the EPGenius list.
@@ -358,17 +362,6 @@ Mouse-click the gear icon to set up categories/layout. You only need to do this 
 
 ---
 
-## Optional: SmartTube (Ad-Free YouTube)
-
-The stock YouTube app on AOSP Android boxes is the mobile version and runs poorly. SmartTube is a free, ad-free YouTube client built for Android TV.
-
-1. Open Chrome on the Ugoos
-2. Go to `smarttubeapp.github.io`
-3. Download and install the APK
-4. Features: no ads, SponsorBlock, 4K/HDR support, Android TV interface
-
----
-
 ## Automated Setup with Claude Code
 
 If you have [Claude Code](https://docs.anthropic.com/en/docs/claude-code) installed, you can have it walk you through the setup or run the ADB commands for you:
@@ -438,6 +431,5 @@ Claude will detect your Ugoos via ADB and apply system tweaks. See `CLAUDE.md` f
 | Ugoos HDR / DV | Settings → Display → HDR On, Dolby Vision On |
 | TV HDMI Deep Colour | TV Settings → HDMI → Deep Colour → On |
 | FLauncher | Sideload from APKPure, set default via `adb shell cmd package set-home-activity` |
-| SmartTube | Sideload from `smarttubeapp.github.io` |
 | System tweaks | `./scripts/setup-adb.sh --tivimate-only` |
 | Firmware update | Ugoos Settings → OTA Update (2.0.6+) |
