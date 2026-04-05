@@ -169,7 +169,9 @@ EPGenius is a community project maintained by volunteers. Consider donating and 
 
 ### Using Both Playlists
 
-Keep your original Strong 8K Xtream Codes playlist as a fallback. TiviMate Premium supports multiple playlists. Use EPGenius as your daily driver for better organization and EPG, and switch to the raw Strong 8K playlist if a specific channel isn't in the EPGenius list.
+EPGenius only covers live TV channels — it does not include movies or TV shows (VOD). Keep your original Strong 8K Xtream Codes playlist for movies, TV series, and any live channels not in the EPGenius list. TiviMate Premium supports multiple playlists, so use EPGenius as your daily driver for live TV and the raw Strong 8K playlist for VOD content.
+
+If you get an **HttpDataSourceException** on EPGenius channels, update your credentials via the EPGenius Edit Credentials tool on their website, then refresh the playlist in TiviMate: Settings → Playlists → [EPGenius] → **Update Playlist**.
 
 ---
 
@@ -362,6 +364,50 @@ Mouse-click the gear icon to set up categories/layout. You only need to do this 
 
 ---
 
+## Mac: Watch IPTV with Chillio
+
+Chillio is the best IPTV player for macOS (also works on Apple TV, iPhone, and iPad). It supports Xtream Codes, M3U playlists, and has a clean native interface.
+
+### Install
+
+1. Download **Chillio** from the Mac App Store — search "Chillio IPTV Smart Player" or go to `chillio.app`
+2. Open the app
+
+### Add Your Strong 8K Account
+
+1. Go to **Settings → Accounts → Add Account**
+2. Select **Xtream Codes**
+3. Enter your **Server URL**, **Username**, and **Password** from Strong 8K
+4. Name it (e.g., "Strong 8K")
+5. Save — channels, VOD, and EPG will load automatically
+
+You can also add your EPGenius M3U playlist: Add Account → **M3U** → paste your Google Drive URL.
+
+> **Pricing:** Chillio is free with basic features. **Chillio Premium** (~$2.49/month or ~$100 lifetime) unlocks advanced customization, profiles, and premium features. The free version works fine for basic watching.
+
+---
+
+## iPhone / iPad: Watch IPTV with MYTVOnline+
+
+MYTVOnline+ is a solid IPTV player for iOS with Xtream Codes support, EPG, picture-in-picture, favorites, and parental controls.
+
+### Install
+
+1. Download **MYTVOnline+ IPTV Player** from the App Store (by Formuler)
+2. Open the app
+
+### Add Your Strong 8K Account
+
+1. Tap **Add Portal** or the **+** button
+2. Select **Xtream Codes** as the login type
+3. Give it a name (e.g., "Strong 8K")
+4. Enter your **Server URL**, **Username**, and **Password**
+5. Save — your channels and VOD library will load
+
+> **Pricing:** MYTVOnline+ is free with a limited-time premium trial. Premium unlocks the full feature set (EPG, PiP, catch-up, etc.) via App Store subscription. Check the app for current pricing.
+
+---
+
 ## Automated Setup with Claude Code
 
 If you have [Claude Code](https://docs.anthropic.com/en/docs/claude-code) installed, you can have it walk you through the setup or run the ADB commands for you:
@@ -405,10 +451,10 @@ Claude will detect your Ugoos via ADB and apply system tweaks. See `CLAUDE.md` f
 
 | Service | What It Is | Cost | Renewal |
 |---------|-----------|------|---------|
-| **TiviMate Premium** | IPTV player — unlocks recording, multi-playlist, favorites | ~$20/year or ~$34 lifetime | In-app or via TiviMate Companion app |
+| **TiviMate Premium** | IPTV player for Ugoos/Android — recording, multi-playlist, favorites | ~$20/year or ~$34 lifetime | In-app or via TiviMate Companion app |
 | **Strong 8K** | IPTV service — 30K+ channels, sports, VOD | ~$2-5/month (reseller) | Contact your reseller to renew |
-| **Chillio** | IPTV service | Varies | Contact provider |
-| **myIPTV (iPhone)** | IPTV player for iOS | Varies | App Store subscription |
+| **Chillio** | IPTV player for Mac/Apple TV | Free or ~$2.49/month premium (~$100 lifetime) | App Store subscription |
+| **MYTVOnline+** | IPTV player for iPhone/iPad | Free with premium trial, then App Store sub | App Store subscription |
 | **EPGenius** | Community-curated playlists with better EPG | $10 donation | Voluntary — donate via their website/Discord |
 
 > **Total monthly cost:** Roughly $5-15/month depending on your Strong 8K reseller pricing, plus the annual TiviMate renewal.

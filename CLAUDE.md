@@ -165,11 +165,11 @@ Not handled by script (manual UI setup):
 
 | Service | Cost | Notes |
 |---------|------|-------|
-| TiviMate Premium | ~$20/year or ~$34 lifetime | IPTV player. Renew in-app or via Companion app |
+| TiviMate Premium | ~$20/year or ~$34 lifetime | IPTV player for Ugoos/Android. Renew in-app or via Companion app |
 | Strong 8K | ~$2-5/month (reseller) | IPTV service. Renew through reseller |
-| Chillio | Varies | IPTV service |
-| myIPTV (iPhone) | Varies | iOS IPTV player |
-| EPGenius | $10 donation | Community-curated playlists. Voluntary donation |
+| Chillio | Free or ~$2.49/month (~$100 lifetime) | IPTV player for Mac/Apple TV. App Store subscription |
+| MYTVOnline+ | Free with premium trial, then App Store sub | IPTV player for iPhone/iPad. App Store subscription |
+| EPGenius | $10 donation | Community-curated playlists (live TV only). Voluntary donation |
 
 ## Common Issues
 
