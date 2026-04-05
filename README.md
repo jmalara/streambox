@@ -455,6 +455,18 @@ Strong 8K usually has a Telegram channel or Discord where they post server maint
 
 If channels suddenly stop working across the board, force-refresh your playlist before anything else: TiviMate → Settings → Playlists → [playlist] → **Update Playlist**. 90% of the time that fixes it — the server URL or port may have changed.
 
+### Channel Switching Speed
+
+If you want even faster channel switching, try Settings → Player → **Buffer Size → None**. It's more aggressive than Small and some streams will hiccup, but for channel surfing during commercial breaks it's snappy. Switch back to Small for extended watching.
+
+### USB Ethernet Adapter
+
+If the AM9 Pro is too far from your router for ethernet but WiFi isn't cutting it for sports, a USB-C to ethernet adapter works on Android 14. Lets you run a long ethernet cable without relocating the box.
+
+### Reboot Schedule
+
+The AM9 Pro can get sluggish after running for weeks. Set a weekly auto-reboot: **Settings → Ugoos Settings → Scheduled Restart** → pick a time when you're asleep (e.g., Tuesday 4am).
+
 ---
 
 ## Network Tips
