@@ -121,7 +121,7 @@ IPTV providers label channels with quality/priority tiers:
 
 ## Step 5: EPGenius Curated Playlist (Recommended)
 
-EPGenius provides community-curated playlists with clean channel names, proper logos, organized categories, and better EPG mapping than raw IPTV provider feeds. Your guide/EPG will be significantly better with EPGenius.
+EPGenius provides community-curated playlists with clean channel names, proper logos, organized categories, and better EPG mapping than raw IPTV provider feeds. Your guide/EPG will be significantly better with EPGenius. A major advantage is that you get the same curated channel list across all your devices — add the same EPGenius playlist to TiviMate on your Ugoos, Chillio on your Mac, and MYTVOnline+ on your iPhone and they'll all have identical channel organization.
 
 ### Set Up EPGenius
 
@@ -174,6 +174,10 @@ EPGenius is a community project maintained by volunteers. Consider donating and 
 EPGenius only covers live TV channels — it does not include movies or TV shows (VOD). Keep your original Strong 8K Xtream Codes playlist for movies, TV series, and any live channels not in the EPGenius list. TiviMate Premium supports multiple playlists, so use EPGenius as your daily driver for live TV and the raw Strong 8K playlist for VOD content.
 
 If you get an **HttpDataSourceException** on EPGenius channels, update your credentials via the EPGenius Edit Credentials tool on their website, then refresh the playlist in TiviMate: Settings → Playlists → [EPGenius] → **Update Playlist**.
+
+### What Doesn't Sync Across Devices
+
+EPGenius gives you a consistent channel list everywhere, but any customizations you make inside TiviMate (favorites, hidden groups, channel sorting, EPG source overrides) are local to that device and won't sync to other devices. Back up your TiviMate settings via **Settings → General → Backup & Restore** whenever you make large customizations so you don't lose that work.
 
 ---
 
