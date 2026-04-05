@@ -1,193 +1,177 @@
 # Streambox Setup Guide
 
-Complete setup guide for the **Ugoos AM9 Pro** running Kodi with POV (Real Debrid) and TiviMate (IPTV for live sports).
+Complete setup guide for the **Ugoos AM9 Pro** running TiviMate with Strong 8K IPTV and EPGenius curated playlists for live sports and TV.
 
 ---
 
 ## What You'll End Up With
 
-- **POV** — fast, clean addon for movies and TV shows with external scrapers (Torrentio, MediaFusion) and Trakt integration
-- **TiviMate + IPTV** — cable-TV-like experience for live sports (NFL, NBA, MLB, NHL, soccer) with EPG, no blackouts
-- **Real Debrid** — premium link service that gives you fast, reliable 4K/1080p streams (~$3/month)
-- **Trakt** — free service that tracks your watch history and progress across all addons and devices
-- **Optimized buffering** — no audio drift or buffering on long streams
+- **TiviMate** — gold standard IPTV player with EPG, favorites, catch-up, and recording
+- **Strong 8K** — IPTV service with 30K+ channels including every sports network (~$2-5/month via resellers)
+- **EPGenius** — community-curated playlists with clean channel names, logos, categories, and EPG mapping
+- **No blackouts** — regional sports networks (SportsNet LA, YES Network, etc.) work without MLB/NFL blackout restrictions
+- **Optimized system** — instant UI, Cloudflare DNS, HDR passthrough, network tuning via ADB
 
-Everything below can be done with just the Ugoos remote. ADB (connecting the box to a computer) is optional and only needed for the advanced optimization section at the end.
-
----
-
-## Step 1: Install Kodi
-
-Do NOT use the Play Store version — it's the phone/tablet build. Grab the proper APK instead.
-
-1. On the Ugoos, open the built-in browser (or install **Downloader** from the Play Store)
-2. Navigate to: `kodi.tv/download/android`
-3. Under the **Recommended** tab, download the **ARMV8A (64BIT)** APK
-4. If Android blocks the install, allow "Unknown Sources" for your browser when prompted
-5. Install and open Kodi
-
-> **Important:** Download ARMV8A (64-bit), NOT ARMV7A (32-bit). The AM9 Pro is a 64-bit device.
+Everything below can be done with just the Ugoos remote. ADB (connecting the box to a computer) is optional and only needed for the system optimization section.
 
 ---
 
-## Step 2: Sign Up for Real Debrid
+## Step 1: Initial Setup
 
-Do this on your phone or laptop while Kodi installs.
-
-1. Go to [real-debrid.com](https://real-debrid.com)
-2. Click **Sign Up** and create an account with your email
-3. Verify your email address
-4. Go to **Premium Offers** and purchase a plan:
-   - **180 days (~$16)** is the best value
-   - 30 days (~$4) if you want to try it first
-5. Payment options include credit card, Amazon Pay, and others
-
-> **Why Real Debrid?** Without it, you're relying on free links — typically 720p, slow, and unreliable. Real Debrid caches popular torrents on fast servers and gives you direct links. The result is consistent 4K HDR streams that start instantly. It's the single biggest upgrade you can make.
+1. Power on the Ugoos AM9 Pro and connect to WiFi
+2. Check for firmware updates: **Settings → About → OTA Update** — get to version **2.0.6+** (fixes crashes and DV/HDR issues)
+3. While the box updates, sign up for your IPTV service (Step 2) on your phone or laptop
 
 ---
 
-## Step 3: Enable Unknown Sources
+## Step 2: Get an IPTV Service (Strong 8K)
 
-This lets Kodi install third-party addons.
+You need an IPTV service that provides Xtream Codes credentials (server URL + username + password).
 
-1. Open Kodi
-2. Click the **gear icon** (Settings) — top left of the home screen
-3. Go to **System**
-4. On the left sidebar, click **Add-ons**
-5. Toggle **Unknown Sources** to ON
-6. A warning will pop up — click **Yes**
+1. Visit `strong8k.app` or search for Strong IPTV resellers
+2. **Always get a 24-hour free trial first** — test during a live game before paying
+3. Start with a **1-month subscription** (never pay yearly upfront with IPTV — services can disappear)
+4. They'll email you Xtream Codes credentials: server URL, username, and password
 
----
+Other well-reviewed IPTV services include Falcon TV (~$14/month, known for stable sports) and Xtreme HD IPTV ($12-15/month, 20K+ channels).
 
-## Step 4: Add Repository Sources
+> **Pricing:** Strong 8K runs ~$2-5/month through resellers, $10-15/month direct.
 
-1. Go to **Settings** (gear icon) → **File Manager**
-2. Double-click **Add source**
-3. Click `<None>`
-4. Type the URL, click **OK**
-5. Name the source, click **OK**
-6. Repeat for the second source
-
-| URL | Name |
-|-----|------|
-| `https://kodifitzwell.github.io/repo/` | `kodifitzwell` |
+> **Quality:** Live sports channels are typically 720p-1080p at the source (ESPN broadcasts at 720p, Fox Sports at 1080p). The "8K/4K" branding applies to some VOD content, not live sports. Still looks great on an OLED.
 
 ---
 
-## Step 5: Install Repositories from Zip Files
+## Step 3: Install TiviMate
 
-1. Go back to the Kodi home screen
-2. Click **Add-ons** (left sidebar)
-3. Click the **open box icon** (top left — package installer)
-4. Click **Install from zip file**
-5. Click **kodifitzwell** → select the `repository.kodifitzwell-0.0.1.zip` file → wait for "installed" notification
+TiviMate is not available on the Play Store for AOSP Android 14. Sideload it via Uptodown:
 
----
+1. Open **Chrome** on the Ugoos
+2. Go to `tivimate.en.uptodown.com/android/download`
+3. Download the APK and install it
+4. If Android blocks the install, allow "Unknown Sources" for Chrome when prompted
 
-## Step 6: Install Addons
+> **Package:** `ar.tvplayer.tv` — TiviMate Premium (~$20/year or ~$34 lifetime) unlocks recording, multi-playlist, favorites management, and auto EPG updates. The free version works for testing.
 
-Still in the addon package manager:
+> **Note:** TiviMate Companion is a separate app for managing your premium subscription — it is NOT the player.
 
-1. Click **Install from repository**
-2. **kodifitzwell repository** → Video add-ons → **POV** → Install (accept all dependencies)
-3. Wait for "installed" notification
+### Alternative: Strong 8K App
 
-Your addon is now at: Kodi home → Add-ons → Video add-ons
+Strong 8K has their own app (a rebranded TiviMate v5.1.6) with pre-configured EPG. Download from the Strong 8K website. Upside: EPG works out of the box. Downside: pinned to older TiviMate version and only works with Strong 8K.
 
 ---
 
-## Step 7: Authorize Real Debrid and Set Up POV
+## Step 4: Configure TiviMate with Strong 8K
 
-### Authorize Real Debrid in POV
+1. Open TiviMate → it will prompt you to **Add Playlist**
+2. Select **Xtream Codes**
+3. Enter the **Server URL**, **Username**, and **Password** from Strong 8K
+4. Name the playlist (e.g., "Strong 8K")
+5. Hit **Connect** — it will download the channel list and EPG
+6. Browse channels by category → find **Sports** → look for ESPN, Fox Sports, SportsNet LA, etc.
 
-1. Open POV → go to **Settings** (from the POV home screen)
-2. Select **SETTINGS: My Services**
-3. Tap **Real-Debrid** → **Authorize**
-4. A code will appear on screen
-5. On your phone, go to [real-debrid.com/device](https://real-debrid.com/device)
-6. Enter the code and click **Allow**
-7. Wait for the "authorized" confirmation
+### Player Settings
 
-### Enable External Scrapers
+In TiviMate → Settings → Player:
 
-This is what makes POV powerful — it pulls sources from Torrentio, MediaFusion, and other external scrapers in addition to its own built-in scrapers.
+- **Buffer Size** → **Small** (fast channel switching with minimal delay. Bump to Medium if you see stuttering)
+- **Audio Passthrough** → **Off** (can cause decoder errors with some IPTV streams on the S905X5)
+- **Tunneled Playback** → **Off** (causes DecoderInitializationException on the AM9 Pro. Leave this off.)
+- **AFR (Auto Frame Rate)** → **On** (matches TV refresh rate to the stream — important for 60fps sports)
+- **AFR on VOD** → **Off** (causes unnecessary screen flicker)
+- **Switch 50/60fps only** → **On** (only switches refresh rate for sports broadcasts, avoids flicker on everything else)
+- **Video Decoder** → **Hardware** (should be default — verify)
 
-1. Go to **Settings** → **SETTINGS: POV** → **Sources** tab (left sidebar)
-2. Under **External Scrapers**: toggle **Enable** → **On**
-3. Toggle **Remove Undesirables** → **On**
-4. Scroll down to the **Sources** list and enable:
-   - **piratebay** → On
-   - **torrentio** → On
-   - **aiostreams (comet/mediafusion)** → On
-   - **torrentsdb** → On
-   - **zilean** → On
-5. Leave bitmagnet, dmm, nyaa, torrentdownload, meteor, stremthru torz **Off**
+### EPG & Playlist Settings
 
-### Configure Real Debrid Settings in POV
+- Settings → EPG → **Update Interval** → **4 hours**
+- Settings → Playlists → [Strong 8K] → **Update Interval** → **4 hours**
+- Settings → EPG → **Past Days to Keep** → **1** (saves memory)
+- Settings → EPG → **Logos** → **Prefer logos from EPG**
 
-1. **SETTINGS: POV** → **My Services** tab (left sidebar)
-2. Scroll to **Real Debrid** section:
-   - **Enable** → On
-   - **Use Torrent Services** → On
-   - **Search RD Cloud** → On (surfaces previously cached content as instant sources)
-   - **Priority** → **0** (lowest number = highest priority, RD resolves first)
-   - **Premium Expires Notification** → **7** days
+### Clean Up Channel Groups
 
-### Set Up Trakt (Recommended)
+Strong 8K has 30K+ channels in 40+ languages. Hide what you don't need:
 
-Trakt is a free service that tracks everything you watch. It syncs your watchlist, progress, and history across all devices.
+1. Settings → Playlists → [Strong 8K] → **Manage Groups**
+2. **Long-press** on any group you don't want → the toggle turns gray and it disappears
+3. Keep only the groups you care about (USA, Sports, PPV, Movies, etc.)
 
-1. Sign up at [trakt.tv](https://trakt.tv) (free)
-2. In POV → **Settings** → **SETTINGS: My Services** → tap **Trakt** → **Authorize**
-3. Enter the code at `trakt.tv/activate` on your phone
+### Set Up Favorites
 
-### POV General Settings
+TiviMate doesn't support favoriting entire channel groups, but you can create custom Favorites groups:
 
-1. **SETTINGS: POV** → **General** tab:
-   - **Auto Start POV when Kodi Starts** → **On** (opens POV automatically when Kodi launches)
-   - **Enable Kodi Menu Caching** → On
-   - **Maximum threads** → **60** (balances scrape speed with device performance)
+1. On the main EPG/guide screen, **long-press OK** on any channel
+2. Select **Add to Favorites** → **Create Group**
+3. Name it whatever you want — "Sports", "Movies", "News", etc.
+4. Add channels from any provider group into your custom groups
+5. Set **Settings → General → Startup → Favorites** so TiviMate opens to your curated list
 
-2. **SETTINGS: POV** → **Features** tab:
-   - **Preferred Audio Language** → **English**
-   - **Show Release Year in Listings** → **On**
-   - **Include Unaired Episodes** → **Off**
-   - **Include Unaired Items in Watchlists** → **Off**
+### Understanding Channel Labels
+
+IPTV providers label channels with quality/priority tiers:
+
+- **VIP** — premium stream, highest priority server resources, most stable during peak hours
+- **8K** — higher bitrate/upscaled stream (not actual 8K resolution), better quality than standard
+- **BK** — backup stream from a different server. Use as fallback if the primary is down.
+- Prefer: **VIP > 8K > standard > BK**
 
 ---
 
-## Step 8: Kodi Player Settings
+## Step 5: EPGenius Curated Playlist (Recommended)
 
-1. Kodi → **Settings** (gear icon) → **Player**
-2. Change the settings level to **Expert** (click the gear icon in the bottom left until it says Expert)
+EPGenius provides community-curated playlists with clean channel names, proper logos, organized categories, and better EPG mapping than raw IPTV provider feeds. Your guide/EPG will be significantly better with EPGenius.
 
-**Videos section:**
+### Set Up EPGenius
 
-3. **Adjust display refresh rate** → **On start / stop** — matches TV refresh rate to content (24fps movies, 60fps sports)
-4. **Adjust display HDR mode** → **On** — switches display in/out of HDR based on content
-5. **Sync playback to display** → **Off** — this causes audio drift over time. Refresh rate matching above handles sync correctly.
-6. **Minimise black bars** → **Off** — cropping cuts off content
+1. Go to `epgenius.org` on your Mac or phone (not the Ugoos)
+2. Sort/filter by your IPTV service (e.g., Strong 8K)
+3. Click **Preview Playlist** to see what channels/categories each list includes
+4. Pick the one with the best USA sports coverage and clean category organization
+5. Click **Google Drive** to set it up — sign into your Google account when prompted
+6. Enter your Xtream Codes credentials (server URL, username, password) when asked
+7. EPGenius saves a curated M3U file to your Google Drive that auto-updates
 
-**Processing section (scroll down in Videos):**
+### Add EPGenius to TiviMate
 
-7. **Allow hardware acceleration - MediaCodec (Surface)** → **On** — critical for 4K HDR/DV passthrough
-8. **Allow hardware acceleration - MediaCodec** → **On** — fallback decoder
-9. **Dolby Vision compatibility mode** → **Off** — your TV supports native DV, don't need compatibility mode
-10. **Allowed HDR dynamic metadata formats** → **Dolby Vision, HDR10+**
+1. In TiviMate → **Add Playlist** → **M3U Playlist**
+2. Paste the Google Drive M3U URL that EPGenius generated
+3. Name it (e.g., "EPGenius")
+4. Let it download channels
 
-**Subtitles section (left sidebar):**
+### Register on Discord (Required)
 
-11. **Preferred subtitle language** → **None** — disables subtitles by default. Turn them on per-video during playback if needed.
+Your EPGenius playlist will stop working if you don't register it:
 
-**Language section (left sidebar):**
+1. Join the EPGenius Discord (link on their website)
+2. Complete verification in the welcome/rules channel
+3. Go to the `🤖〢bot-commands` channel
+4. Click **Register Playlist** → paste your playlist URL when prompted
+5. Use `/dns` to verify your server DNS resolves correctly (avoid Cloudflare resolution)
 
-12. **Preferred audio language** → **English** (or your preference)
+### EPGenius Credentials Tool
+
+If you need to update your IPTV credentials later (e.g., new server URL, password change):
+
+1. Go to `epgenius.org` → **Edit Credentials**
+2. Update your DNS (server URL), username, and/or password
+3. Click **Update Credentials**
+4. In TiviMate → Settings → Playlists → [EPGenius] → **Update Playlist**
+
+### Troubleshooting EPGenius
+
+- **HttpDataSourceException on playback:** Update credentials via the EPGenius Edit Credentials tool, then refresh the playlist in TiviMate. If still failing, run `/dns` in the EPGenius Discord to check your server URL. Ask in Discord for an alternative DNS if needed.
+- **Channels load but won't play:** Check that your Xtream Codes credentials match between your working Strong 8K playlist and the EPGenius playlist. Verify with the Edit Credentials tool.
+- **EPG missing on some channels:** Some channels (especially "8K", "BK", and international variants) may not have EPG data mapped. Long-press the channel → EPG Source → search for the correct channel to manually map it.
+
+### Using Both Playlists
+
+Keep your original Strong 8K Xtream Codes playlist as a fallback. TiviMate Premium supports multiple playlists. Use EPGenius as your daily driver for better organization and EPG, and switch to the raw Strong 8K playlist if a specific channel isn't in the EPGenius list.
 
 ---
 
-## Step 9: Ugoos Display Settings
+## Step 6: Ugoos Display Settings
 
-Go to **Ugoos Settings** → **Display**:
+Go to **Ugoos Settings → Display**:
 
 - **Resolution** → 4K 60Hz
 - **Color Mode** → **YCbCr 4:2:2 12-bit**
@@ -205,32 +189,9 @@ Make sure **HDMI Deep Colour** (or equivalent) is **ON** for the HDMI port the U
 
 ---
 
-## Step 10: Firmware Update
+## Step 7: TV Picture Settings (for Best HDR/Dolby Vision)
 
-Check for Ugoos firmware updates: **Ugoos Settings → OTA Update**. Version **2.0.6+** includes critical fixes for system crashes and Dolby Vision/HDR color issues. Do this if you're experiencing crashes.
-
----
-
-## Kodi Playback Settings
-
-These are covered in Step 8 above. The key settings for reference:
-
-- **Adjust display refresh rate** → On start / stop
-- **Adjust display HDR mode** → On
-- **Sync playback to display** → **Off** (causes audio drift — refresh rate matching handles sync)
-- **MediaCodec (Surface)** → On (critical for 4K HDR/DV)
-- **MediaCodec** → On (fallback)
-- **Dolby Vision compatibility mode** → Off (TV supports native DV)
-- **Allowed HDR dynamic metadata formats** → Dolby Vision, HDR10+
-- **Preferred subtitle language** → None
-
-MediaCodec (Surface) is the critical one — it enables 4K output, HDR passthrough, and Dolby Vision. Without it, Kodi falls back to software decoding and you lose HDR entirely. The S905X5 hardware decodes HEVC, AV1, H.266, VP9, and H.264 at zero CPU cost through this setting.
-
----
-
-## TV Picture Settings (for Best HDR/Dolby Vision)
-
-These settings apply to the HDMI input your Ugoos is plugged into. Adjust them on your TV.
+These settings apply to the HDMI input your Ugoos is plugged into.
 
 **Critical settings:**
 
@@ -246,39 +207,23 @@ These settings apply to the HDMI input your Ugoos is plugged into. Adjust them o
 
 **Disable all processing:**
 
-- **TruMotion / Motion Smoothing** → **Off** (eliminates soap opera effect on movies)
+- **TruMotion / Motion Smoothing** → **Off** (eliminates soap opera effect)
 - **Super Resolution** → **Off**
 - **Noise Reduction** → **Off**
 - **MPEG Noise Reduction** → **Off**
 - **Sharpness** → **0**
 
-These processing features add latency and artifacts. Your content quality comes from the source file (Remux > WEB-DL > BRRip), not TV upscaling.
+---
+
+## Step 8: Firmware Update
+
+Check for Ugoos firmware updates: **Ugoos Settings → OTA Update**. Version **2.0.6+** includes critical fixes for system crashes and Dolby Vision/HDR color issues.
 
 ---
 
-## Audio Sync Troubleshooting
+## Advanced: ADB System Optimization (Optional)
 
-### Delay is constant from the start
-
-This is a processing delay in the TV or receiver.
-
-- **In Kodi:** Settings → Player → Videos (Expert mode) → **Audio offset** — adjust in milliseconds
-- **On the TV:** Look for an AV Sync Adjustment setting
-- **Disable audio processing:** Turn off AI Sound, Virtual Surround, or any audio effects on the TV — these add latency
-
-### Delay gets worse over time
-
-This is a buffering issue. Apply the buffer optimization in the Advanced section below. Also: use Real Debrid links instead of free links, and use ethernet instead of WiFi.
-
-### Quick fix during playback
-
-While a video is playing, press the **menu/settings button** on the remote → **Audio settings** → adjust **Audio offset** until it syncs. This only applies to the current video.
-
----
-
-## Advanced: ADB Optimization (Optional)
-
-Everything above this point can be done with just the Ugoos remote. The steps below require connecting the Ugoos to a Mac or PC via ADB. **This is not required** but improves the experience.
+Everything above can be done with just the Ugoos remote. The steps below require connecting the Ugoos to a Mac or PC via ADB. **This is not required** but improves the experience.
 
 ### Setting Up ADB
 
@@ -288,89 +233,49 @@ Everything above this point can be done with just the Ugoos remote. The steps be
 4. Connect via USB and run: `adb devices`
 5. Or connect via WiFi: `adb connect <ugoos-ip>:5555`
 
-### Configure Kodi Cache (In the Kodi GUI)
+### Run the Setup Script
 
-Kodi 21 Omega moved cache settings from advancedsettings.xml to the GUI. **The XML cache tags are ignored in Kodi 21+.** You must set these through the Kodi interface.
-
-1. Go to **Settings** (gear icon) → **Services** → **Caching**
-2. Set the settings level to **Expert** (click the gear in the bottom left)
-3. Set these values:
-   - **Buffer Mode** → **Buffer all filesystems, including local files** (the last option in the list)
-   - **Memory size** → **350 MB** (Kodi uses 3x this in RAM, so ~1GB actual usage on a 4GB device)
-   - **Read factor** → **20** (aggressive pre-buffering — fills the cache fast)
-
-This is the single biggest fix for buffering and audio drift on long streams.
-
-### Deploy Network and GUI Config
-
-The network timeout and GUI rendering settings still work in advancedsettings.xml. Deploy them via ADB.
-
-First, find where Kodi stores its data:
+A script that applies all system optimizations is included in this repo:
 
 ```bash
-adb root
-adb shell "find / -name 'guisettings.xml' 2>/dev/null | head -1"
+./scripts/setup-adb.sh --tivimate-only    # System tweaks only (recommended)
+./scripts/setup-adb.sh                     # Full setup (includes Kodi config if Kodi is installed)
+./scripts/setup-adb.sh --dry-run           # Preview commands without executing
 ```
 
-Use the path it returns (typically `/data/media/0/Android/data/org.xbmc.kodi/files/.kodi/userdata/`). Then create the config file:
+The script applies:
+- Animations → 0 (instant UI)
+- WiFi sleep policy → never
+- Cloudflare DNS-over-TLS
+- Telemetry disabled
+- Heads-up notifications disabled
+- HDR passthrough (let TV handle tone mapping)
+- TCP streaming optimizations
+- Bloatware disabled
 
-```bash
-adb shell 'cat > /data/media/0/Android/data/org.xbmc.kodi/files/.kodi/userdata/advancedsettings.xml << EOF
-<advancedsettings>
-  <network>
-    <curlclienttimeout>30</curlclienttimeout>
-    <curllowspeedtime>30</curllowspeedtime>
-    <curlretries>3</curlretries>
-    <disableipv6>true</disableipv6>
-  </network>
-  <gui>
-    <algorithmdirtyregions>3</algorithmdirtyregions>
-  </gui>
-</advancedsettings>
-EOF'
-```
+### Individual ADB Commands
 
-This sets longer timeouts for slow sources, auto-retry on failed connections, disables IPv6 (avoids dual-stack delays), and optimizes GUI dirty region rendering.
+If you prefer to run commands individually:
 
-A pre-built copy of this file is in `configs/advancedsettings.xml`.
-
-### Prioritize Real Debrid Links
-
-Set Real Debrid priority directly in the POV UI (not via ADB):
-
-POV → Settings → SETTINGS: POV → My Services → Real Debrid → **Priority → 0** (lowest number = highest priority, resolves before free sources).
-
-### Disable UI Animations
-
-Makes every menu and app switch instant — zero delay:
-
+**Disable UI Animations:**
 ```bash
 adb shell settings put global window_animation_scale 0
 adb shell settings put global transition_animation_scale 0
 adb shell settings put global animator_duration_scale 0
 ```
 
-### Keep WiFi Alive During Sleep
-
-Prevents streams from dropping:
-
+**Keep WiFi Alive During Sleep:**
 ```bash
 adb shell settings put global wifi_sleep_policy 2
 ```
 
-### Set Cloudflare DNS (Faster + Private)
-
-Uses DNS-over-TLS with Cloudflare instead of your ISP's DNS. Faster lookups and no DNS logging:
-
+**Set Cloudflare DNS (Faster + Private):**
 ```bash
 adb shell settings put global private_dns_mode hostname
 adb shell settings put global private_dns_specifier "1dot1dot1dot1.cloudflare-dns.com"
 ```
 
-### Disable Telemetry and Notifications
-
-Stops diagnostic data collection and prevents popup notifications from interrupting video playback:
-
+**Disable Telemetry and Notifications:**
 ```bash
 adb shell settings put global send_action_app_error 0
 adb shell settings put global netstats_enabled 0
@@ -378,18 +283,12 @@ adb shell settings put global heads_up_notifications_enabled 0
 adb shell settings put global app_standby_enabled 0
 ```
 
-### Prevent Android HDR Tone Mapping
-
-Forces HDR content to pass through to your TV without Android processing it. Let your TV handle tone mapping — it does it better:
-
+**HDR Passthrough:**
 ```bash
 adb shell settings put global hdr_conversion_mode 0
 ```
 
-### Network Streaming Optimization
-
-Disables TCP slow start after idle connections and increases buffer sizes for smoother 4K streaming:
-
+**Network Streaming Optimization:**
 ```bash
 adb root
 adb shell sysctl -w net.ipv4.tcp_slow_start_after_idle=0
@@ -397,27 +296,76 @@ adb shell sysctl -w net.core.rmem_max=2097152
 adb shell sysctl -w net.core.wmem_max=2097152
 ```
 
-> **Note:** These sysctl tweaks don't persist across reboots. Re-run them after a restart, or create a boot script at `/data/local/tmp/network_tweaks.sh` and run it manually.
+> **Note:** The sysctl tweaks don't persist across reboots. Re-run them after a restart.
 
-### Auto-Open POV on Kodi Startup
+---
 
-POV has a built-in autostart feature — no custom service addon needed. Enable it in POV → Settings → SETTINGS: POV → General → **Auto Start POV when Kodi Starts** → On.
+## Optional: Replace the Default Launcher with FLauncher
 
-This is configured in Step 7 above. When Kodi launches, POV opens automatically to its home screen with your Trakt progress, watchlist, and trending content.
+The stock Ugoos home screen is cluttered. **FLauncher** is a free, open-source launcher that gives you a clean grid of apps.
 
-### Or Run It All at Once
+> **Important:** The Play Store shows FLauncher as "incompatible" on AOSP Android 14. Must sideload.
 
-A script that applies system tweaks and deploys Kodi config is included in this repo:
+### Install FLauncher
 
+Open **Chrome** on the Ugoos → go to `apkpure.com/flauncher/me.efesser.flauncher` → download and install.
+
+Or via ADB:
 ```bash
-./scripts/setup-adb.sh                    # Full setup (system tweaks + Kodi config)
-./scripts/setup-adb.sh --tivimate-only    # System tweaks only, skip Kodi (for IPTV-only boxes)
-./scripts/setup-adb.sh --dry-run          # Preview commands without executing
+adb install ~/Downloads/flauncher.apk
 ```
 
-The `--tivimate-only` flag is useful when setting up a box with just TiviMate and no Kodi (e.g., a second box for a family member). It applies all the Android system optimizations but skips Kodi-specific configuration.
+### Set FLauncher as Default
 
-Restart Kodi after running (if Kodi is installed).
+Use ADB to set FLauncher as the home activity:
+```bash
+adb shell cmd package set-home-activity me.efesser.flauncher/.MainActivity
+```
+
+To also prevent long-press Home from going to the stock launcher:
+```bash
+adb shell settings put secure assistant me.efesser.flauncher/.MainActivity
+```
+
+If `set-home-activity` doesn't work, disable the stock launcher instead:
+```bash
+adb shell pm disable-user --user 0 com.uapplication.launcher
+adb shell reboot
+```
+
+To undo later: `adb shell pm enable com.uapplication.launcher`
+
+### Set a Wallpaper
+
+FLauncher's built-in wallpaper picker may not work on AOSP Android 14. Use Chrome on the device:
+
+1. Open **Chrome** → go to `unsplash.com/s/photos/oled-dark` (true blacks for OLED)
+2. Long press an image → **Download image**
+3. Go to FLauncher home → **long press the background** → **Wallpaper** → **Pick a photo**
+4. Select from Chrome's Downloads folder
+
+> **Note:** Pushing images via ADB and running media scanner doesn't work reliably on this AOSP build. Always download through Chrome on the device.
+
+### FLauncher Settings Workaround
+
+The gear icon in FLauncher may not respond to clicks on the Ugoos remote (AOSP input handling issue). Use **scrcpy** from your Mac to click it with a mouse cursor:
+
+```bash
+scrcpy
+```
+
+Mouse-click the gear icon to set up categories/layout. You only need to do this once.
+
+---
+
+## Optional: SmartTube (Ad-Free YouTube)
+
+The stock YouTube app on AOSP Android boxes is the mobile version and runs poorly. SmartTube is a free, ad-free YouTube client built for Android TV.
+
+1. Open Chrome on the Ugoos
+2. Go to `smarttubeapp.github.io`
+3. Download and install the APK
+4. Features: no ads, SponsorBlock, 4K/HDR support, Android TV interface
 
 ---
 
@@ -430,280 +378,47 @@ cd streambox
 claude
 ```
 
-Claude will detect your Ugoos via ADB, deploy configs, and apply system tweaks. See `CLAUDE.md` for details.
+Claude will detect your Ugoos via ADB and apply system tweaks. See `CLAUDE.md` for details.
 
 ---
 
 ## Network Tips
 
-- **Ethernet is strongly recommended** for 4K streaming. The AM9 Pro has a 1 Gigabit ethernet port.
+- **Ethernet is recommended** for the most stable streams. The AM9 Pro has a 1 Gigabit ethernet port.
 - If you're on WiFi, use the **5GHz band** (not 2.4GHz).
-- 4K Real Debrid streams need consistent 25-50 Mbps.
+- IPTV needs consistent 50+ Mbps for reliable HD sports streams.
+- The AM9 Pro's WiFi 6 at 850+ Mbps is more than enough over WiFi.
 
 ---
 
-## Choosing a Player on the Ugoos
+## Common Issues
 
-The AM9 Pro runs Android 14 AOSP, so you can install any Android media player. Here's what works and what to use when.
-
-### Kodi (recommended — what this guide uses)
-
-Best for: streaming via addons (POV + Real Debrid) and full customization. Kodi is the hub that ties everything together — addons scrape sources, Real Debrid resolves the links, and Kodi plays them. It handles 4K HDR, Dolby Vision, and surround audio. Best buffering of any player (350MB configurable cache). The downside is it takes some setup (which is what this guide is for).
-
-### TiviMate (recommended for live sports)
-
-Best for: live sports and live TV via IPTV. TiviMate is the gold standard IPTV player for Android boxes. It has an EPG (electronic program guide), catch-up TV, recording, favorites, and multi-playlist support. Pair it with an IPTV service like Strong 8K (~$2-5/month) and you get every sports channel (ESPN, Fox Sports, regional sports networks like SportsNet LA) with no blackouts. This is the best way to watch live sports on the Ugoos — far more reliable than free Kodi sports addons which are constantly dying. See the TiviMate Setup section below for full instructions.
-
-### SmartTube
-
-Best for: YouTube without ads. The stock YouTube app on AOSP Android boxes is the mobile version and runs poorly. SmartTube is a free, ad-free YouTube client built for Android TV. Sideload it from `smarttubeapp.github.io`. Highly recommended.
-
-### VLC
-
-Best for: local file playback. If you have movies on a USB drive or NAS, VLC plays everything. Install from Play Store. For streaming via addons and Real Debrid, Kodi is better.
-
-### MX Player
-
-Best for: local file playback with hardware acceleration. Similar to VLC but some people prefer it for its codec handling on Amlogic chips. Install from Play Store.
-
-### What we recommend
-
-Use **Kodi + POV** as your main streaming hub for movies and TV (Real Debrid + Trakt). Add **TiviMate + IPTV** for live sports (no blackouts, every channel). Add **SmartTube** for ad-free YouTube. That covers everything.
+- **TiviMate not on Play Store:** AOSP Android 14 doesn't have it. Sideload from Uptodown: `tivimate.en.uptodown.com/android/download`
+- **TiviMate Companion vs TiviMate:** Companion is only for managing your premium subscription. The actual player is "TiviMate IPTV Player" (`ar.tvplayer.tv`).
+- **DecoderInitializationException:** Turn off **Tunneled Playback** and **Audio Passthrough** in Settings → Player. The S905X5 doesn't handle tunneled playback well with IPTV streams.
+- **EPG empty / no program data:** Clear EPG (Settings → EPG → Clear EPG) then Update EPG. Check playlist EPG URL is populated. Try the Strong 8K app for pre-configured EPG. Third-party EPG: `myepg.top` supports Strong 8K.
+- **EPGenius HttpDataSourceException:** Update credentials via the EPGenius Edit Credentials tool on their website, then refresh the playlist in TiviMate. Run `/dns` in EPGenius Discord to verify your server URL.
+- **IPTV channels not loading:** Verify Xtream Codes credentials are correct. Force-stop and restart TiviMate. Check if your IPTV trial has expired.
+- **Live sports quality:** ESPN streams at 720p, Fox Sports at 1080p — this is the source broadcast quality, not an IPTV limitation. "8K/4K" branding refers to VOD content.
+- **Channels slow to start:** Normal IPTV behavior. Buffer set to Small gives fastest channel switching.
+- **FLauncher package name:** Stock Ugoos launcher is `com.uapplication.launcher` (NOT `com.ugoos.launcher`). FLauncher is `me.efesser.flauncher`.
+- **FLauncher gear icon not responding:** Use scrcpy from your Mac to mouse-click it. AOSP input handling issue.
+- **FLauncher Play Store incompatible:** Sideload from `apkpure.com/flauncher/me.efesser.flauncher`.
+- **Long-press Home goes to stock launcher:** Run `adb shell settings put secure assistant me.efesser.flauncher/.MainActivity`
 
 ---
 
-## Bonus: Stream PC Games with Moonlight
-
-If you have a gaming PC, you can stream your games to the Ugoos and play them on your TV. Moonlight is a free, open-source game streaming client that uses NVIDIA's GameStream protocol (or Sunshine, which works with any GPU).
-
-### What you need
-
-- **On your PC:** [Sunshine](https://github.com/LizardByte/Sunshine) installed and running (works with NVIDIA, AMD, and Intel GPUs). If you have an NVIDIA GPU, you can also use NVIDIA GeForce Experience's built-in GameStream, but Sunshine is recommended since NVIDIA deprecated GameStream.
-- **On the Ugoos:** Moonlight app
-- **Network:** Both devices on the same network. Ethernet on both ends is strongly recommended — WiFi adds latency. The AM9 Pro's gigabit ethernet is plenty for 4K 60fps streaming.
-- **Controller:** A Bluetooth gamepad paired to the Ugoos (Xbox, PlayStation, or 8BitDo controllers all work)
-
-### Setting up Sunshine on your PC
-
-1. Download Sunshine from [github.com/LizardByte/Sunshine](https://github.com/LizardByte/Sunshine/releases)
-2. Install and run it — it starts a web UI at `https://localhost:47990`
-3. Set a username and password on first launch
-4. Sunshine will auto-detect your installed games, or you can add them manually
-
-### Installing Moonlight on the Ugoos
-
-1. On the Ugoos, open the Play Store and search for **Moonlight Game Streaming**
-2. Install it (or sideload the APK from [moonlight-stream.org](https://moonlight-stream.org))
-3. Open Moonlight — it should auto-discover your PC on the local network
-4. Click your PC → enter the PIN shown on the Ugoos into the Sunshine web UI on your PC
-5. Once paired, you'll see your game library
-
-### Recommended settings
-
-- **Resolution:** 1080p or 4K depending on your GPU (4K needs a strong GPU like RTX 3070+)
-- **Frame rate:** 60fps (or 120fps if your TV supports it)
-- **Bitrate:** 40-80 Mbps for 4K, 20-40 Mbps for 1080p — higher is better if your network handles it
-- **Codec:** H.265 (HEVC) — the AM9 Pro decodes this in hardware with no performance hit
-- **HDR:** Enable if your PC and TV both support it — the Ugoos passes HDR through
-
-### Tips
-
-- Pair a Bluetooth controller to the Ugoos before launching Moonlight: Ugoos Settings → Bluetooth → pair your controller
-- For the lowest latency, use ethernet on both the PC and the Ugoos — WiFi adds 10-30ms
-- If you see stuttering, lower the bitrate or resolution
-- Moonlight also supports mouse and keyboard input if you plug USB peripherals into the Ugoos
-- The Ugoos remote won't work as a game controller — you need a proper gamepad
-
----
-
-## Replacing Your Apple TV with the Ugoos
-
-If you're switching from an Apple TV 4K, here's how to make the Ugoos feel like home.
-
-### Replace the Default Launcher
-
-The stock Ugoos home screen is cluttered. **FLauncher** is a free, open-source launcher that gives you a clean grid of apps — similar to Apple TV's layout.
-
-> **Important:** The Play Store shows FLauncher as "incompatible" on AOSP Android 14 devices. You must sideload it via the device browser or ADB.
-
-**Install via the device browser (easiest):**
-
-1. Open **Chrome** on the Ugoos
-2. Go to `apkpure.com/flauncher/me.efesser.flauncher`
-3. Tap **Download APK** and install it
-4. If Android blocks the install, allow "Unknown Sources" for Chrome when prompted
-
-**Or install via ADB:**
-
-```bash
-# Download on your Mac
-curl -L -o ~/Downloads/flauncher.apk "https://apkpure.com/flauncher/me.efesser.flauncher/download"
-# If curl gets an HTML page instead of the APK, download manually from the APKPure site
-adb install ~/Downloads/flauncher.apk
-```
-
-**Set FLauncher as default:**
-
-1. Use ADB to set FLauncher as the home activity directly:
-   ```bash
-   adb shell cmd package set-home-activity me.efesser.flauncher/.MainActivity
-   ```
-2. If that doesn't work, disable the stock launcher instead (forces Android to use FLauncher):
-   ```bash
-   adb shell pm disable-user --user 0 com.uapplication.launcher
-   adb shell reboot
-   ```
-
-To undo later: `adb shell pm enable com.uapplication.launcher`
-
-### Set a Wallpaper
-
-FLauncher's built-in wallpaper picker may not work on AOSP Android 14. The workaround is to download an image through Chrome on the device:
-
-1. Open **Chrome** on the Ugoos and browse to any wallpaper site (e.g., `unsplash.com/s/photos/dark-abstract`)
-2. Long press an image → **Download image**
-3. Go back to FLauncher home screen → long press the background → **Wallpaper** → **Pick a photo**
-4. Select the image from Chrome's Downloads folder
-
-> **Note:** Pushing images via ADB and running media scanner doesn't work reliably on this AOSP build. Always download through Chrome on the device.
-
-### Organize the Home Screen
-
-FLauncher auto-populates apps into two rows: **TV Applications** (apps with Android TV leanback intent) and **Non-TV Applications** (everything else). To manage apps:
-
-1. Tap the **gear icon** (top right) to open FLauncher settings
-2. Select a category (TV Applications or Non-TV Applications)
-3. Use the three tabs: TV icon (TV apps), Android icon (non-TV apps), eye-slash icon (hidden apps)
-4. Tap the **[+]** button next to an app to add it to the home screen row
-5. Long press any app tile on the home screen to move or remove it
-
-> **Note:** Only apps with an Android TV "leanback" intent appear in the TV Applications row. Phone/tablet versions of apps (like regular YouTube) only appear in Non-TV Applications. Install the **Android TV version** of apps (e.g., YouTube for Android TV) for them to show in the TV row.
-
-Suggested layout:
-
-- **Row 1 (TV Apps):** Kodi, Netflix, YouTube (Android TV version), Disney+, HBO Max
-- **Row 2 (Non-TV Apps):** Chrome, Settings
-- **Hide everything else:** Clock, Files, Gallery, File Browser, Total Commander, etc.
-
-The fewer apps visible, the easier it is for everyone.
-
-### Remote Control
-
-Good news: HDMI-CEC works out of the box on the Ugoos. Your TV remote (LG Magic Remote, Samsung OneRemote, Sony, etc.) controls the Ugoos — d-pad navigation, select, back, volume, power. No extra setup needed.
-
-### What You Keep
-
-- All major streaming apps (Netflix, Disney+, Hulu, HBO Max, YouTube, Spotify) — install from Play Store
-- TV remote controls everything via CEC
-- 4K HDR and Dolby Vision support
-- Voice control via Google Assistant (if you set it up in Ugoos Settings)
-
-### What You Lose
-
-- **AirPlay** — no native AirPlay on Android. Install **AirScreen** from the Play Store as a workaround, but it's not as seamless as Apple TV
-- **Apple TV+ app** — not available on Android. Cast from your phone or watch in a browser
-- **Siri** — your TV remote's mic button won't do universal search the way Siri does on Apple TV
-- **iCloud Photos / Apple ecosystem** — no integration with Apple services
-
-### What You Gain
-
-- POV with Real Debrid — free 4K movies and TV with Trakt integration
-- TiviMate + IPTV — live sports with EPG, no blackouts (~$2-5/month)
-- SmartTube — ad-free YouTube
-- Sideloading any Android app
-- Full customization (launchers, skins, settings)
-
----
-
-## TiviMate Setup (Live Sports via IPTV)
-
-TiviMate turns your Ugoos into a cable TV replacement for live sports. Pair it with an IPTV service and you get every sports channel (ESPN, Fox Sports, SportsNet LA, Sky Sports, beIN, regional networks) with no blackouts, plus an EPG (electronic program guide) so you can browse what's on.
-
-### Why IPTV Instead of Kodi Sports Addons?
-
-Free Kodi sports addons (Mad Titan Sports, The Loop, SportHD, Winner 2) are almost all abandoned or dying as of 2026. They depend on volunteer devs maintaining scrapers for streams that constantly move — it's fundamentally fragile. A paid IPTV service (~$2-15/month) gives you maintained infrastructure, reliable streams, and every channel. Think of it as the Real Debrid equivalent for live TV.
-
-### Install TiviMate
-
-TiviMate is not available on the Play Store for AOSP Android 14. Sideload it via Uptodown:
-
-1. Open **Chrome** on the Ugoos
-2. Go to `tivimate.en.uptodown.com/android/download`
-3. Download the APK and install it
-4. If Android blocks the install, allow "Unknown Sources" for Chrome
-
-> **Package:** `ar.tvplayer.tv` — TiviMate premium (~$20/year) unlocks recording, multi-playlist, and favorites. The free version works fine for testing.
-
-### Get an IPTV Service
-
-You need an IPTV service that provides Xtream Codes credentials (server URL + username + password). The Troypoint community recommends **Strong 8K** as a reliable, affordable option:
-
-1. Visit `strong8k.app` or search for Strong IPTV resellers
-2. **Always get a 24-hour free trial first** — test during a live game before paying
-3. Start with a **1-month subscription** (never pay yearly upfront with IPTV — services can disappear)
-4. They'll provide you with an Xtream Codes login: server URL, username, and password
-
-Other well-reviewed IPTV services include Citizen IPTV (known for stability during live sports) and StreamHut TV.
-
-> **Pricing:** Strong 8K runs ~$2-5/month through resellers, $10-15/month direct. Most IPTV services are $8-15/month.
-
-> **Quality:** Live sports channels are typically 720p-1080p at the source (ESPN broadcasts at 720p, Fox Sports at 1080p). The "8K/4K" branding applies to some VOD content, not live sports. Still looks great on an OLED.
-
-### Configure TiviMate
-
-1. Open TiviMate → it will prompt you to **Add Playlist**
-2. Select **Xtream Codes**
-3. Enter the **Server URL**, **Username**, and **Password** from your IPTV provider
-4. Name the playlist (e.g., "Strong 8K")
-5. Hit **Connect** — it will download the channel list and EPG
-6. Browse channels by category → find **Sports** → look for **SportsNet LA**, **ESPN**, **Fox Sports**, etc.
-
-### TiviMate Player Settings
-
-In TiviMate → Settings → Player:
-
-- **Buffer Size** → **Small** (fast channel switching with minimal delay. Bump to Medium if you see stuttering)
-- **Audio Passthrough** → **Off** (can cause decoder errors with some IPTV streams)
-- **Tunneled Playback** → **Off** (causes DecoderInitializationException on the AM9 Pro's S905X5 chip with IPTV streams. Leave this off.)
-- **AFR (Auto Frame Rate)** → **On** (matches TV refresh rate to the stream — important for 60fps sports)
-- **AFR on VOD** → **Off** (causes unnecessary screen flicker; movies are handled by Kodi anyway)
-- **Switch 50/60fps only** → **On** (only switches refresh rate for sports broadcasts, avoids flicker on everything else)
-
-### Tips
-
-- **No blackouts** — IPTV services carry regional sports networks directly, not through MLB/NFL infrastructure, so there are no in-market blackouts
-- **EPG** — TiviMate shows a full TV guide so you can see what's on across all channels. If the guide is empty, check Settings → Playlists → your playlist → EPG URL is populated. Force refresh via Settings → EPG → Update EPG.
-- **Favorites** — star your most-watched channels (SportsNet LA, ESPN, etc.) for quick access
-- **Recording** (premium) — record live games to watch later
-- **Premium recommended** (~$20/year or ~$34 lifetime via TiviMate Companion app) — unlocks auto EPG updates, favorites, recording, multi-playlist, and channel hiding
-
----
-
-## Understanding Stream Quality
-
-When browsing sources in POV, you'll see filenames with quality tags. Here's what they mean, from best to worst:
-
-**REMUX** — full Blu-ray rip with no re-encoding. Lossless video and audio. 40-80GB for 4K, 20-40GB for 1080p. The best quality possible.
-
-**WEB-DL** — pulled directly from a streaming service (Netflix, Amazon) without re-encoding. Slightly compressed vs Remux but visually near-identical. 10-20GB for 4K.
-
-**BDRip / BRRip** — re-encoded from a Blu-ray. Smaller file size, slight quality loss. 2-8GB. Fine for casual watching.
-
-**WEBRip** — screen-captured from a streaming service. Slightly worse than WEB-DL.
-
-**HDRip / HDTV** — lower quality. Avoid if Real Debrid links are available.
-
-**CAM / TS / TC** — filmed in a theater. Never watch these.
-
-**Tags to look for:**
-
-- **2160p** = 4K, **1080p** = Full HD
-- **HDR10** or **DV** (Dolby Vision) = HDR content, looks great on OLED
-- **Atmos** or **DTS-HD MA** or **TrueHD** = lossless surround audio
-- **x265/HEVC** = efficient codec, smaller files at same quality vs x264
-- **[RD]** = Real Debrid cached link, fast and reliable
-
-When browsing results, bigger file size generally means better quality. A 60GB 4K Remux with Atmos will look and sound noticeably better than a 4GB 1080p BRRip.
+## Subscriptions & Costs
+
+| Service | What It Is | Cost | Renewal |
+|---------|-----------|------|---------|
+| **TiviMate Premium** | IPTV player — unlocks recording, multi-playlist, favorites | ~$20/year or ~$34 lifetime | In-app or via TiviMate Companion app |
+| **Strong 8K** | IPTV service — 30K+ channels, sports, VOD | ~$2-5/month (reseller) | Contact your reseller to renew |
+| **Chillio** | IPTV service | Varies | Contact provider |
+| **myIPTV (iPhone)** | IPTV player for iOS | Varies | App Store subscription |
+| **EPGenius** | Community-curated playlists with better EPG | $10 donation | Voluntary — donate via their website/Discord |
+
+> **Total monthly cost:** Roughly $5-15/month depending on your Strong 8K reseller pricing, plus the annual TiviMate renewal.
 
 ---
 
@@ -711,14 +426,18 @@ When browsing results, bigger file size generally means better quality. A 60GB 4
 
 | What | Where |
 |------|-------|
-| POV | Add-ons → Video add-ons → POV |
-| TiviMate | Sideload from Uptodown (tivimate.en.uptodown.com/android/download) |
+| TiviMate | Sideload from Uptodown (`tivimate.en.uptodown.com/android/download`) |
+| Strong 8K | `strong8k.app` — Xtream Codes credentials |
+| EPGenius | `epgenius.org` — curated playlists with better EPG |
 | IPTV setup | TiviMate → Add Playlist → Xtream Codes → enter credentials |
-| Real Debrid auth | POV → Settings → SETTINGS: My Services → Real-Debrid → Authorize |
-| Display refresh rate | Settings → Player → Videos → On start/stop |
-| Hardware acceleration | Settings → Player → Videos → MediaCodec (Surface) → On |
-| Ugoos display | Ugoos Settings → Display → YCbCr 4:2:2 12-bit |
-| Ugoos HDR / DV | Ugoos Settings → Display → HDR On, Dolby Vision On |
+| EPGenius setup | TiviMate → Add Playlist → M3U Playlist → paste Google Drive URL |
+| Player settings | Tunneled Playback OFF, Audio Passthrough OFF, Buffer Small, AFR ON |
+| EPG refresh | Settings → EPG → Update Interval → 4 hours |
+| Channel cleanup | Settings → Playlists → Manage Groups → hide unwanted groups |
+| Ugoos display | Settings → Display → YCbCr 4:2:2 12-bit, 4K 60Hz, AFR On |
+| Ugoos HDR / DV | Settings → Display → HDR On, Dolby Vision On |
 | TV HDMI Deep Colour | TV Settings → HDMI → Deep Colour → On |
-| FLauncher | Sideload APK from APKPure (Play Store incompatible on AOSP) |
-| Firmware update | Ugoos Settings → OTA Update |
+| FLauncher | Sideload from APKPure, set default via `adb shell cmd package set-home-activity` |
+| SmartTube | Sideload from `smarttubeapp.github.io` |
+| System tweaks | `./scripts/setup-adb.sh --tivimate-only` |
+| Firmware update | Ugoos Settings → OTA Update (2.0.6+) |

@@ -1,25 +1,22 @@
 # Streambox — Claude Code Project Instructions
 
-This repo contains setup instructions and configuration files for a Ugoos AM9 Pro streaming box running Kodi with POV (Real Debrid) and TiviMate (IPTV for live sports).
+This repo contains setup instructions and configuration files for a Ugoos AM9 Pro streaming box running TiviMate with Strong 8K IPTV and EPGenius curated playlists.
 
 ## Project Context
 
 - **Device:** Ugoos AM9 Pro (Amlogic S905X5-J, Android 14 AOSP, 4GB RAM, 64GB storage)
-- **Media Player:** Kodi 21.x Omega (ARMV8A 64-bit)
-- **Primary Addons:** POV (movies/TV via Real Debrid + external scrapers)
-- **Live Sports:** TiviMate (ar.tvplayer.tv) with IPTV service (Strong 8K recommended, ~$2-5/month via resellers)
-- **Real Debrid:** Premium link aggregator — authorized directly in POV's My Services settings
-- **Trakt:** Watch history and progress tracking — authorized in POV's My Services settings
+- **IPTV Player:** TiviMate (ar.tvplayer.tv) — gold standard IPTV player for Android
+- **IPTV Service:** Strong 8K (~$2-5/month via resellers, Xtream Codes credentials)
+- **Curated Playlists:** EPGenius (epgenius.org) — community-curated channel lists with better EPG mapping
 - **Target Display:** LG C5 OLED (Dolby Vision, HDR10, eARC)
 - **Launcher:** FLauncher (package: `me.efesser.flauncher`, replaces stock Ugoos launcher `com.uapplication.launcher`)
 - **Audio Receiver:** Onkyo RZ900 (ARC only, no eARC)
 
 ## What This Repo Contains
 
-- `README.md` — Full step-by-step setup guide for manual configuration
+- `README.md` — Full step-by-step setup guide for TiviMate + Strong 8K + EPGenius
 - `CLAUDE.md` — This file. Project context for Claude Code.
 - `.claude/agent.md` — Agent instructions for automated ADB-based setup
-- `configs/advancedsettings.xml` — Kodi network timeout and GUI optimization config
 - `scripts/setup-adb.sh` — Automated ADB setup script
 
 ## ADB Access
@@ -28,72 +25,25 @@ The Ugoos AM9 Pro supports ADB over USB and WiFi. When connected via ADB, Claude
 
 1. **Detect the device:** `adb devices`
 2. **Get root access:** `adb root` (Ugoos AOSP supports this)
-3. **Find Kodi userdata path:** `adb shell "find / -name 'guisettings.xml' 2>/dev/null | head -1"`
-   - Typical path: `/data/media/0/Android/data/org.xbmc.kodi/files/.kodi/userdata/`
-4. **Deploy advancedsettings.xml** to the userdata directory
-5. **POV autostart** is built-in (Settings → General → Auto Start POV when Kodi Starts)
-6. **Set Real Debrid priority** in POV's My Services settings (priority 0)
-7. **Apply system tweaks** (animations, DNS, telemetry, HDR passthrough, network optimization)
-8. **Swap launcher:** `adb shell cmd package set-home-activity me.efesser.flauncher/.MainActivity` (or disable `com.uapplication.launcher` as fallback)
-9. **TiviMate-only mode:** `./scripts/setup-adb.sh --tivimate-only` (system tweaks only, skip Kodi)
-10. **Check firmware version:** `adb shell "getprop ro.build.display.id"`
+3. **Apply system tweaks:** `./scripts/setup-adb.sh --tivimate-only`
+4. **Swap launcher:** `adb shell cmd package set-home-activity me.efesser.flauncher/.MainActivity`
+5. **Fix long-press Home:** `adb shell settings put secure assistant me.efesser.flauncher/.MainActivity`
+6. **Disable stock launcher (fallback):** `adb shell pm disable-user --user 0 com.uapplication.launcher`
+7. **Launch TiviMate:** `adb shell monkey -p ar.tvplayer.tv -c android.intent.category.LAUNCHER 1`
+8. **Check firmware version:** `adb shell "getprop ro.build.display.id"`
 
 ### Important ADB Notes
 
-- Android 14 restricts `Android/data/` access — `adb root` is required to write to Kodi's userdata folder
-- The `/sdcard/` path often maps to `/data/media/0/` or `/storage/emulated/0/` — they are the same filesystem
-- Always verify the Kodi userdata path by searching for `guisettings.xml` rather than hardcoding a path
-- Restart Kodi after modifying any config files for changes to take effect
 - zsh on macOS interprets `!` in heredocs — use single-quoted heredocs (`'EOF'`) or escape with `\!`
+- The `/sdcard/` path often maps to `/data/media/0/` or `/storage/emulated/0/` — they are the same filesystem
 
-## Key Configuration Files
-
-### advancedsettings.xml
-
-Located at: `<kodi-userdata>/advancedsettings.xml`
-
-Controls network timeouts and GUI rendering. **Cache settings are now in the Kodi GUI** (Settings → Services → Caching) since Kodi 21 Omega — the XML cache tags are ignored.
-
-See `configs/advancedsettings.xml` for the recommended configuration.
-
-### Kodi Cache Settings (GUI only — not in XML)
-
-Configure in Kodi: Settings → Services → Caching (Expert mode):
-- **Buffer Mode** → Buffer all filesystems, including local files
-- **Memory size** → 350 MB
-- **Read factor** → 20
-
-### POV Autostart
-
-POV has a built-in autostart feature. No custom service addon needed.
-
-Enable in: POV → Settings → SETTINGS: POV → General → **Auto Start POV when Kodi Starts** → On
-
-### POV Real Debrid Settings
-
-Configured directly in POV (not ResolveURL):
-
-POV → Settings → SETTINGS: POV → My Services → Real Debrid:
-- **Priority** → 0 (lowest = highest priority)
-- **Use Torrent Services** → On
-- **Search RD Cloud** → On
-- **Enable** → On
-
-### POV External Scrapers
-
-POV → Settings → SETTINGS: POV → Sources:
-- **External Scrapers → Enable** → On
-- **Remove Undesirables** → On
-- Enabled sources: piratebay, torrentio, aiostreams (comet/mediafusion), torrentsdb, zilean
-- Disabled: bitmagnet, dmm, nyaa, torrentdownload, meteor, stremthru torz
-
-## TiviMate Setup (Live Sports via IPTV)
+## TiviMate Setup
 
 - **Package:** `ar.tvplayer.tv`
 - **APK:** Sideload from Uptodown (`tivimate.en.uptodown.com/android/download`) — not available on Play Store for AOSP
-- **Launch:** `adb shell monkey -p ar.tvplayer.tv -c android.intent.category.LAUNCHER 1`
 - **Premium:** ~$20/year — unlocks recording, multi-playlist, favorites management
 - **IPTV Service:** Strong 8K recommended (~$2-5/month via resellers, trial available)
+- **Alternative App:** Strong 8K has their own app (rebranded TiviMate v5.1.6) with pre-configured EPG
 
 ### TiviMate Configuration
 
@@ -103,64 +53,58 @@ POV → Settings → SETTINGS: POV → Sources:
 4. Connect → downloads channel list + EPG automatically
 5. Browse Sports category for ESPN, Fox Sports, SportsNet LA, etc.
 
-### Why IPTV Instead of Kodi Sports Addons
-
-Free Kodi sports addons (Mad Titan Sports, The Loop, SportHD, Winner 2) are almost all abandoned as of 2026. IPTV services provide maintained infrastructure, reliable streams, EPG, and every sports channel for ~$2-15/month. No blackouts on regional sports networks.
-
 ### TiviMate Player Settings
 
 - **Buffer Size** → Small (fast channel switching; bump to Medium if stuttering)
 - **Audio Passthrough** → Off (causes decoder errors on some IPTV streams)
 - **Tunneled Playback** → Off (causes DecoderInitializationException on S905X5 with IPTV streams)
 - **AFR (Auto Frame Rate)** → On
-- **AFR on VOD** → Off (unnecessary flicker, movies handled by Kodi)
+- **AFR on VOD** → Off (unnecessary flicker)
 - **Switch 50/60fps only** → On (only switches for sports broadcasts, avoids flicker on other content)
+- **Video Decoder** → Hardware
+
+### TiviMate EPG & Playlist Settings
+
+- EPG Update Interval → 4 hours
+- Playlist Update Interval → 4 hours
+- Past EPG Days to Keep → 1
+- Logos → Prefer logos from EPG
+
+### Channel Labels
+
+- **VIP** — premium/highest priority stream, most stable during peak hours
+- **8K** — higher bitrate stream (not actual 8K resolution)
+- **BK** — backup stream from different server, use as fallback
+- Prefer: VIP > 8K > standard > BK
+
+## EPGenius Curated Playlists
+
+EPGenius provides community-curated M3U playlists with clean channel names, proper logos, organized categories, and better EPG mapping than raw IPTV provider feeds.
+
+### Setup
+
+1. Go to `epgenius.org`, filter by IPTV provider (Strong 8K)
+2. Preview playlist → click Google Drive to set up
+3. Enter Xtream Codes credentials when prompted
+4. EPGenius saves curated M3U to Google Drive (auto-updates)
+5. In TiviMate: Add Playlist → M3U Playlist → paste Google Drive URL
+6. Register playlist in EPGenius Discord (`🤖〢bot-commands` channel) — required to keep it active
+
+### Credentials Edit Tool
+
+Update credentials at `epgenius.org` → Edit Credentials → Update DNS/username/password → Update Credentials → refresh playlist in TiviMate
+
+### Troubleshooting EPGenius
+
+- **HttpDataSourceException:** Update credentials via EPGenius Edit Credentials tool, refresh playlist. Run `/dns` in Discord to verify server URL.
+- **Channels load but won't play:** Credentials mismatch — verify with Edit Credentials tool
+- **EPG missing on some channels:** Long-press channel → EPG Source → manually map
 
 ### IPTV Quality Notes
 
 - Live sports channels: 720p-1080p at source (ESPN = 720p, Fox Sports = 1080p)
 - "8K/4K" branding on IPTV services applies to VOD content, not live sports
 - Needs 50+ Mbps bandwidth (AM9 Pro's WiFi 6 at 850+ Mbps is more than enough)
-
-## Addon Repository Sources
-
-| Addon | Repo URL | Repo Name |
-|-------|----------|-----------|
-| POV | `https://kodifitzwell.github.io/repo/` | `kodifitzwell` |
-
-## POV Optimal Settings
-
-Configured through POV → Settings → SETTINGS: POV:
-
-**Sources tab:**
-- External Scrapers → Enable → On
-- Remove Undesirables → On
-- Enabled sources: piratebay, torrentio, aiostreams, torrentsdb, zilean
-
-**My Services tab:**
-- Real Debrid → Priority 0, Use Torrent Services On, Search RD Cloud On
-- Trakt → Authorized
-
-**General tab:**
-- Auto Start POV when Kodi Starts → On
-- Maximum threads → 60
-- Enable Kodi Menu Caching → On
-
-**Features tab:**
-- Preferred Audio Language → English
-- Show Release Year in Listings → On
-- Include Unaired Episodes → Off
-
-## Kodi Player Settings
-
-- **Adjust display refresh rate** → On start/stop
-- **Adjust display HDR mode** → On
-- **Sync playback to display** → Off (causes audio drift)
-- **MediaCodec (Surface)** → On (critical for 4K HDR/DV)
-- **MediaCodec** → On
-- **Dolby Vision compatibility mode** → Off
-- **Allowed HDR dynamic metadata formats** → Dolby Vision, HDR10+
-- **Preferred subtitle language** → None
 
 ## Ugoos Recommended Settings
 
@@ -175,13 +119,12 @@ Configured through POV → Settings → SETTINGS: POV:
 Applied via `scripts/setup-adb.sh`:
 
 ```bash
-./scripts/setup-adb.sh                    # Full setup (system tweaks + Kodi config)
-./scripts/setup-adb.sh --tivimate-only    # System tweaks only, skip Kodi (for IPTV-only boxes)
-./scripts/setup-adb.sh --skip-system-tweaks
+./scripts/setup-adb.sh --tivimate-only    # System tweaks only (recommended)
+./scripts/setup-adb.sh                     # Full setup (includes Kodi config if Kodi installed)
 ./scripts/setup-adb.sh --dry-run
 ```
 
-System tweaks applied (both modes):
+System tweaks applied:
 - Animations → 0 (instant UI)
 - WiFi sleep policy → never
 - Cloudflare DNS-over-TLS (`1dot1dot1dot1.cloudflare-dns.com`)
@@ -192,14 +135,20 @@ System tweaks applied (both modes):
 - TCP buffer sizes increased (rmem_max/wmem_max → 2MB)
 - Bloatware disabled (printspooler, ugoosfirstrun)
 
-Kodi config (full mode only):
-- Deploys advancedsettings.xml (network timeouts + GUI rendering)
-- Reminds to configure POV and cache through the UI
-
 Not handled by script (manual UI setup):
 - FLauncher sideload + launcher swap (optional — stock launcher works fine)
-- POV autostart (built-in setting: POV → Settings → General → Auto Start POV)
 - TiviMate player settings (tunneled playback off, audio passthrough off, buffer small, AFR on)
+- EPGenius playlist setup
+
+## FLauncher
+
+- **Package:** `me.efesser.flauncher`
+- **Install:** Sideload from `apkpure.com/flauncher/me.efesser.flauncher` (Play Store incompatible on AOSP)
+- **Set default:** `adb shell cmd package set-home-activity me.efesser.flauncher/.MainActivity`
+- **Fix long-press Home:** `adb shell settings put secure assistant me.efesser.flauncher/.MainActivity`
+- **Disable stock launcher (fallback):** `adb shell pm disable-user --user 0 com.uapplication.launcher`
+- **Gear icon workaround:** Use scrcpy from Mac to mouse-click (AOSP remote input issue)
+- **Wallpapers:** Download through Chrome on device (ADB media scanner unreliable on AOSP)
 
 ## TV Picture Settings (LG C5 OLED)
 
@@ -212,24 +161,26 @@ Not handled by script (manual UI setup):
 - TruMotion → Off
 - Super Resolution / Noise Reduction / Sharpness → Off/0
 
+## Subscriptions & Costs
+
+| Service | Cost | Notes |
+|---------|------|-------|
+| TiviMate Premium | ~$20/year or ~$34 lifetime | IPTV player. Renew in-app or via Companion app |
+| Strong 8K | ~$2-5/month (reseller) | IPTV service. Renew through reseller |
+| Chillio | Varies | IPTV service |
+| myIPTV (iPhone) | Varies | iOS IPTV player |
+| EPGenius | $10 donation | Community-curated playlists. Voluntary donation |
+
 ## Common Issues
 
-- **Kodi crashes:** Update Ugoos firmware to 2.0.6+ via OTA Update
-- **Audio drift over time:** Configure Kodi cache (Settings → Services → Caching: 350MB, readfactor 20) and deploy advancedsettings.xml network config
-- **No passthrough option in Kodi audio:** Normal with AudioTrack (RAW) on Android — passthrough is handled at system level
-- **Can't write to Android/data via file manager:** Use ADB with root access instead
-- **ResolveURL not visible in addon list:** Check under My add-ons → All, or Program add-ons, or Dependencies
-- **Sync playback to display causes audio drift:** Turn it OFF — use Adjust display refresh rate instead
-- **advancedsettings.xml cache settings ignored:** Kodi 21 Omega moved cache to GUI. Use Settings → Services → Caching.
-- **FLauncher package name:** Stock Ugoos launcher is `com.uapplication.launcher` (NOT `com.ugoos.launcher`). FLauncher package is `me.efesser.flauncher`.
-- **FLauncher Play Store incompatible:** Play Store shows "Your device isn't compatible" on AOSP Android 14. Sideload via device browser from `apkpure.com/flauncher/me.efesser.flauncher` instead.
-- **FLauncher wallpapers:** Built-in wallpaper picker may not work on AOSP. Download images through Chrome on the device, then pick from FLauncher's wallpaper settings.
-- **FLauncher app visibility:** Only apps with Android TV leanback intent appear in the TV Applications row. Phone/tablet app versions (e.g., `com.google.android.youtube`) only show in Non-TV Applications. Install Android TV versions of apps for them to appear in the TV row.
-- **ADB media scanner unreliable on AOSP:** Pushing images via ADB and running `MEDIA_SCANNER_SCAN_FILE` broadcast doesn't reliably index files on this AOSP build. Download files through Chrome on the device instead.
-- **TiviMate not on Play Store:** AOSP Android 14 doesn't have TiviMate in the Play Store. Sideload from Uptodown: `tivimate.en.uptodown.com/android/download`.
-- **TiviMate package name:** Package is `ar.tvplayer.tv`. TiviMate Companion is a separate app for subscription management only — NOT the player.
-- **IPTV channels not loading:** Verify Xtream Codes credentials (server URL, username, password) are correct. Try force-stopping and restarting TiviMate.
-- **Live sports quality:** ESPN streams at 720p, Fox Sports at 1080p — this is the source broadcast quality, not an IPTV limitation. "8K/4K" IPTV branding refers to VOD content.
-- **TiviMate DecoderInitializationException:** Turn off Tunneled Playback and Audio Passthrough in Settings → Player. The S905X5 doesn't handle tunneled playback well with IPTV streams.
-- **TiviMate EPG empty/no program data:** Check Settings → Playlists → playlist → EPG URL is populated. Force refresh via Settings → EPG → Update EPG. Some IPTV providers need a separate EPG URL — contact provider support.
-- **TiviMate Companion vs TiviMate:** Companion is only for managing your premium subscription/account. The actual player is "TiviMate IPTV Player" (ar.tvplayer.tv).
+- **TiviMate not on Play Store:** AOSP Android 14 doesn't have it. Sideload from Uptodown.
+- **TiviMate Companion vs TiviMate:** Companion is for subscription management only. Player is `ar.tvplayer.tv`.
+- **DecoderInitializationException:** Turn off Tunneled Playback and Audio Passthrough in Settings → Player.
+- **EPG empty/no program data:** Clear EPG then Update EPG. Try Strong 8K app for pre-configured EPG. Third-party: `myepg.top`.
+- **EPGenius HttpDataSourceException:** Update credentials via Edit Credentials tool on epgenius.org, refresh playlist. Run `/dns` in Discord.
+- **IPTV channels not loading:** Verify Xtream Codes credentials. Force-stop and restart TiviMate.
+- **Live sports quality:** ESPN = 720p, Fox Sports = 1080p (source limitation, not IPTV).
+- **FLauncher gear icon not responding:** Use scrcpy to mouse-click it.
+- **FLauncher long-press Home goes to stock launcher:** `adb shell settings put secure assistant me.efesser.flauncher/.MainActivity`
+- **FLauncher wallpapers:** Download through Chrome on device, pick from FLauncher wallpaper settings.
+- **ADB media scanner unreliable:** Download files through Chrome on the device instead of ADB push.
