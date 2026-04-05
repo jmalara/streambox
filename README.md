@@ -236,10 +236,10 @@ Everything above can be done with just the Ugoos remote. The steps below require
 ### Setting Up ADB
 
 1. On the Ugoos: Settings → About → tap **Build Number** 7 times to enable Developer Options
-2. Settings → Developer Options → enable **USB Debugging**
+2. Settings → Developer Options → enable **Wireless Debugging** (no USB cable needed)
 3. On your Mac: `brew install scrcpy` (includes adb)
-4. Connect via USB and run: `adb devices`
-5. Or connect via WiFi: `adb connect <ugoos-ip>:5555`
+4. Connect via WiFi: `adb connect <ugoos-ip>:5555`
+5. Or connect via USB and run: `adb devices`
 
 ### Run the Setup Script
 
