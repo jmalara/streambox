@@ -74,7 +74,7 @@ Strong 8K has their own app (a rebranded TiviMate v5.1.6) with pre-configured EP
 In TiviMate → Settings → Player:
 
 - **Buffer Size** → **Small** (fast channel switching with minimal delay. Bump to Medium if you see stuttering)
-- **Audio Passthrough** → **Off** (can cause decoder errors with some IPTV streams on the S905X5)
+- **Audio Passthrough** → **On** (sends audio directly to your receiver/TV for best quality. Turn off if you get decoder errors.)
 - **Tunneled Playback** → **Off** (causes DecoderInitializationException on the AM9 Pro. Leave this off.)
 - **AFR (Auto Frame Rate)** → **On** (matches TV refresh rate to the stream — important for 60fps sports)
 - **AFR on VOD** → **Off** (causes unnecessary screen flicker)
@@ -356,13 +356,11 @@ FLauncher's built-in wallpaper picker may not work on AOSP Android 14. Use Chrom
 
 ### FLauncher Settings Workaround
 
-The gear icon in FLauncher may not respond to clicks on the Ugoos remote (AOSP input handling issue). Use **scrcpy** from your Mac to click it with a mouse cursor:
+The gear icon in FLauncher may not respond to clicks if the Ugoos remote is in IR mode. Pair the remote via **Bluetooth** (Settings → Remotes & Accessories → Pair new device) and it will work. If Bluetooth pairing isn't an option, use **scrcpy** from your Mac to click it with a mouse cursor:
 
 ```bash
 scrcpy
 ```
-
-Mouse-click the gear icon to set up categories/layout. You only need to do this once.
 
 ---
 
@@ -436,14 +434,14 @@ Claude will detect your Ugoos via ADB and apply system tweaks. See `CLAUDE.md` f
 
 - **TiviMate not on Play Store:** AOSP Android 14 doesn't have it. Sideload from Uptodown: `tivimate.en.uptodown.com/android/download`
 - **TiviMate Companion vs TiviMate:** Companion is only for managing your premium subscription. The actual player is "TiviMate IPTV Player" (`ar.tvplayer.tv`).
-- **DecoderInitializationException:** Turn off **Tunneled Playback** and **Audio Passthrough** in Settings → Player. The S905X5 doesn't handle tunneled playback well with IPTV streams.
+- **DecoderInitializationException:** Turn off **Tunneled Playback** in Settings → Player. If still happening, also try turning off **Audio Passthrough**.
 - **EPG empty / no program data:** Clear EPG (Settings → EPG → Clear EPG) then Update EPG. Check playlist EPG URL is populated. Try the Strong 8K app for pre-configured EPG. Third-party EPG: `myepg.top` supports Strong 8K.
 - **EPGenius HttpDataSourceException:** Update credentials via the EPGenius Edit Credentials tool on their website, then refresh the playlist in TiviMate. Run `/dns` in EPGenius Discord to verify your server URL.
 - **IPTV channels not loading:** Verify Xtream Codes credentials are correct. Force-stop and restart TiviMate. Check if your IPTV trial has expired.
 - **Live sports quality:** ESPN streams at 720p, Fox Sports at 1080p — this is the source broadcast quality, not an IPTV limitation. "8K/4K" branding refers to VOD content.
 - **Channels slow to start:** Normal IPTV behavior. Buffer set to Small gives fastest channel switching.
 - **FLauncher package name:** Stock Ugoos launcher is `com.uapplication.launcher` (NOT `com.ugoos.launcher`). FLauncher is `me.efesser.flauncher`.
-- **FLauncher gear icon not responding:** Use scrcpy from your Mac to mouse-click it. AOSP input handling issue.
+- **FLauncher gear icon not responding:** The Ugoos remote is likely in IR mode. Pair it via Bluetooth (Settings → Remotes & Accessories → Pair new device) and it will respond to clicks. Alternatively, use scrcpy from your Mac to mouse-click it.
 - **FLauncher Play Store incompatible:** Sideload from `apkpure.com/flauncher/me.efesser.flauncher`.
 - **Long-press Home goes to stock launcher:** Run `adb shell settings put secure assistant me.efesser.flauncher/.MainActivity`
 
@@ -472,7 +470,7 @@ Claude will detect your Ugoos via ADB and apply system tweaks. See `CLAUDE.md` f
 | EPGenius | `epgenius.org` — curated playlists with better EPG |
 | IPTV setup | TiviMate → Add Playlist → Xtream Codes → enter credentials |
 | EPGenius setup | TiviMate → Add Playlist → M3U Playlist → paste Google Drive URL |
-| Player settings | Tunneled Playback OFF, Audio Passthrough OFF, Buffer Small, AFR ON |
+| Player settings | Tunneled Playback OFF, Audio Passthrough ON, Buffer Small, AFR ON |
 | EPG refresh | Settings → EPG → Update Interval → 4 hours |
 | Channel cleanup | Settings → Playlists → Manage Groups → hide unwanted groups |
 | Ugoos display | Settings → Display → YCbCr 4:2:2 12-bit, 4K 60Hz, AFR On |

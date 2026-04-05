@@ -56,7 +56,7 @@ The Ugoos AM9 Pro supports ADB over USB and WiFi. When connected via ADB, Claude
 ### TiviMate Player Settings
 
 - **Buffer Size** → Small (fast channel switching; bump to Medium if stuttering)
-- **Audio Passthrough** → Off (causes decoder errors on some IPTV streams)
+- **Audio Passthrough** → On (sends audio directly to receiver/TV for best quality; turn off if decoder errors)
 - **Tunneled Playback** → Off (causes DecoderInitializationException on S905X5 with IPTV streams)
 - **AFR (Auto Frame Rate)** → On
 - **AFR on VOD** → Off (unnecessary flicker)
@@ -147,7 +147,7 @@ Not handled by script (manual UI setup):
 - **Set default:** `adb shell cmd package set-home-activity me.efesser.flauncher/.MainActivity`
 - **Fix long-press Home:** `adb shell settings put secure assistant me.efesser.flauncher/.MainActivity`
 - **Disable stock launcher (fallback):** `adb shell pm disable-user --user 0 com.uapplication.launcher`
-- **Gear icon workaround:** Use scrcpy from Mac to mouse-click (AOSP remote input issue)
+- **Gear icon workaround:** Pair the Ugoos remote via Bluetooth (IR mode doesn't register clicks). Alternatively, use scrcpy from Mac to mouse-click.
 - **Wallpapers:** Download through Chrome on device (ADB media scanner unreliable on AOSP)
 
 ## TV Picture Settings (LG C5 OLED)
@@ -175,12 +175,12 @@ Not handled by script (manual UI setup):
 
 - **TiviMate not on Play Store:** AOSP Android 14 doesn't have it. Sideload from Uptodown.
 - **TiviMate Companion vs TiviMate:** Companion is for subscription management only. Player is `ar.tvplayer.tv`.
-- **DecoderInitializationException:** Turn off Tunneled Playback and Audio Passthrough in Settings → Player.
+- **DecoderInitializationException:** Turn off Tunneled Playback in Settings → Player. If still happening, also try turning off Audio Passthrough.
 - **EPG empty/no program data:** Clear EPG then Update EPG. Try Strong 8K app for pre-configured EPG. Third-party: `myepg.top`.
 - **EPGenius HttpDataSourceException:** Update credentials via Edit Credentials tool on epgenius.org, refresh playlist. Run `/dns` in Discord.
 - **IPTV channels not loading:** Verify Xtream Codes credentials. Force-stop and restart TiviMate.
 - **Live sports quality:** ESPN = 720p, Fox Sports = 1080p (source limitation, not IPTV).
-- **FLauncher gear icon not responding:** Use scrcpy to mouse-click it.
+- **FLauncher gear icon not responding:** Pair the Ugoos remote via Bluetooth (IR mode doesn't register clicks). Or use scrcpy to mouse-click it.
 - **FLauncher long-press Home goes to stock launcher:** `adb shell settings put secure assistant me.efesser.flauncher/.MainActivity`
 - **FLauncher wallpapers:** Download through Chrome on device, pick from FLauncher wallpaper settings.
 - **ADB media scanner unreliable:** Download files through Chrome on the device instead of ADB push.
