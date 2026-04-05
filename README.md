@@ -131,7 +131,7 @@ EPGenius provides community-curated playlists with clean channel names, proper l
 4. **Recommended: GanjaRelease | Strong 8K** — the #1 playlist on EPGenius with TV Guide coverage for USA, UK, AU, and Canada, and 100% EPG coverage for sports and live TV
 5. Click **Google Drive** to set it up — sign into your Google account when prompted
 6. When prompted, select **Xtream Codes** and enter your server URL, username, and password (recommended over M3U for better compatibility and fewer credential issues)
-7. EPGenius saves a curated playlist to your Google Drive that auto-updates
+7. EPGenius saves a curated playlist file to your Google Drive — **don't delete this file**. EPGenius automatically updates it with new channels, fixes, and EPG improvements so your playlist stays current across all devices without any manual work.
 
 ### Add EPGenius to TiviMate
 
@@ -422,6 +422,38 @@ claude
 ```
 
 Claude will detect your Ugoos via ADB and apply system tweaks. See `CLAUDE.md` for details.
+
+---
+
+## IPTV Tips & Tricks
+
+### VPN
+
+You probably don't need a VPN for day-to-day watching, but keep one ready. If your ISP starts throttling IPTV traffic (streams suddenly buffer at peak hours but your speed test is fine), a VPN to a nearby server fixes it instantly. Surfshark or Mullvad are solid picks. The AM9 Pro can run a VPN app natively, or set it up at the router level to cover all devices.
+
+### Big Event Strategy
+
+Super Bowl, UFC PPV, playoffs — these are when IPTV services get hammered. Have multiple channel options ready: try the VIP stream first, then 8K, then standard, then BK. If your EPGenius playlist is struggling, switch to the raw Strong 8K playlist which has more redundant streams. Having a second IPTV service on standby (even just a cheap one-month sub) is good insurance for must-watch events.
+
+### Catch-Up TV
+
+Strong 8K supports catch-up on many channels (up to 48 hours). In TiviMate, long-press a channel → **Catch Up** to rewind to something you missed. Not every channel supports it, but most of the major US ones do.
+
+### Recording
+
+TiviMate Premium lets you record to local storage. Go to **Settings → Recording** and set the path to the Ugoos internal storage or a USB drive. You can schedule recordings from the EPG — useful for games you'll miss.
+
+### Multiple Connections
+
+Check with your reseller how many simultaneous connections your Strong 8K sub allows. Most reseller plans are 1 connection. If you're watching on your Ugoos and someone tries Chillio on the Mac at the same time, one of you gets kicked. Some resellers sell multi-connection plans for a couple bucks more.
+
+### Server Status
+
+Strong 8K usually has a Telegram channel or Discord where they post server maintenance and outage updates. Worth joining so you know when issues are on their end vs yours.
+
+### Playlist Refresh Shortcut
+
+If channels suddenly stop working across the board, force-refresh your playlist before anything else: TiviMate → Settings → Playlists → [playlist] → **Update Playlist**. 90% of the time that fixes it — the server URL or port may have changed.
 
 ---
 
