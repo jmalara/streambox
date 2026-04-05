@@ -90,6 +90,8 @@ In TiviMate → Settings → Player:
 
 ### Clean Up Channel Groups
 
+> **Tip:** Don't spend too much time organizing channels and favorites here — EPGenius (Step 5) gives you much better channel organization and EPG out of the box. Set up EPGenius first, then come back and fine-tune from those cleaner channel lists.
+
 Strong 8K has 30K+ channels in 40+ languages. Hide what you don't need:
 
 1. Settings → Playlists → [Strong 8K] → **Manage Groups**
@@ -128,8 +130,8 @@ EPGenius provides community-curated playlists with clean channel names, proper l
 3. Click **Preview Playlist** to see what channels/categories each list includes
 4. **Recommended: GanjaRelease | Strong 8K** — the #1 playlist on EPGenius with TV Guide coverage for USA, UK, AU, and Canada, and 100% EPG coverage for sports and live TV
 5. Click **Google Drive** to set it up — sign into your Google account when prompted
-6. Enter your Xtream Codes credentials (server URL, username, password) when asked
-7. EPGenius saves a curated M3U file to your Google Drive that auto-updates
+6. When prompted, select **Xtream Codes** and enter your server URL, username, and password (recommended over M3U for better compatibility and fewer credential issues)
+7. EPGenius saves a curated playlist to your Google Drive that auto-updates
 
 ### Add EPGenius to TiviMate
 
