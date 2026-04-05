@@ -177,7 +177,7 @@ If you get an **HttpDataSourceException** on EPGenius channels, update your cred
 
 ### What Doesn't Sync Across Devices
 
-EPGenius gives you a consistent channel list everywhere, but any customizations you make inside TiviMate (favorites, hidden groups, channel sorting, EPG source overrides) are local to that device and won't sync to other devices. Back up your TiviMate settings via **Settings → General → Backup & Restore** whenever you make large customizations so you don't lose that work.
+EPGenius gives you a consistent channel list everywhere, but any customizations you make inside your IPTV player — favorites, hidden groups, channel sorting, EPG source overrides — are local to that app and device. TiviMate on your Ugoos, Chillio on your Mac, and MYTVOnline+ on your iPhone each maintain their own settings independently. Nothing syncs between them. If you spend time organizing favorites on TiviMate, you'll need to redo that work on Chillio and MYTVOnline+ separately. Back up your TiviMate settings via **Settings → General → Backup & Restore** whenever you make large customizations so you don't lose that work.
 
 ---
 
