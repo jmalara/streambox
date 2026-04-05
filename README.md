@@ -126,7 +126,7 @@ EPGenius provides community-curated playlists with clean channel names, proper l
 1. Go to `epgenius.org` on your Mac or phone (not the Ugoos)
 2. Sort/filter by your IPTV service (e.g., Strong 8K)
 3. Click **Preview Playlist** to see what channels/categories each list includes
-4. Pick the one with the best USA sports coverage and clean category organization
+4. **Recommended: GanjaRelease | Strong 8K** — the #1 playlist on EPGenius with TV Guide coverage for USA, UK, AU, and Canada, and 100% EPG coverage for sports and live TV
 5. Click **Google Drive** to set it up — sign into your Google account when prompted
 6. Enter your Xtream Codes credentials (server URL, username, password) when asked
 7. EPGenius saves a curated M3U file to your Google Drive that auto-updates
