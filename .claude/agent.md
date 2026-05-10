@@ -43,38 +43,40 @@ The user needs an IPTV service that gives them Xtream Codes credentials (server 
 
 ## Phase 3 — Install TiviMate
 
-TiviMate is the IPTV player. Install path differs by box:
+TiviMate is the IPTV player. **Sideload only — TiviMate is not on Google Play Store on Ugoos AOSP, and Superbox doesn't have Google Play Store at all** (it ships with its own app store / BigdroidOS, no Google services).
 
-### Superbox
+### Easiest path: Downloader app (works on both Ugoos and Superbox)
 
-1. **Try Play Store first** — most Superbox models have Play Store access. Have them search "TiviMate IPTV Player" and install from there.
-2. **Sideload fallback** if Play Store rejects it:
-   - Open the box's built-in browser → go to `tivimate.en.uptodown.com/android/download` → download APK.
-   - Enable **Install Unknown Apps** for that browser: Settings → Apps → Special Access → Install Unknown Apps → toggle on for the browser.
-   - Open the downloaded APK to install.
+1. Have user install **Downloader** (free) — search "Downloader" in the box's built-in app store. If not there, sideload from `aftvnews.com/downloader`.
+2. Open Downloader → enter URL: `tivimate.en.uptodown.com/android/download`
+3. Download the latest TiviMate APK and install it.
 
-### Ugoos
+### Alternative: built-in browser
 
-- Not on Play Store on AOSP Android 14. Sideload it.
-- Open **Chrome** on the Ugoos → `tivimate.en.uptodown.com/android/download` → download APK and install.
-- If Android blocks the install, allow "Unknown Sources" for Chrome when prompted.
+- **Ugoos:** Chrome (install from Play Store first if missing) → `tivimate.en.uptodown.com/android/download` → download APK → allow "Unknown Sources" for Chrome when prompted → install.
+- **Superbox:** stock browser → same URL → enable Install Unknown Apps for the browser. **Path varies by Superbox firmware:**
+  - Newer (Android 12+, BigdroidOS): Settings → Apps → Special Access → Install Unknown Apps → enable for the browser
+  - Older: Settings → Security → Unknown Sources (global toggle)
+
+### After installing, have them open TiviMate at least once
+
+Complete the welcome screen so it boots into the main app. They need this before activating Premium.
 
 ### TiviMate Premium (free via Jeremy's account)
 
-The user gets free TiviMate Premium by being added to Jeremy's TiviMate Companion paid account. **But Jeremy can only add them after they've installed and opened TiviMate at least once** — opening the app generates the unique device ID Jeremy needs.
+The user gets free TiviMate Premium by using one of the 5 device slots on Jeremy's TiviMate Companion paid account. The activation flow is **NOT** sending Jeremy a device ID — that was an old, incorrect guidance. The correct flow:
 
-Walk them through:
+1. **Install + open TiviMate** (steps above)
+2. **Have user message Jeremy and ask for an activation code.** Jeremy generates it in his TiviMate Companion *phone* app on his end and texts it to the user. Each code uses one of his 5 device slots.
+3. **In TiviMate on the box:** Settings → About → **Unlock Premium** (or "Activate Premium" — wording varies by version)
+4. Enter the activation code Jeremy sent
+5. Premium features (recording, multi-playlist, favorites management, auto EPG updates) unlock immediately. Usually no restart needed.
 
-1. **Install TiviMate** (steps above)
-2. **Open it once** and complete the welcome screen so it boots into the main app
-3. **Find their device ID:** TiviMate → Settings → About → look for a device ID / code near the top (or under "Device" / "TiviMate Premium" depending on TiviMate version)
-4. **Send that ID to Jeremy** (text/message him)
-5. Jeremy adds the device to his Companion account on his end
-6. After Jeremy confirms, **restart TiviMate** — Premium features (recording, multi-playlist, favorites management, auto EPG updates) unlock
+While waiting for Jeremy to send the code, the user can keep going with free TiviMate — Phase 4 (Strong 8K playlist) and Phase 5 (EPGenius playlist) both work on the free version. Premium just adds extras.
 
-While waiting for Jeremy, they can keep going with free TiviMate. The Step 4 + 5 setup (Strong 8K playlist, EPGenius playlist, player settings) all work on free TiviMate. Premium just adds extras.
+> **Important to clarify:** TiviMate Companion is a *separate phone app* (Android, not on the box) that Jeremy uses to manage device slots. It is NOT the player. The player is **"TiviMate IPTV Player"** (`ar.tvplayer.tv`). The user should NOT install TiviMate Companion on their box. If they accidentally install Companion thinking it's the player, walk them back to installing the actual player.
 
-> **Important to clarify:** TiviMate Companion is a *separate app* for managing premium subscriptions — it is NOT the player. The player is **"TiviMate IPTV Player"** (`ar.tvplayer.tv`). The user should NOT install TiviMate Companion on their box — Jeremy uses it on his end to manage devices. If they accidentally install Companion thinking it's the player, walk them back to installing the actual player.
+> **Decoder/buffering troubleshooting:** if first playback stutters or throws `DecoderInitializationException`, **first** verify Tunneled Playback is OFF (Phase 4 player settings). Then try toggling Settings → Player → Video Decoder between Hardware and Software — Hardware is the correct default but some Superbox models prefer Software for specific stream codecs.
 
 ## Phase 4 — Configure TiviMate with Strong 8K
 
@@ -242,13 +244,15 @@ If the user shares their Strong 8K credentials (server URL, username, password) 
 
 ### Superbox
 
-- **Locked-down stock firmware.** ADB exists but most system tweaks revert on reboot — skip Phase 8 entirely.
-- Display, HDR, refresh rate **all handled automatically** by Superbox firmware. No manual YCbCr/12-bit setup needed.
-- Don't try to swap the launcher — Superbox uses its own.
-- Firmware updates come via Superbox's own OTA channel (in their launcher settings).
-- Most Superbox models have Play Store — try installing TiviMate from there before sideloading.
-- No Bluetooth pairing needed for the Superbox remote — works with TiviMate out of the box.
-- Recording storage: internal is fine for typical use. For heavy recording, suggest a USB drive.
+- **No Google Play Store.** Custom OS (BigdroidOS on newer S6/S7) with its own app store — TiviMate is NOT there. Sideload only. **Don't tell users to "try Play Store first" — that was wrong in older revisions.**
+- **Locked-down stock firmware.** ADB / Developer Options are restricted; system tweaks revert on reboot. Skip Phase 8 entirely.
+- Display, HDR, refresh rate **all handled automatically** by Superbox firmware. No manual YCbCr / 12-bit setup needed.
+- **Don't try to swap the launcher** — Superbox uses its own (LauncherX / BigdroidOS launcher). Replacement is unsupported and can break the box.
+- Firmware updates come via Superbox's own OTA channel (in their launcher settings menu, not Android system settings).
+- **Bluetooth remote:** dual-mode IR + BT. IR works default; BT pairing (hold OK + Return ~8-12s until LED flashes) is needed for voice search and some advanced shortcuts. Mention if user reports voice/shortcut issues.
+- **Install Unknown Apps location varies:** newer Android 12+ = per-app at Settings → Apps → Special Access → Install Unknown Apps; older = Settings → Security → Unknown Sources (global).
+- Recording storage: internal is fine for typical use. For heavy recording (multiple games per week), suggest a USB drive.
+- **Factory reset wipes sideloaded TiviMate.** If user resets, they reinstall via the same sideload path and re-activate Premium with a new code from Jeremy.
 
 ## Important Notes for You
 

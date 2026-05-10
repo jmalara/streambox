@@ -75,29 +75,43 @@ Pricing: ~$2-5/month via resellers, $10-15/month direct.
 
 ## Step 3: Install TiviMate
 
-TiviMate is not on the Play Store on most Android TV box firmware. Sideload it:
+TiviMate is not in any official app store on Superbox or most Android TV boxes — sideload it. Pick one of these install paths:
 
-1. Open **Chrome** on the box (install Chrome from Play Store first if needed)
+### Easiest: Downloader app
+
+1. On the box, install the **Downloader** app (search "Downloader" in your box's app store, or sideload from `aftvnews.com/downloader`)
+2. Open Downloader → enter the URL: `tivimate.en.uptodown.com/android/download`
+3. Download the latest TiviMate APK and install it
+
+### Alternative: Built-in browser
+
+1. Open the box's built-in web browser (Chrome on Ugoos; Superbox has a stock browser)
 2. Go to `tivimate.en.uptodown.com/android/download`
-3. Download the APK and install it (allow "Unknown Sources" for Chrome if prompted)
-4. **Open TiviMate at least once** and complete the initial setup screen — this generates a unique device ID Jeremy needs to add you to his account (see below)
+3. Download the APK
+4. **Allow Install Unknown Apps** for that browser when prompted — path depends on your Android version:
+   - Newer (Android 12+): Settings → Apps → Special Access → Install Unknown Apps → enable for the browser
+   - Older: Settings → Security → Unknown Sources → enable
+5. Open the downloaded APK to install
+
+After installing, **open TiviMate at least once** and complete the welcome screen so it boots into the main app.
+
+> **Don't install "TiviMate Companion" on your box.** That's a separate Android *phone* app that Jeremy uses on his end to manage device slots. The actual player is **"TiviMate IPTV Player"** (`ar.tvplayer.tv`) — that's the one you want.
 
 > ### Skip paying for TiviMate Premium — use Jeremy's account
 >
-> Jeremy has a TiviMate Companion paid account and can add your device. **You still need to install and set up TiviMate yourself first** — Jeremy can't add you until your install has generated a device ID.
+> Jeremy has a TiviMate Companion paid account that can host **up to 5 devices**. You can use one of those slots for free.
 >
 > The flow:
 >
-> 1. Install TiviMate (steps above)
-> 2. Open it once and complete the welcome screen so it boots into the main app
-> 3. Find your **device ID**: TiviMate → Settings → About → it shows a code/ID near the top (or under "Device" / "TiviMate Premium" depending on version)
-> 4. Send that ID to Jeremy
-> 5. Jeremy adds your device to his Companion account
-> 6. Restart TiviMate — Premium features (recording, multi-playlist, favorites management, auto EPG updates) are now unlocked
+> 1. Install TiviMate on your box (steps above) and open it once
+> 2. Message Jeremy and ask for an **activation code** — he generates one in his TiviMate Companion phone app and sends it to you
+> 3. On your box, open TiviMate → **Settings → About → Unlock Premium** (or "Activate Premium")
+> 4. Enter the activation code Jeremy sent
+> 5. Premium features (recording, multi-playlist, favorites management, auto EPG updates) unlock immediately. No restart needed in most cases.
 >
 > Otherwise: TiviMate Premium is ~$20/year or ~$34 lifetime via the in-app purchase.
 
-> **Note:** TiviMate Companion is a separate app for managing premium subscriptions — it is NOT the player. The player is "TiviMate IPTV Player" (`ar.tvplayer.tv`). Don't install TiviMate Companion on your box — Jeremy uses it on his end to manage devices.
+> **Pro tip — buffering or decoder errors after install:** if TiviMate stutters or throws decoder errors on first playback, toggle **Settings → Player → Video Decoder** between Hardware and Software. Hardware is the right default but a few cores need Software on certain Android TV boxes.
 
 ---
 
@@ -231,19 +245,17 @@ Most of the steps above are identical on any Android TV box. Hardware-specific b
 
 ### Superbox
 
-- **Display:** Superbox handles HDR / Dolby Vision / refresh rate automatically through its own settings menu — generally no manual override needed
-- **Firmware:** check for OTA updates from the Superbox launcher's settings menu — apply pending updates before installing apps
-- **Launcher:** Superbox uses its own custom launcher — don't try to swap it
-- **TiviMate install on Superbox:**
-  1. Most Superbox models have **Play Store access** — try installing TiviMate from there first (search "TiviMate")
-  2. If TiviMate isn't on Play Store for your firmware, sideload via the built-in **browser** or **File Manager** app:
-     - Open the browser → go to `tivimate.en.uptodown.com/android/download` → download APK
-     - When prompted, **allow installs from unknown sources** for the browser app (Settings → Apps → Browser → Install Unknown Apps → On)
-     - Open the downloaded APK and install
-- **Allow Unknown Sources on Superbox:** Settings → Security or Settings → Apps → Special Access → **Install Unknown Apps** → enable for the browser/file manager you used to download
-- **ADB:** Superbox firmware is locked down — ADB system tweaks generally won't apply or revert on reboot. Skip the ADB tweaks above. The Claude Code walkthrough automatically skips ADB steps if you tell Claude you're on Superbox.
-- **Storage:** Superbox internal storage is usually plenty for TiviMate + recordings. If recording lots of games, plug in a USB drive — TiviMate Recording supports external storage.
-- **Remote:** Superbox remote works fully with TiviMate out of the box — no Bluetooth pairing or extra setup needed.
+- **No Google Play Store.** Superbox uses its own custom OS (BigdroidOS on newer S6/S7 models) with its own app store — TiviMate is NOT there. **Sideload is the only path** (Downloader app or built-in browser, see Step 3).
+- **Display:** Superbox handles HDR / Dolby Vision / refresh rate automatically through its own settings menu — no manual YCbCr / 12-bit override needed.
+- **Firmware:** check for OTA updates from the Superbox launcher's settings menu — apply pending updates before installing apps.
+- **Launcher:** Superbox uses its own custom locked-down launcher (LauncherX / BigdroidOS launcher) — **don't try to swap it.** Replacement is not officially supported and can break box functionality.
+- **Install Unknown Apps location varies by Superbox model / firmware version:**
+  - **Newer (Android 12+, BigdroidOS):** Settings → Apps → Special Access → Install Unknown Apps → enable for whichever browser/Downloader you used
+  - **Older:** Settings → Security → **Unknown Sources** (global toggle)
+- **ADB:** Superbox firmware is locked down. Developer Options + ADB are restricted, and any system tweaks generally won't stick or revert on reboot. Skip the ADB tweaks above entirely. The Claude Code walkthrough automatically skips them if you tell Claude you're on Superbox.
+- **Storage:** Superbox internal storage is fine for TiviMate + light recording. For heavy recording (multiple games per week), plug in a USB drive — TiviMate Recording supports external storage.
+- **Remote:** Superbox ships a dual-mode IR + Bluetooth remote. Out of the box it works in IR mode — TiviMate basic navigation is fine. **Voice search and some advanced shortcuts require Bluetooth pairing**: hold **OK + Return** for ~8-12 seconds until the LED flashes, then complete pairing in Settings → Bluetooth.
+- **Factory reset warning:** If you ever factory-reset the Superbox, sideloaded apps (including TiviMate) get wiped. You'll need to reinstall TiviMate via the same sideload path, then re-activate Premium with the activation code from Jeremy.
 
 ### TV Picture Settings (Any Box)
 
