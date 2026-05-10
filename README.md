@@ -18,37 +18,20 @@ Hand this repo to a friend with [Claude Code](https://docs.anthropic.com/en/docs
 
 The whole setup is designed to be driven by [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — it'll ask which box you have, skip the steps that don't apply, and help debug anything that goes wrong. Works for **Superbox** or **Ugoos**.
 
-### One-step start (don't need to clone first)
+**In Claude Code, paste this exactly:**
 
-Open a terminal anywhere on your computer and run:
+> Clone https://github.com/jmalara/streambox into a folder, then walk me through setting up TiviMate, Strong 8K, and EPGenius on my Superbox.
 
-```bash
-claude
-```
+(Replace `Superbox` with `Ugoos` if that's your box.)
 
-Then paste exactly this:
+That's it. Claude will:
 
-> *"Clone https://github.com/jmalara/streambox into a folder, then walk me through setting up TiviMate, Strong 8K, and EPGenius on my Superbox."*
-
-Replace `Superbox` with `Ugoos` if that's what you have.
-
-### What Claude does
-
-1. Clones the repo into a folder
-2. Reads project context (`CLAUDE.md` + `.claude/agent.md` + `README.md`)
-3. Confirms which box you have and what you've already done
-4. Walks you through **one step at a time**, waits for you to say "done" before moving on
-5. Skips the parts that don't apply to your box
-6. Debugs issues using the Common Issues table
-
-### Already cloned the repo
-
-```bash
-cd streambox
-claude
-```
-
-Then say: *"Walk me through setting up TiviMate, Strong 8K, and EPGenius on my Superbox."*
+1. Clone the repo into a folder
+2. Read the project context (`CLAUDE.md`, `.claude/agent.md`, `README.md`)
+3. Confirm which box you have and what you've already done
+4. Walk you through **one step at a time**, waiting for you to say "done" before moving on
+5. Skip the parts that don't apply to your box
+6. Debug issues using the Common Issues table
 
 The rest of this README is the manual version of the same steps — Claude follows it. You can read it for context or just let Claude drive.
 
