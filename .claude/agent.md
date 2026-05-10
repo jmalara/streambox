@@ -59,11 +59,22 @@ TiviMate is the IPTV player. Install path differs by box:
 - Open **Chrome** on the Ugoos → `tivimate.en.uptodown.com/android/download` → download APK and install.
 - If Android blocks the install, allow "Unknown Sources" for Chrome when prompted.
 
-### TiviMate Premium
+### TiviMate Premium (free via Jeremy's account)
 
-**Tell them to message Jeremy and ask to be added to his TiviMate Companion paid account.** This unlocks all premium features (recording, multi-playlist, favorites, auto EPG) for free. They can keep using free TiviMate while waiting for Jeremy.
+The user gets free TiviMate Premium by being added to Jeremy's TiviMate Companion paid account. **But Jeremy can only add them after they've installed and opened TiviMate at least once** — opening the app generates the unique device ID Jeremy needs.
 
-> **Important to clarify:** TiviMate Companion is a *separate app* for managing premium subscriptions — it is NOT the player. The player is **"TiviMate IPTV Player"** (`ar.tvplayer.tv`). If they install Companion thinking it's the player, walk them back.
+Walk them through:
+
+1. **Install TiviMate** (steps above)
+2. **Open it once** and complete the welcome screen so it boots into the main app
+3. **Find their device ID:** TiviMate → Settings → About → look for a device ID / code near the top (or under "Device" / "TiviMate Premium" depending on TiviMate version)
+4. **Send that ID to Jeremy** (text/message him)
+5. Jeremy adds the device to his Companion account on his end
+6. After Jeremy confirms, **restart TiviMate** — Premium features (recording, multi-playlist, favorites management, auto EPG updates) unlock
+
+While waiting for Jeremy, they can keep going with free TiviMate. The Step 4 + 5 setup (Strong 8K playlist, EPGenius playlist, player settings) all work on free TiviMate. Premium just adds extras.
+
+> **Important to clarify:** TiviMate Companion is a *separate app* for managing premium subscriptions — it is NOT the player. The player is **"TiviMate IPTV Player"** (`ar.tvplayer.tv`). The user should NOT install TiviMate Companion on their box — Jeremy uses it on his end to manage devices. If they accidentally install Companion thinking it's the player, walk them back to installing the actual player.
 
 ## Phase 4 — Configure TiviMate with Strong 8K
 

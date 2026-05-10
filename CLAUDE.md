@@ -38,14 +38,14 @@ If the user shares Strong 8K credentials (server URL, username, password) for tr
   - **Superbox** — locked-down stock firmware. TiviMate + Strong 8K + EPGenius all work, but ADB system tweaks and launcher swaps do NOT apply.
   - Most other Android TV boxes work too — the steps in `README.md` are generic.
 - **IPTV Player:** TiviMate (`ar.tvplayer.tv`) — sideload from Uptodown
-- **TiviMate Premium:** Jeremy has a TiviMate Companion paid account. New users should reach out to be added to it → Premium for free, no subscription needed.
+- **TiviMate Premium:** Jeremy has a TiviMate Companion paid account. New users should reach out to be added → Premium for free, no subscription needed. **The user MUST install + open TiviMate first** to generate a device ID before Jeremy can add them. Flow: install → open once → Settings → About → copy device ID → send to Jeremy → Jeremy adds it → user restarts TiviMate → Premium unlocked.
 - **IPTV Service:** Strong 8K — website is now [https://my8k.org](https://my8k.org) (formerly strong8k.app). ~$2-5/month via resellers. **Recommend 6-month subscription** as price/risk balance.
 - **Curated Playlists:** EPGenius (epgenius.org) — community-curated channel lists with better EPG. Free with Discord registration.
 - **Mac / iPad / iPhone player:** Chillio (Mac App Store / App Store). Same Strong 8K credentials work.
 
 ## Common User Questions and How to Answer
 
-- **"How do I get TiviMate Premium?"** → Tell them to reach out to Jeremy and be added to his TiviMate Companion account. Free.
+- **"How do I get TiviMate Premium?"** → Free via Jeremy's TiviMate Companion account, BUT user must install and open TiviMate first to generate a device ID. Then send the device ID (Settings → About) to Jeremy, he adds it, user restarts the app, Premium unlocks.
 - **"What box should I use?"** → Either Ugoos AM9 Pro or Superbox works. Ugoos has more configurability via ADB; Superbox is more locked-down but easier (less to tweak).
 - **"Should I get a 1-month or longer Strong 8K sub?"** → 6 months is the sweet spot. 1 month is more expensive per-month; full year is risky if the service disappears.
 - **"Why isn't TiviMate on the Play Store?"** → It's not distributed on Play Store for AOSP Android 14. Sideload from Uptodown.
@@ -80,7 +80,7 @@ If user says "I have a Superbox," default flow:
 2. **Skip Ugoos display + ADB sections entirely.**
 3. **Step 2 — Strong 8K signup:** Direct them to my8k.org, push the 6-month subscription. Mention Jeremy's referral if they have one.
 4. **Step 3 — TiviMate install:** Try Play Store first. If that fails, walk through sideload from `tivimate.en.uptodown.com/android/download`.
-5. **Step 3.5 — TiviMate Premium:** Tell them to message Jeremy and ask to be added to his Companion account (free). They can keep using free TiviMate while waiting.
+5. **Step 3.5 — TiviMate Premium:** After they install and open TiviMate, walk them to Settings → About → copy the device ID → send it to Jeremy. Jeremy adds the device to his Companion account. After Jeremy confirms, have them restart TiviMate — Premium features unlock. They can keep configuring playlists with free TiviMate while waiting for Jeremy.
 6. **Step 4 — Configure TiviMate:** Add Playlist → Xtream Codes → enter Strong 8K credentials. Walk through the Player Settings list (especially Tunneled Playback OFF).
 7. **Step 5 — EPGenius:** Have them go to epgenius.org on their phone, pick GanjaRelease | Strong 8K, save via Google Drive. Tell them to send Jeremy the Drive M3U URL — Jeremy will register the playlist on the EPGenius Discord for them. Then add the Drive M3U URL to TiviMate.
 8. **Step 6 (optional) — Chillio on Apple devices:** if they have a Mac, iPad, or iPhone and want IPTV there.
