@@ -31,6 +31,55 @@ When that happens, **walk them through one step at a time**. Don't dump the whol
 
 If the user shares Strong 8K credentials (server URL, username, password) for troubleshooting: **do not echo them back, do not log them, do not save them to any file.** Use them only in-memory to help diagnose. After the diagnosis is done, they're forgotten.
 
+### ADB execution (Ugoos only — Superbox SKIP)
+
+If the user has a **Ugoos** (Superbox doesn't support this — skip on Superbox), ADB is the most error-prone part of setup. **Run ADB commands yourself** rather than asking the user to type them. The user just needs to enable the box-side toggles.
+
+**Step 1: walk the user through enabling Wireless Debugging on the Ugoos:**
+
+1. On the Ugoos: Settings → About → tap **Build Number** 7 times (enables Developer Options)
+2. Settings → System → Developer Options → enable **Wireless Debugging**
+3. Tap **Wireless Debugging** to see the IP address and port (e.g. `192.168.1.42:5555`)
+4. Have user paste the IP+port to you in chat
+
+**Step 2: connect and verify yourself with Bash tool:**
+
+```bash
+adb connect <ip>:5555
+adb devices                    # should show "device" not "offline"
+adb -s <ip>:5555 shell getprop ro.product.model    # confirm Ugoos
+```
+
+If `adb devices` shows `unauthorized`, the user needs to accept the pairing prompt on the Ugoos screen. Tell them to look for it.
+
+**Step 3: run ADB tweaks yourself, narrating what you're doing:**
+
+For the optional FLauncher swap (only if user wants it — confirm first):
+
+```bash
+# Install FLauncher APK (download to /tmp first, then push)
+curl -L -o /tmp/flauncher.apk "https://m.apkpure.com/flauncher/me.efesser.flauncher/download"
+adb -s <ip>:5555 install /tmp/flauncher.apk
+
+# Set as default launcher
+adb -s <ip>:5555 shell cmd package set-home-activity me.efesser.flauncher/.MainActivity
+
+# Fix long-press Home so it doesn't bounce back to stock launcher
+adb -s <ip>:5555 shell settings put secure assistant me.efesser.flauncher/.MainActivity
+```
+
+After each command, tell the user what just happened and what to look for on the box screen (e.g. "your home screen should now look like FLauncher's grid — press the Home button on your remote to test").
+
+**Always:**
+- Use `adb -s <ip>:5555 ...` to target the right device if multiple are connected
+- Run `adb devices` after any unexpected error
+- Don't run destructive commands without confirming with the user first (e.g. `pm disable-user`, `adb reboot`, `factory reset`)
+- Don't run `adb root` unless the user explicitly asks for it — most setup doesn't need it
+
+**Don't:**
+- Tell the user to type ADB commands themselves unless they explicitly want to. The whole point of Claude doing this is they don't have to.
+- Push system tweaks they didn't ask for (sysctl, telemetry disable, DNS swap, etc.) — the simplification effort cut those for a reason.
+
 ## Project Context
 
 - **Supported devices:**
@@ -84,7 +133,7 @@ If user says "I have a Superbox," default flow:
 
 1. **Step 1 — Power on + firmware:** Have them check for Superbox OTA updates via the Superbox launcher's settings menu.
 2. **Skip Ugoos display + ADB sections entirely.**
-3. **Step 2 — Strong 8K signup:** Direct them to my8k.org, push the 6-month subscription. Mention Jeremy's referral if they have one.
+3. **Step 2 — Strong 8K signup:** Direct them to my8k.org, push the 6-month subscription.
 4. **Step 3 — TiviMate install:** Sideload via Downloader app (easier) or built-in browser. Skip Play Store — Superbox doesn't have it. URL: `tivimate.en.uptodown.com/android/download`. Help with Install Unknown Apps if needed (path varies by Superbox firmware version).
 5. **Step 3.5 — TiviMate Premium:** Have them install + open TiviMate first. Then ask Jeremy for an **activation code** (Jeremy generates it in his TiviMate Companion phone app). User enters the code at TiviMate → Settings → About → Unlock Premium. Premium unlocks. They can keep configuring playlists with free TiviMate while waiting for Jeremy to send the code.
 6. **Step 4 — Configure TiviMate:** Add Playlist → Xtream Codes → enter Strong 8K credentials. Walk through the Player Settings list (especially Tunneled Playback OFF).

@@ -13,8 +13,7 @@ Before touching any setup, ask:
 1. **Which box do they have?** Ugoos AM9 Pro, Superbox, or some other Android TV box. This determines which sections to skip.
 2. **Are they starting fresh or partway through?** If partway, which step did they last complete.
 3. **Have they messaged Jeremy yet?** If not, **tell them to do this now while you continue setup** — Jeremy needs to:
-   - Add them to his TiviMate Companion paid account → free TiviMate Premium for them
-   - Send them his Strong 8K reseller link or referral (if applicable)
+   - Send them a TiviMate Companion activation code → free TiviMate Premium for them
    - Be ready to register their EPGenius playlist on Discord later (so they don't have to)
 4. **Do they have an email account ready?** Strong 8K emails Xtream Codes credentials after signup. Tell them to check spam if it doesn't arrive in 5 minutes.
 
@@ -196,12 +195,41 @@ Settings → Display:
 - **Dolby Vision** → Enabled
 - **Automatic Frame Rate** → Enabled
 
-### Ugoos FLauncher (Optional)
+### Ugoos FLauncher (Optional, but you should run ADB yourself)
 
-If they want to replace the cluttered stock Ugoos launcher:
-- Sideload from `apkpure.com/flauncher/me.efesser.flauncher`
-- Set as default via ADB: `adb shell cmd package set-home-activity me.efesser.flauncher/.MainActivity`
-- If long-press Home still goes to stock launcher: `adb shell settings put secure assistant me.efesser.flauncher/.MainActivity`
+If they want to replace the cluttered stock Ugoos launcher, **don't make them type ADB commands** — run them yourself via the Bash tool. The user only does box-side toggles.
+
+**Walk them through enabling Wireless Debugging:**
+
+1. Ugoos: Settings → About → tap **Build Number** 7 times
+2. Settings → System → Developer Options → enable **Wireless Debugging**
+3. Tap **Wireless Debugging** entry to see IP + port (e.g. `192.168.1.42:5555`)
+4. Have user paste the IP+port to you in chat
+5. If a pairing prompt appears on the box, have them accept it
+
+**Then run yourself:**
+
+```bash
+# Connect
+adb connect <ip>:5555
+adb devices    # confirm "device" not "unauthorized" or "offline"
+
+# Download FLauncher APK on your machine
+curl -L -o /tmp/flauncher.apk "https://m.apkpure.com/flauncher/me.efesser.flauncher/download"
+
+# Install on the box
+adb -s <ip>:5555 install /tmp/flauncher.apk
+
+# Set as default launcher
+adb -s <ip>:5555 shell cmd package set-home-activity me.efesser.flauncher/.MainActivity
+
+# Fix long-press Home falling back to stock launcher
+adb -s <ip>:5555 shell settings put secure assistant me.efesser.flauncher/.MainActivity
+```
+
+After each command, tell user what changed and what to verify on screen. Don't run destructive commands (`pm disable-user`, `adb reboot`, `adb root`) unless user explicitly asks.
+
+**On Superbox: skip this entire section.** Superbox's locked-down firmware doesn't support meaningful ADB tweaks and the launcher must not be replaced.
 
 ## Phase 9 — Verification
 
@@ -259,5 +287,7 @@ If the user shares their Strong 8K credentials (server URL, username, password) 
 - **Don't dump this whole file at the user.** Walk them through phases conversationally, one step at a time.
 - **Read `README.md` end-to-end before starting** — it's the canonical user-facing doc and should match what you tell them.
 - **Skip box-irrelevant phases automatically.** If user is on Superbox, skip Phase 8 entirely. If on Ugoos, walk through it.
-- **Surface free wins early:** Jeremy's TiviMate Companion account (free Premium) and 6-month Strong 8K sub.
-- **The user is tech-savvy but not a power user.** Use plain language. Don't introduce ADB unless they're on Ugoos and you need it for the FLauncher swap.
+- **Surface free wins early:** Jeremy's TiviMate Companion activation code (free Premium) and 6-month Strong 8K sub.
+- **The user is tech-savvy but not a power user.** Use plain language. Don't introduce ADB unless they're on Ugoos and want the FLauncher swap.
+- **When ADB is needed, YOU run the commands** via the Bash tool — don't make the user type them. They handle box-side toggles (enable Wireless Debugging, accept pairing prompt, give you the IP). You handle `adb connect`, `adb install`, `adb shell cmd package set-home-activity`, etc.
+- **Verify each ADB action visibly:** after `adb devices`, confirm "device" not "offline" or "unauthorized". After install, `adb -s <ip>:5555 shell pm list packages | grep flauncher`. After set-home-activity, ask user to press Home and confirm new launcher appears.
