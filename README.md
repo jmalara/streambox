@@ -80,14 +80,24 @@ TiviMate is not on the Play Store on most Android TV box firmware. Sideload it:
 1. Open **Chrome** on the box (install Chrome from Play Store first if needed)
 2. Go to `tivimate.en.uptodown.com/android/download`
 3. Download the APK and install it (allow "Unknown Sources" for Chrome if prompted)
+4. **Open TiviMate at least once** and complete the initial setup screen — this generates a unique device ID Jeremy needs to add you to his account (see below)
 
 > ### Skip paying for TiviMate Premium — use Jeremy's account
 >
-> Jeremy has a TiviMate Companion paid account and can add your device. **Reach out to him before buying your own subscription.** Once added, your TiviMate gets all premium features (recording, multi-playlist, favorites management, auto EPG updates) at no cost.
+> Jeremy has a TiviMate Companion paid account and can add your device. **You still need to install and set up TiviMate yourself first** — Jeremy can't add you until your install has generated a device ID.
+>
+> The flow:
+>
+> 1. Install TiviMate (steps above)
+> 2. Open it once and complete the welcome screen so it boots into the main app
+> 3. Find your **device ID**: TiviMate → Settings → About → it shows a code/ID near the top (or under "Device" / "TiviMate Premium" depending on version)
+> 4. Send that ID to Jeremy
+> 5. Jeremy adds your device to his Companion account
+> 6. Restart TiviMate — Premium features (recording, multi-playlist, favorites management, auto EPG updates) are now unlocked
 >
 > Otherwise: TiviMate Premium is ~$20/year or ~$34 lifetime via the in-app purchase.
 
-> **Note:** TiviMate Companion is a separate app for managing premium subscriptions — it is NOT the player. The player is "TiviMate IPTV Player" (`ar.tvplayer.tv`).
+> **Note:** TiviMate Companion is a separate app for managing premium subscriptions — it is NOT the player. The player is "TiviMate IPTV Player" (`ar.tvplayer.tv`). Don't install TiviMate Companion on your box — Jeremy uses it on his end to manage devices.
 
 ---
 
