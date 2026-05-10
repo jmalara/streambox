@@ -130,7 +130,11 @@ Do this on your phone or laptop, not the box itself.
 
 ### Register on Discord (Required)
 
-EPGenius requires registration to keep playlists active:
+EPGenius requires playlist registration on their Discord to keep it active.
+
+> **Easy mode:** Jeremy is already set up on the EPGenius Discord and can register your playlist for you. Just send him your Google Drive M3U URL (the one EPGenius generated above) and he'll register it. You can skip the rest of this section.
+
+If Jeremy isn't available, do it yourself:
 
 1. Join the EPGenius Discord (link on their website)
 2. Complete verification in the welcome channel
