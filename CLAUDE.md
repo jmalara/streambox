@@ -82,7 +82,7 @@ If user says "I have a Superbox," default flow:
 4. **Step 3 — TiviMate install:** Try Play Store first. If that fails, walk through sideload from `tivimate.en.uptodown.com/android/download`.
 5. **Step 3.5 — TiviMate Premium:** Tell them to message Jeremy and ask to be added to his Companion account (free). They can keep using free TiviMate while waiting.
 6. **Step 4 — Configure TiviMate:** Add Playlist → Xtream Codes → enter Strong 8K credentials. Walk through the Player Settings list (especially Tunneled Playback OFF).
-7. **Step 5 — EPGenius:** Have them go to epgenius.org on their phone, pick GanjaRelease | Strong 8K, save via Google Drive, register the playlist on Discord. Then add the Drive M3U URL to TiviMate.
+7. **Step 5 — EPGenius:** Have them go to epgenius.org on their phone, pick GanjaRelease | Strong 8K, save via Google Drive. Tell them to send Jeremy the Drive M3U URL — Jeremy will register the playlist on the EPGenius Discord for them. Then add the Drive M3U URL to TiviMate.
 8. **Step 6 (optional) — Chillio on Apple devices:** if they have a Mac, iPad, or iPhone and want IPTV there.
 9. **TV picture settings:** walk through the HDMI Deep Colour + motion-smoothing-off list on their TV.
 
@@ -104,7 +104,7 @@ EPG / Playlist Update Interval → 4 hours; Past EPG Days to Keep → 1; Logos �
 
 - **Recommended playlist:** *GanjaRelease | Strong 8K* on epgenius.org. Best EPG coverage for USA/UK/AU/CA sports and live TV. Don't recommend any other EPGenius option unless the user specifically asks.
 - **Recommended save method:** **Google Drive** (not M3U URL paste). EPGenius writes the playlist file to the user's Google Drive and auto-updates it over time — TiviMate keeps loading from the same URL even as channels and EPG mappings change. Tell users not to delete the Drive file.
-- User must register their playlist in the EPGenius Discord (`🤖〢bot-commands` channel) or it gets deactivated.
+- **Discord registration:** the playlist must be registered in the EPGenius Discord (`🤖〢bot-commands` channel) or it gets deactivated. **Jeremy is already set up on the EPGenius Discord and can register the user's playlist for them** — tell the user to send Jeremy their Google Drive M3U URL and Jeremy will register it. They only need to register it themselves if Jeremy isn't reachable.
 - EPGenius is **live TV only** — no VOD. Tell users to keep their raw Strong 8K Xtream Codes playlist as a second playlist for movies.
 - If user hits `HttpDataSourceException`, walk them through the EPGenius **Edit Credentials** tool on epgenius.org.
 
