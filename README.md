@@ -14,13 +14,54 @@ Hand this repo to a friend with [Claude Code](https://docs.anthropic.com/en/docs
 
 ---
 
+## Easiest Path: Let Claude Code Walk You Through It
+
+The whole setup is designed to be driven by [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — it'll ask which box you have, skip the steps that don't apply, and help debug anything that goes wrong. Works for **Superbox** or **Ugoos**.
+
+### One-step start (don't need to clone first)
+
+Open a terminal anywhere on your computer and run:
+
+```bash
+claude
+```
+
+Then paste exactly this:
+
+> *"Clone https://github.com/jmalara/streambox into a folder, then walk me through setting up TiviMate, Strong 8K, and EPGenius on my Superbox."*
+
+Replace `Superbox` with `Ugoos` if that's what you have.
+
+### What Claude does
+
+1. Clones the repo into a folder
+2. Reads project context (`CLAUDE.md` + `.claude/agent.md` + `README.md`)
+3. Confirms which box you have and what you've already done
+4. Walks you through **one step at a time**, waits for you to say "done" before moving on
+5. Skips the parts that don't apply to your box
+6. Debugs issues using the Common Issues table
+
+### Already cloned the repo
+
+```bash
+cd streambox
+claude
+```
+
+Then say: *"Walk me through setting up TiviMate, Strong 8K, and EPGenius on my Superbox."*
+
+The rest of this README is the manual version of the same steps — Claude follows it. You can read it for context or just let Claude drive.
+
+---
+
 ## TL;DR for Existing Users
 
 Ask **Jeremy** for:
 1. To be added to his TiviMate Companion account → TiviMate Premium for free
 2. His Strong 8K reseller link / referral
+3. To register your EPGenius playlist on Discord for you (once you have a Google Drive M3U URL from EPGenius — Step 5)
 
-Then follow Steps 3-5 below.
+Then follow Steps 1-5 below (or let Claude Code drive — see above).
 
 ---
 
@@ -126,8 +167,6 @@ EPGenius is a community-curated *lens* on top of your Strong 8K subscription. Yo
 - **Doesn't sync your favorites or hidden groups** — EPGenius gives you the same channel *list* on every device, but favorites, hidden groups, and sort order are local to each app. Set up favorites once per device.
 - **Doesn't replace Strong 8K** — you still need an active Strong 8K subscription. EPGenius reads your Strong 8K credentials and outputs a curated playlist; without Strong 8K, no streams.
 - **Requires registration** — the playlist must be registered in their Discord or it gets deactivated. Jeremy can do this for you (see below).
-
-### Set Up the EPGenius Playlist
 
 ### Set Up the EPGenius Playlist
 
@@ -260,31 +299,6 @@ Roughly **$5/month total** for the IPTV service after Jeremy's TiviMate account 
 - If on WiFi, use the **5GHz** band, not 2.4GHz
 - IPTV needs ~50 Mbps for reliable HD sports streams
 - **VPN:** generally not needed. If your ISP throttles IPTV (streams buffer at peak hours but speed test is fine), a VPN to a nearby server fixes it. Surfshark or Mullvad are solid picks.
-
----
-
-## Setup with Claude Code (Easiest Path)
-
-If you have [Claude Code](https://docs.anthropic.com/en/docs/claude-code) installed, skip reading the rest of this guide — let Claude walk you through it conversationally. **Works for both Superbox and Ugoos** (Claude will ask which one you have and skip the steps that don't apply).
-
-```bash
-cd streambox
-claude
-```
-
-Then say:
-
-> *"Walk me through setting up TiviMate, Strong 8K, and EPGenius on my Superbox."*
-
-(Replace `Superbox` with `Ugoos` or whatever box you have.)
-
-Claude will:
-1. Ask what box you have and where you're starting from
-2. Walk you through one step at a time, waiting for you to confirm before moving on
-3. Skip the steps that don't apply to your box (Superbox-specific paths vs Ugoos-specific paths)
-4. Help debug issues as they come up
-
-See `CLAUDE.md` for the project context Claude uses.
 
 ---
 
