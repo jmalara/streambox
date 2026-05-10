@@ -40,9 +40,8 @@ The rest of this README is the manual version of the same steps — Claude follo
 ## TL;DR for Existing Users
 
 Ask **Jeremy** for:
-1. To be added to his TiviMate Companion account → TiviMate Premium for free
-2. His Strong 8K reseller link / referral
-3. To register your EPGenius playlist on Discord for you (once you have a Google Drive M3U URL from EPGenius — Step 5)
+1. A TiviMate Companion **activation code** → free TiviMate Premium (he generates it in his Companion phone app)
+2. To register your EPGenius playlist on Discord for you (once you have a Google Drive M3U URL from EPGenius — Step 5)
 
 Then follow Steps 1-5 below (or let Claude Code drive — see above).
 
