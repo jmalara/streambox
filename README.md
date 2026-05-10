@@ -1,511 +1,267 @@
 # Streambox Setup Guide
 
-Complete setup guide for the **Ugoos AM9 Pro** running TiviMate with Strong 8K IPTV and EPGenius curated playlists for live sports and TV.
+Simple setup guide for getting **TiviMate + Strong 8K + EPGenius** running on any Android TV box (designed and tested on **Ugoos AM9 Pro** and **Superbox**).
+
+Hand this repo to a friend with [Claude Code](https://docs.anthropic.com/en/docs/claude-code) installed and they can walk through the whole thing in under 30 minutes.
 
 ---
 
 ## What You'll End Up With
 
 - **TiviMate** — gold standard IPTV player with EPG, favorites, catch-up, and recording
-- **Strong 8K** — IPTV service with 30K+ channels including every sports network (~$2-5/month via resellers)
-- **EPGenius** — community-curated playlists with clean channel names, logos, categories, and EPG mapping
-- **No blackouts** — regional sports networks (SportsNet LA, YES Network, etc.) work without MLB/NFL blackout restrictions
-- **Optimized system** — instant UI, Cloudflare DNS, HDR passthrough, network tuning via ADB
-
-Everything below can be done with just the Ugoos remote. ADB (connecting the box to a computer) is optional and only needed for the system optimization section.
+- **Strong 8K** — IPTV service with 30K+ channels including every sports network
+- **EPGenius** — community-curated playlists with clean channel names, logos, and EPG
 
 ---
 
-## Step 1: Initial Setup
+## TL;DR for Existing Users
 
-1. Power on the Ugoos AM9 Pro and connect to WiFi
-2. Check for firmware updates: **Settings → About → OTA Update** — get to version **2.0.6+** (fixes crashes and DV/HDR issues)
-3. While the box updates, sign up for your IPTV service (Step 2) on your phone or laptop
+Ask **Jeremy** for:
+1. To be added to his TiviMate Companion account → TiviMate Premium for free
+2. His Strong 8K reseller link / referral
+
+Then follow Steps 3-5 below.
+
+---
+
+## Step 1: Power On Your Box and Update Firmware
+
+1. Connect the box to your TV and to WiFi or ethernet (ethernet preferred for stable streams)
+2. Check for firmware updates and install whatever's pending
+   - **Ugoos:** Settings → About → OTA Update (target version 2.0.6+)
+   - **Superbox:** Settings menu in the Superbox launcher → check for updates
+3. While the box updates, sign up for an IPTV service (next step) on your phone or laptop
 
 ---
 
 ## Step 2: Get an IPTV Service (Strong 8K)
 
-You need an IPTV service that provides Xtream Codes credentials (server URL + username + password).
+You need an IPTV service that gives you Xtream Codes credentials (server URL + username + password).
 
-1. Visit `strong8k.app` or search for Strong IPTV resellers
-2. **Always get a 24-hour free trial first** — test during a live game before paying
-3. Start with a **1-month subscription** (never pay yearly upfront with IPTV — services can disappear)
-4. They'll email you Xtream Codes credentials: server URL, username, and password
+1. Go to [https://my8k.org](https://my8k.org) — Strong 8K's current site (formerly strong8k.app)
+2. **Get the 24-hour free trial first** — test during a live game before paying
+3. **Recommended subscription length: 6 months.** Best balance of price and risk. Avoid yearly upfront (services can disappear); monthly is meaningfully more expensive per month.
+4. Strong 8K emails you Xtream Codes credentials: **server URL, username, password**
 
-Other well-reviewed IPTV services include Falcon TV (~$14/month, known for stable sports) and Xtreme HD IPTV ($12-15/month, 20K+ channels).
+Pricing: ~$2-5/month via resellers, $10-15/month direct.
 
-> **Pricing:** Strong 8K runs ~$2-5/month through resellers, $10-15/month direct.
-
-> **Quality:** Live sports channels are typically 720p-1080p at the source (ESPN broadcasts at 720p, Fox Sports at 1080p). The "8K/4K" branding applies to some VOD content, not live sports. Still looks great on an OLED.
+> **Quality note:** Live sports run at the source broadcast resolution (ESPN 720p, Fox Sports 1080p). The "8K/4K" branding in service names refers to VOD content, not live sports. Looks great on any modern TV.
 
 ---
 
 ## Step 3: Install TiviMate
 
-TiviMate is not available on the Play Store for AOSP Android 14. Sideload it via Uptodown:
+TiviMate is not on the Play Store on most Android TV box firmware. Sideload it:
 
-1. Open **Chrome** on the Ugoos
+1. Open **Chrome** on the box (install Chrome from Play Store first if needed)
 2. Go to `tivimate.en.uptodown.com/android/download`
-3. Download the APK and install it
-4. If Android blocks the install, allow "Unknown Sources" for Chrome when prompted
+3. Download the APK and install it (allow "Unknown Sources" for Chrome if prompted)
 
-> **Package:** `ar.tvplayer.tv` — TiviMate Premium (~$20/year or ~$34 lifetime) unlocks recording, multi-playlist, favorites management, and auto EPG updates. The free version works for testing.
+> ### Skip paying for TiviMate Premium — use Jeremy's account
+>
+> Jeremy has a TiviMate Companion paid account and can add your device. **Reach out to him before buying your own subscription.** Once added, your TiviMate gets all premium features (recording, multi-playlist, favorites management, auto EPG updates) at no cost.
+>
+> Otherwise: TiviMate Premium is ~$20/year or ~$34 lifetime via the in-app purchase.
 
-> **Note:** TiviMate Companion is a separate app for managing your premium subscription — it is NOT the player.
-
-### Alternative: Strong 8K App
-
-Strong 8K has their own app (a rebranded TiviMate v5.1.6) with pre-configured EPG. Download from the Strong 8K website. Upside: EPG works out of the box. Downside: pinned to older TiviMate version and only works with Strong 8K.
+> **Note:** TiviMate Companion is a separate app for managing premium subscriptions — it is NOT the player. The player is "TiviMate IPTV Player" (`ar.tvplayer.tv`).
 
 ---
 
 ## Step 4: Configure TiviMate with Strong 8K
 
-1. Open TiviMate → it will prompt you to **Add Playlist**
-2. Select **Xtream Codes**
-3. Enter the **Server URL**, **Username**, and **Password** from Strong 8K
-4. Name the playlist (e.g., "Strong 8K")
-5. Hit **Connect** — it will download the channel list and EPG
-6. Browse channels by category → find **Sports** → look for ESPN, Fox Sports, SportsNet LA, etc.
+1. Open TiviMate → **Add Playlist** → **Xtream Codes**
+2. Enter the **Server URL**, **Username**, and **Password** Strong 8K emailed you
+3. Name the playlist (e.g., "Strong 8K")
+4. **Connect** → it downloads channels and EPG
 
-### Player Settings
+### Recommended Player Settings
 
-In TiviMate → Settings → Player:
+In TiviMate → **Settings → Player**:
 
-- **Buffer Size** → **Small** (fast channel switching with minimal delay. Bump to Medium if you see stuttering)
-- **Audio Passthrough** → **On** (sends audio directly to your receiver/TV for best quality. Turn off if you get decoder errors.)
-- **Tunneled Playback** → **Off** (causes DecoderInitializationException on the AM9 Pro. Leave this off.)
-- **AFR (Auto Frame Rate)** → **On** (matches TV refresh rate to the stream — important for 60fps sports)
-- **AFR on VOD** → **Off** (causes unnecessary screen flicker)
-- **Switch 50/60fps only** → **On** (only switches refresh rate for sports broadcasts, avoids flicker on everything else)
-- **Video Decoder** → **Hardware** (should be default — verify)
+- **Buffer Size** → **Small** (fast channel switching)
+- **Audio Passthrough** → **On**
+- **Tunneled Playback** → **Off** (causes decoder errors on most Android boxes)
+- **AFR (Auto Frame Rate)** → **On** (matches TV refresh rate to stream — important for sports)
+- **AFR on VOD** → **Off** (avoids screen flicker)
+- **Switch 50/60fps only** → **On**
+- **Video Decoder** → **Hardware**
 
-### EPG & Playlist Settings
+### Recommended EPG Settings
 
-- Settings → EPG → **Update Interval** → **4 hours**
-- Settings → Playlists → [Strong 8K] → **Update Interval** → **4 hours**
-- Settings → EPG → **Past Days to Keep** → **1** (saves memory)
-- Settings → EPG → **Logos** → **Prefer logos from EPG**
+In TiviMate → **Settings → EPG / Playlists**:
 
-### Clean Up Channel Groups
+- **EPG Update Interval** → 4 hours
+- **Playlist Update Interval** → 4 hours
+- **Past Days to Keep** → 1
+- **Logos** → Prefer logos from EPG
 
-> **Tip:** Don't spend too much time organizing channels and favorites here — EPGenius (Step 5) gives you much better channel organization and EPG out of the box. Set up EPGenius first, then come back and fine-tune from those cleaner channel lists.
+### Channel Labels
 
-Strong 8K has 30K+ channels in 40+ languages. Hide what you don't need:
+IPTV providers tag channels with quality tiers — prefer in this order:
 
-1. Settings → Playlists → [Strong 8K] → **Manage Groups**
-2. **Long-press** on any group you don't want → the toggle turns gray and it disappears
-3. Keep only the groups you care about (USA, Sports, PPV, Movies, etc.)
-
-### Set Up Favorites
-
-TiviMate doesn't support favoriting entire channel groups, but you can create custom Favorites groups:
-
-1. On the main EPG/guide screen, **long-press OK** on any channel
-2. Select **Add to Favorites** → **Create Group**
-3. Name it whatever you want — "Sports", "Movies", "News", etc.
-4. Add channels from any provider group into your custom groups
-5. Set **Settings → General → Startup → Favorites** so TiviMate opens to your curated list
-
-### Understanding Channel Labels
-
-IPTV providers label channels with quality/priority tiers:
-
-- **VIP** — premium stream, highest priority server resources, most stable during peak hours
-- **8K** — higher bitrate/upscaled stream (not actual 8K resolution), better quality than standard
-- **BK** — backup stream from a different server. Use as fallback if the primary is down.
-- Prefer: **VIP > 8K > standard > BK**
+- **VIP** — premium stream, most stable
+- **8K** — higher bitrate (not real 8K)
+- **standard**
+- **BK** — backup, fallback only
 
 ---
 
-## Step 5: EPGenius Curated Playlist (Recommended)
+## Step 5: Add EPGenius for Better Channel Organization
 
-EPGenius provides community-curated playlists with clean channel names, proper logos, organized categories, and better EPG mapping than raw IPTV provider feeds. Your guide/EPG will be significantly better with EPGenius. A major advantage is that you get the same curated channel list across all your devices — add the same EPGenius playlist to TiviMate on your Ugoos, Chillio on your Mac, and MYTVOnline+ on your iPhone and they'll all have identical channel organization.
+EPGenius gives you community-curated playlists with clean channel names, logos, organized categories, and significantly better EPG than the raw Strong 8K list. Same playlist works across all your devices.
 
-### Set Up EPGenius
+### Set Up the EPGenius Playlist
 
-1. Go to `epgenius.org` on your Mac or phone (not the Ugoos)
-2. Sort/filter by your IPTV service (e.g., Strong 8K)
-3. Click **Preview Playlist** to see what channels/categories each list includes
-4. **Recommended: GanjaRelease | Strong 8K** — the #1 playlist on EPGenius with TV Guide coverage for USA, UK, AU, and Canada, and 100% EPG coverage for sports and live TV
-5. Click **Google Drive** to set it up — sign into your Google account when prompted
-6. When prompted, select **Xtream Codes** and enter your server URL, username, and password (recommended over M3U for better compatibility and fewer credential issues)
-7. EPGenius saves a curated playlist file to your Google Drive — **don't delete this file**. EPGenius automatically updates it with new channels, fixes, and EPG improvements so your playlist stays current across all devices without any manual work.
+Do this on your phone or laptop, not the box itself.
 
-### Add EPGenius to TiviMate
+1. Go to [https://epgenius.org](https://epgenius.org)
+2. Filter by **Strong 8K**
+3. Pick **GanjaRelease | Strong 8K** — the recommended one. Best EPG coverage for USA/UK/AU/CA sports and live TV.
+4. Click **Google Drive** to set up — this is the recommended option. Sign into Google when prompted.
+5. When asked for credentials, pick **Xtream Codes** and enter your Strong 8K server URL, username, password
+6. EPGenius writes the curated playlist to your Google Drive and gives you an M3U URL pointing at it. **Don't delete the file** — EPGenius auto-updates it (new channels, EPG fixes) and your TiviMate keeps loading from the same URL.
+
+### Add It to TiviMate
 
 1. In TiviMate → **Add Playlist** → **M3U Playlist**
-2. Paste the Google Drive M3U URL that EPGenius generated
-3. Name it (e.g., "EPGenius")
-4. Let it download channels
+2. Paste the Google Drive M3U URL EPGenius generated
+3. Name it "EPGenius"
+4. Let it download
 
 ### Register on Discord (Required)
 
-Your EPGenius playlist will stop working if you don't register it:
+EPGenius requires registration to keep playlists active:
 
 1. Join the EPGenius Discord (link on their website)
-2. Complete verification in the welcome/rules channel
-3. Go to the `🤖〢bot-commands` channel
-4. Click **Register Playlist** → paste your playlist URL when prompted
-5. Use `/dns` to verify your server DNS resolves correctly (avoid Cloudflare resolution)
+2. Complete verification in the welcome channel
+3. In `🤖〢bot-commands`, click **Register Playlist** → paste your URL when prompted
 
-### EPGenius Credentials Tool
+### Use Both Playlists
 
-If you need to update your IPTV credentials later (e.g., new server URL, password change):
+EPGenius is **live TV only** — no movies/VOD. Keep your raw Strong 8K Xtream Codes playlist for VOD. TiviMate Premium supports multiple playlists. Set EPGenius as your main daily-driver, fall back to Strong 8K for movies.
 
-1. Go to `epgenius.org` → **Edit Credentials**
-2. Update your DNS (server URL), username, and/or password
-3. Click **Update Credentials**
-4. In TiviMate → Settings → Playlists → [EPGenius] → **Update Playlist**
+### Set TiviMate to Open to Favorites
 
-### Troubleshooting EPGenius
+After your channels are loaded:
 
-- **HttpDataSourceException on playback:** Update credentials via the EPGenius Edit Credentials tool, then refresh the playlist in TiviMate. If still failing, run `/dns` in the EPGenius Discord to check your server URL. Ask in Discord for an alternative DNS if needed.
-- **Channels load but won't play:** Check that your Xtream Codes credentials match between your working Strong 8K playlist and the EPGenius playlist. Verify with the Edit Credentials tool.
-- **EPG missing on some channels:** Some channels (especially "8K", "BK", and international variants) may not have EPG data mapped. Long-press the channel → EPG Source → search for the correct channel to manually map it.
-
-### Support EPGenius
-
-EPGenius is a community project maintained by volunteers. Consider donating and becoming a supporter via their Discord — supporters get faster playlist updates and priority help in the support channels.
-
-### Using Both Playlists
-
-EPGenius only covers live TV channels — it does not include movies or TV shows (VOD). Keep your original Strong 8K Xtream Codes playlist for movies, TV series, and any live channels not in the EPGenius list. TiviMate Premium supports multiple playlists, so use EPGenius as your daily driver for live TV and the raw Strong 8K playlist for VOD content.
-
-If you get an **HttpDataSourceException** on EPGenius channels, update your credentials via the EPGenius Edit Credentials tool on their website, then refresh the playlist in TiviMate: Settings → Playlists → [EPGenius] → **Update Playlist**.
-
-### What Doesn't Sync Across Devices
-
-EPGenius gives you a consistent channel list everywhere, but any customizations you make inside your IPTV player — favorites, hidden groups, channel sorting, EPG source overrides — are local to that app and device. TiviMate on your Ugoos, Chillio on your Mac, and MYTVOnline+ on your iPhone each maintain their own settings independently. Nothing syncs between them. If you spend time organizing favorites on TiviMate, you'll need to redo that work on Chillio and MYTVOnline+ separately. Back up your TiviMate settings via **Settings → General → Backup & Restore** whenever you make large customizations so you don't lose that work.
+1. Long-press OK on a channel you like → **Add to Favorites** → **Create Group** ("Sports", etc.)
+2. Add channels to your custom groups
+3. **Settings → General → Startup → Favorites** so TiviMate boots into your curated list
 
 ---
 
-## Step 6: Ugoos Display Settings
+## Step 6: Watch on Your Mac, iPad, or iPhone (Optional)
 
-Go to **Ugoos Settings → Display**:
+**Chillio** is the best IPTV player for macOS, iPadOS, and iOS — same Strong 8K credentials, same EPGenius playlist, on every Apple device.
 
-- **Resolution** → 4K 60Hz
-- **Color Mode** → **YCbCr 4:2:2 12-bit**
-- **HDR** → Enable
-- **Dolby Vision** → Enable (if your TV supports it)
-- **Automatic Frame Rate** → Enable
+1. Install **Chillio IPTV Smart Player** from the Mac App Store / App Store
+2. **Settings → Accounts → Add Account → Xtream Codes** → enter your Strong 8K credentials
+3. Optionally also add the EPGenius M3U URL: Add Account → **M3U** → paste the Google Drive URL
 
-### Why YCbCr 4:2:2 12-bit?
+Chillio is free with basic features; **Chillio Premium** (~$2.49/month or ~$100 lifetime) unlocks profiles and customization.
 
-The AM9 Pro can only do YCbCr 4:4:4 at 8-bit due to HDMI bandwidth limits on the S905X5. 4:2:2 at 12-bit gives you the full bit depth needed for HDR10 and Dolby Vision. The chroma difference between 4:4:4 and 4:2:2 is invisible on video content.
-
-### On your TV
-
-Make sure **HDMI Deep Colour** (or equivalent) is **ON** for the HDMI port the Ugoos is plugged into. Without this, the TV caps the signal at 8-bit and you lose HDR/DV.
+> Customizations (favorites, hidden groups, sort order) are local to each app on each device — they don't sync across TiviMate, Chillio, etc. The channel list itself stays consistent because EPGenius gives you the same curated playlist everywhere.
 
 ---
 
-## Step 7: TV Picture Settings (for Best HDR/Dolby Vision)
+## Box-Specific Differences
 
-These settings apply to the HDMI input your Ugoos is plugged into.
+Most of the steps above are identical on any Android TV box. Hardware-specific bits:
 
-**Critical settings:**
+### Ugoos AM9 Pro
 
-- **HDMI Deep Colour** (or HDMI Ultra HD Deep Color) → **On** — without this, the TV caps the signal at 8-bit and blocks all HDR/DV
-- **Picture Mode** → **Filmmaker Mode** (most accurate) or **Cinema**
-- **Dynamic Tone Mapping** → **On** — maps HDR metadata to your panel's actual peak brightness
+- **Display:** Settings → Display → set **Color Mode = YCbCr 4:2:2 12-bit**, **Resolution = 4K 60Hz**, enable **HDR**, **Dolby Vision**, **Automatic Frame Rate**
+- **Firmware target:** version 2.0.6+ (fixes crashes and HDR/DV color issues)
+- **Optional:** replace the cluttered stock launcher with FLauncher — sideload from `apkpure.com/flauncher/me.efesser.flauncher`. To set as default via ADB: `adb shell cmd package set-home-activity me.efesser.flauncher/.MainActivity`
 
-**For OLED TVs — maximize HDR brightness:**
+### Superbox
 
-- **OLED Pixel Brightness** → **100** for HDR content
-- **AI Brightness** → **Off** (prevents the panel from dimming based on room lighting)
-- **Energy Saving** → **Off** (same issue — limits peak brightness)
+- **Display:** Superbox handles HDR / Dolby Vision / refresh rate automatically through its own settings menu — generally no manual override needed
+- **Firmware:** check for OTA updates from the Superbox launcher's settings menu — apply pending updates before installing apps
+- **Launcher:** Superbox uses its own custom launcher — don't try to swap it
+- **TiviMate install on Superbox:**
+  1. Most Superbox models have **Play Store access** — try installing TiviMate from there first (search "TiviMate")
+  2. If TiviMate isn't on Play Store for your firmware, sideload via the built-in **browser** or **File Manager** app:
+     - Open the browser → go to `tivimate.en.uptodown.com/android/download` → download APK
+     - When prompted, **allow installs from unknown sources** for the browser app (Settings → Apps → Browser → Install Unknown Apps → On)
+     - Open the downloaded APK and install
+- **Allow Unknown Sources on Superbox:** Settings → Security or Settings → Apps → Special Access → **Install Unknown Apps** → enable for the browser/file manager you used to download
+- **ADB:** Superbox firmware is locked down — ADB system tweaks generally won't apply or revert on reboot. Skip the ADB tweaks above. The Claude Code walkthrough automatically skips ADB steps if you tell Claude you're on Superbox.
+- **Storage:** Superbox internal storage is usually plenty for TiviMate + recordings. If recording lots of games, plug in a USB drive — TiviMate Recording supports external storage.
+- **Remote:** Superbox remote works fully with TiviMate out of the box — no Bluetooth pairing or extra setup needed.
 
-**Disable all processing:**
+### TV Picture Settings (Any Box)
 
-- **TruMotion / Motion Smoothing** → **Off** (eliminates soap opera effect)
-- **Super Resolution** → **Off**
-- **Noise Reduction** → **Off**
-- **MPEG Noise Reduction** → **Off**
-- **Sharpness** → **0**
+On the HDMI input your box is plugged into, on your TV:
 
----
-
-## Step 8: Firmware Update
-
-Check for Ugoos firmware updates: **Ugoos Settings → OTA Update**. Version **2.0.6+** includes critical fixes for system crashes and Dolby Vision/HDR color issues.
-
----
-
-## Advanced: ADB System Optimization (Optional)
-
-Everything above can be done with just the Ugoos remote. The steps below require connecting the Ugoos to a Mac or PC via ADB. **This is not required** but improves the experience.
-
-### Setting Up ADB
-
-1. On the Ugoos: Settings → About → tap **Build Number** 7 times to enable Developer Options
-2. Settings → Developer Options → enable **Wireless Debugging** (no USB cable needed)
-3. On your Mac: `brew install scrcpy` (includes adb)
-4. Connect via WiFi: `adb connect <ugoos-ip>:5555`
-5. Or connect via USB and run: `adb devices`
-
-### Run the Setup Script
-
-A script that applies all system optimizations is included in this repo:
-
-```bash
-./scripts/setup-adb.sh --tivimate-only    # System tweaks only (recommended)
-./scripts/setup-adb.sh                     # Full setup (includes Kodi config if Kodi is installed)
-./scripts/setup-adb.sh --dry-run           # Preview commands without executing
-```
-
-The script applies:
-- Animations → 0 (instant UI)
-- WiFi sleep policy → never
-- Cloudflare DNS-over-TLS
-- Telemetry disabled
-- Heads-up notifications disabled
-- HDR passthrough (let TV handle tone mapping)
-- TCP streaming optimizations
-- Bloatware disabled
-
-### Individual ADB Commands
-
-If you prefer to run commands individually:
-
-**Disable UI Animations:**
-```bash
-adb shell settings put global window_animation_scale 0
-adb shell settings put global transition_animation_scale 0
-adb shell settings put global animator_duration_scale 0
-```
-
-**Keep WiFi Alive During Sleep:**
-```bash
-adb shell settings put global wifi_sleep_policy 2
-```
-
-**Set Cloudflare DNS (Faster + Private):**
-```bash
-adb shell settings put global private_dns_mode hostname
-adb shell settings put global private_dns_specifier "1dot1dot1dot1.cloudflare-dns.com"
-```
-
-**Disable Telemetry and Notifications:**
-```bash
-adb shell settings put global send_action_app_error 0
-adb shell settings put global netstats_enabled 0
-adb shell settings put global heads_up_notifications_enabled 0
-adb shell settings put global app_standby_enabled 0
-```
-
-**HDR Passthrough:**
-```bash
-adb shell settings put global hdr_conversion_mode 0
-```
-
-**Network Streaming Optimization:**
-```bash
-adb root
-adb shell sysctl -w net.ipv4.tcp_slow_start_after_idle=0
-adb shell sysctl -w net.core.rmem_max=2097152
-adb shell sysctl -w net.core.wmem_max=2097152
-```
-
-> **Note:** The sysctl tweaks don't persist across reboots. Re-run them after a restart.
+- **HDMI Deep Colour** (or "HDMI Ultra HD Deep Color") → **On** — without this the TV caps the signal at 8-bit
+- **Picture Mode** → Filmmaker Mode or Cinema (most accurate)
+- **OLED Pixel Brightness** → 100 (OLED TVs only, for HDR)
+- **Motion Smoothing / TruMotion** → **Off** (eliminates soap opera effect)
+- **Sharpness** → 0
+- **Noise Reduction** → Off
 
 ---
 
-## Optional: Replace the Default Launcher with FLauncher
+## Common Issues
 
-The stock Ugoos home screen is cluttered. **FLauncher** is a free, open-source launcher that gives you a clean grid of apps.
-
-> **Important:** The Play Store shows FLauncher as "incompatible" on AOSP Android 14. Must sideload.
-
-### Install FLauncher
-
-Open **Chrome** on the Ugoos → go to `apkpure.com/flauncher/me.efesser.flauncher` → download and install.
-
-Or via ADB:
-```bash
-adb install ~/Downloads/flauncher.apk
-```
-
-### Set FLauncher as Default
-
-Use ADB to set FLauncher as the home activity:
-```bash
-adb shell cmd package set-home-activity me.efesser.flauncher/.MainActivity
-```
-
-To also prevent long-press Home from going to the stock launcher:
-```bash
-adb shell settings put secure assistant me.efesser.flauncher/.MainActivity
-```
-
-If `set-home-activity` doesn't work, disable the stock launcher instead:
-```bash
-adb shell pm disable-user --user 0 com.uapplication.launcher
-adb shell reboot
-```
-
-To undo later: `adb shell pm enable com.uapplication.launcher`
-
-### Set a Wallpaper
-
-FLauncher's built-in wallpaper picker may not work on AOSP Android 14. Use Chrome on the device:
-
-1. Open **Chrome** → go to `unsplash.com/s/photos/oled-dark` (true blacks for OLED)
-2. Long press an image → **Download image**
-3. Go to FLauncher home → **long press the background** → **Wallpaper** → **Pick a photo**
-4. Select from Chrome's Downloads folder
-
-> **Note:** Pushing images via ADB and running media scanner doesn't work reliably on this AOSP build. Always download through Chrome on the device.
-
-### FLauncher Settings Workaround
-
-The gear icon in FLauncher may not respond to clicks if the Ugoos remote is in IR mode. Pair the remote via **Bluetooth** (Settings → Remotes & Accessories → Pair new device) and it will work. If Bluetooth pairing isn't an option, use **scrcpy** from your Mac to click it with a mouse cursor:
-
-```bash
-scrcpy
-```
+| Issue | Fix |
+|-------|-----|
+| TiviMate not on Play Store | Sideload from `tivimate.en.uptodown.com/android/download` |
+| Confused by TiviMate vs TiviMate Companion | Companion is for managing your subscription. The player is "TiviMate IPTV Player" (`ar.tvplayer.tv`) |
+| `DecoderInitializationException` on playback | Settings → Player → turn **Tunneled Playback** OFF. If still failing, also turn **Audio Passthrough** OFF |
+| EPG empty / no program data | Settings → EPG → **Clear EPG** then **Update EPG**. Make sure your playlist has an EPG URL |
+| EPGenius `HttpDataSourceException` | epgenius.org → **Edit Credentials** → update DNS/username/password → refresh playlist in TiviMate |
+| Channels load but won't play | Verify Xtream Codes credentials are correct — credentials may have expired or changed |
+| Channels suddenly all stop working | Settings → Playlists → [your playlist] → **Update Playlist**. Server URL/port may have changed |
+| Live sports look low-res | ESPN broadcasts at 720p, Fox Sports at 1080p — that's the source, not an IPTV limitation |
 
 ---
 
-## Mac: Watch IPTV with Chillio
+## Subscriptions & Costs
 
-Chillio is the best IPTV player for macOS (also works on Apple TV, iPhone, and iPad). It supports Xtream Codes, M3U playlists, and has a clean native interface.
+| Service | Cost | Notes |
+|---------|------|-------|
+| **TiviMate Premium** | **Free via Jeremy's account** (else ~$20/year or ~$34 lifetime) | Reach out to Jeremy first |
+| **Strong 8K** | ~$2-5/month (reseller) | [https://my8k.org](https://my8k.org). Recommend 6-month sub |
+| **Chillio** (Mac / iPad / iPhone) | Free or ~$2.49/month premium | Optional, only if you want IPTV on Apple devices |
+| **EPGenius** | Donation-supported | Optional ~$10 donation via their Discord/website |
 
-### Install
-
-1. Download **Chillio** from the Mac App Store — search "Chillio IPTV Smart Player" or go to `chillio.app`
-2. Open the app
-
-### Add Your Strong 8K Account
-
-1. Go to **Settings → Accounts → Add Account**
-2. Select **Xtream Codes**
-3. Enter your **Server URL**, **Username**, and **Password** from Strong 8K
-4. Name it (e.g., "Strong 8K")
-5. Save — channels, VOD, and EPG will load automatically
-
-You can also add your EPGenius M3U playlist: Add Account → **M3U** → paste your Google Drive URL.
-
-> **Pricing:** Chillio is free with basic features. **Chillio Premium** (~$2.49/month or ~$100 lifetime) unlocks advanced customization, profiles, and premium features. The free version works fine for basic watching.
+Roughly **$5/month total** for the IPTV service after Jeremy's TiviMate account covers the player.
 
 ---
 
-## iPhone / iPad: Watch IPTV with MYTVOnline+
+## Network Tips
 
-MYTVOnline+ is a solid IPTV player for iOS with Xtream Codes support, EPG, picture-in-picture, favorites, and parental controls.
-
-### Install
-
-1. Download **MYTVOnline+ IPTV Player** from the App Store (by Formuler)
-2. Open the app
-
-### Add Your Strong 8K Account
-
-1. Tap **Add Portal** or the **+** button
-2. Select **Xtream Codes** as the login type
-3. Give it a name (e.g., "Strong 8K")
-4. Enter your **Server URL**, **Username**, and **Password**
-5. Save — your channels and VOD library will load
-
-> **Pricing:** MYTVOnline+ is free with a limited-time premium trial. Premium unlocks the full feature set (EPG, PiP, catch-up, etc.) via App Store subscription. Check the app for current pricing.
+- **Ethernet** is the most stable for live sports. Both Ugoos AM9 Pro and Superbox have gigabit ethernet.
+- If on WiFi, use the **5GHz** band, not 2.4GHz
+- IPTV needs ~50 Mbps for reliable HD sports streams
+- **VPN:** generally not needed. If your ISP throttles IPTV (streams buffer at peak hours but speed test is fine), a VPN to a nearby server fixes it. Surfshark or Mullvad are solid picks.
 
 ---
 
-## Automated Setup with Claude Code
+## Setup with Claude Code (Easiest Path)
 
-If you have [Claude Code](https://docs.anthropic.com/en/docs/claude-code) installed, you can have it walk you through the setup or run the ADB commands for you:
+If you have [Claude Code](https://docs.anthropic.com/en/docs/claude-code) installed, skip reading the rest of this guide — let Claude walk you through it conversationally. **Works for both Superbox and Ugoos** (Claude will ask which one you have and skip the steps that don't apply).
 
 ```bash
 cd streambox
 claude
 ```
 
-Claude will detect your Ugoos via ADB and apply system tweaks. See `CLAUDE.md` for details.
+Then say:
 
----
+> *"Walk me through setting up TiviMate, Strong 8K, and EPGenius on my Superbox."*
 
-## IPTV Tips & Tricks
+(Replace `Superbox` with `Ugoos` or whatever box you have.)
 
-### VPN
+Claude will:
+1. Ask what box you have and where you're starting from
+2. Walk you through one step at a time, waiting for you to confirm before moving on
+3. Skip the steps that don't apply to your box (Superbox-specific paths vs Ugoos-specific paths)
+4. Help debug issues as they come up
 
-You probably don't need a VPN for day-to-day watching, but keep one ready. If your ISP starts throttling IPTV traffic (streams suddenly buffer at peak hours but your speed test is fine), a VPN to a nearby server fixes it instantly. Surfshark or Mullvad are solid picks. The AM9 Pro can run a VPN app natively, or set it up at the router level to cover all devices.
-
-### Big Event Strategy
-
-Super Bowl, UFC PPV, playoffs — these are when IPTV services get hammered. Have multiple channel options ready: try the VIP stream first, then 8K, then standard, then BK. If your EPGenius playlist is struggling, switch to the raw Strong 8K playlist which has more redundant streams. Having a second IPTV service on standby (even just a cheap one-month sub) is good insurance for must-watch events.
-
-### Catch-Up TV
-
-Strong 8K supports catch-up on many channels (up to 48 hours). In TiviMate, long-press a channel → **Catch Up** to rewind to something you missed. Not every channel supports it, but most of the major US ones do.
-
-### Recording
-
-TiviMate Premium lets you record to local storage. Go to **Settings → Recording** and set the path to the Ugoos internal storage or a USB drive. You can schedule recordings from the EPG — useful for games you'll miss.
-
-### Multiple Connections
-
-Check with your reseller how many simultaneous connections your Strong 8K sub allows. Most reseller plans are 1 connection. If you're watching on your Ugoos and someone tries Chillio on the Mac at the same time, one of you gets kicked. Some resellers sell multi-connection plans for a couple bucks more.
-
-### Server Status
-
-Strong 8K usually has a Telegram channel or Discord where they post server maintenance and outage updates. Worth joining so you know when issues are on their end vs yours.
-
-### Playlist Refresh Shortcut
-
-If channels suddenly stop working across the board, force-refresh your playlist before anything else: TiviMate → Settings → Playlists → [playlist] → **Update Playlist**. 90% of the time that fixes it — the server URL or port may have changed.
-
-### Channel Switching Speed
-
-If you want even faster channel switching, try Settings → Player → **Buffer Size → None**. It's more aggressive than Small and some streams will hiccup, but for channel surfing during commercial breaks it's snappy. Switch back to Small for extended watching.
-
-### USB Ethernet Adapter
-
-If the AM9 Pro is too far from your router for ethernet but WiFi isn't cutting it for sports, a USB-C to ethernet adapter works on Android 14. Lets you run a long ethernet cable without relocating the box.
-
-### Reboot Schedule
-
-The AM9 Pro can get sluggish after running for weeks. Set a weekly auto-reboot: **Settings → Ugoos Settings → Scheduled Restart** → pick a time when you're asleep (e.g., Tuesday 4am).
-
----
-
-## Network Tips
-
-- **Ethernet is recommended** for the most stable streams. The AM9 Pro has a 1 Gigabit ethernet port.
-- If you're on WiFi, use the **5GHz band** (not 2.4GHz).
-- IPTV needs consistent 50+ Mbps for reliable HD sports streams.
-- The AM9 Pro's WiFi 6 at 850+ Mbps is more than enough over WiFi.
-
----
-
-## Common Issues
-
-- **TiviMate not on Play Store:** AOSP Android 14 doesn't have it. Sideload from Uptodown: `tivimate.en.uptodown.com/android/download`
-- **TiviMate Companion vs TiviMate:** Companion is only for managing your premium subscription. The actual player is "TiviMate IPTV Player" (`ar.tvplayer.tv`).
-- **DecoderInitializationException:** Turn off **Tunneled Playback** in Settings → Player. If still happening, also try turning off **Audio Passthrough**.
-- **EPG empty / no program data:** Clear EPG (Settings → EPG → Clear EPG) then Update EPG. Check playlist EPG URL is populated. Try the Strong 8K app for pre-configured EPG. Third-party EPG: `myepg.top` supports Strong 8K.
-- **EPGenius HttpDataSourceException:** Update credentials via the EPGenius Edit Credentials tool on their website, then refresh the playlist in TiviMate. Run `/dns` in EPGenius Discord to verify your server URL.
-- **IPTV channels not loading:** Verify Xtream Codes credentials are correct. Force-stop and restart TiviMate. Check if your IPTV trial has expired.
-- **Live sports quality:** ESPN streams at 720p, Fox Sports at 1080p — this is the source broadcast quality, not an IPTV limitation. "8K/4K" branding refers to VOD content.
-- **Channels slow to start:** Normal IPTV behavior. Buffer set to Small gives fastest channel switching.
-- **FLauncher package name:** Stock Ugoos launcher is `com.uapplication.launcher` (NOT `com.ugoos.launcher`). FLauncher is `me.efesser.flauncher`.
-- **FLauncher gear icon not responding:** The Ugoos remote is likely in IR mode. Pair it via Bluetooth (Settings → Remotes & Accessories → Pair new device) and it will respond to clicks. Alternatively, use scrcpy from your Mac to mouse-click it.
-- **FLauncher Play Store incompatible:** Sideload from `apkpure.com/flauncher/me.efesser.flauncher`.
-- **Long-press Home goes to stock launcher:** Run `adb shell settings put secure assistant me.efesser.flauncher/.MainActivity`
-
----
-
-## Subscriptions & Costs
-
-| Service | What It Is | Cost | Renewal |
-|---------|-----------|------|---------|
-| **TiviMate Premium** | IPTV player for Ugoos/Android — recording, multi-playlist, favorites | ~$20/year or ~$34 lifetime | In-app or via TiviMate Companion app |
-| **Strong 8K** | IPTV service — 30K+ channels, sports, VOD | ~$2-5/month (reseller) | Contact your reseller to renew |
-| **Chillio** | IPTV player for Mac/Apple TV | Free or ~$2.49/month premium (~$100 lifetime) | App Store subscription |
-| **MYTVOnline+** | IPTV player for iPhone/iPad | Free with premium trial, then App Store sub | App Store subscription |
-| **EPGenius** | Community-curated playlists with better EPG | $10 donation | Voluntary — donate via their website/Discord |
-
-> **Total monthly cost:** Roughly $5-15/month depending on your Strong 8K reseller pricing, plus the annual TiviMate renewal.
+See `CLAUDE.md` for the project context Claude uses.
 
 ---
 
@@ -513,17 +269,11 @@ The AM9 Pro can get sluggish after running for weeks. Set a weekly auto-reboot: 
 
 | What | Where |
 |------|-------|
-| TiviMate | Sideload from Uptodown (`tivimate.en.uptodown.com/android/download`) |
-| Strong 8K | `strong8k.app` — Xtream Codes credentials |
-| EPGenius | `epgenius.org` — curated playlists with better EPG |
-| IPTV setup | TiviMate → Add Playlist → Xtream Codes → enter credentials |
-| EPGenius setup | TiviMate → Add Playlist → M3U Playlist → paste Google Drive URL |
+| Strong 8K signup | [https://my8k.org](https://my8k.org) — get Xtream Codes credentials |
+| TiviMate APK | `tivimate.en.uptodown.com/android/download` |
+| TiviMate Premium | Get added to Jeremy's TiviMate Companion account (free) |
+| EPGenius playlists | [https://epgenius.org](https://epgenius.org) → filter by Strong 8K → GanjaRelease |
+| Chillio (Mac/iPad/iPhone) | Mac App Store / App Store — "Chillio IPTV Smart Player" |
+| TiviMate setup | Add Playlist → Xtream Codes → enter Strong 8K credentials |
+| EPGenius setup | Add Playlist → M3U Playlist → paste Google Drive URL |
 | Player settings | Tunneled Playback OFF, Audio Passthrough ON, Buffer Small, AFR ON |
-| EPG refresh | Settings → EPG → Update Interval → 4 hours |
-| Channel cleanup | Settings → Playlists → Manage Groups → hide unwanted groups |
-| Ugoos display | Settings → Display → YCbCr 4:2:2 12-bit, 4K 60Hz, AFR On |
-| Ugoos HDR / DV | Settings → Display → HDR On, Dolby Vision On |
-| TV HDMI Deep Colour | TV Settings → HDMI → Deep Colour → On |
-| FLauncher | Sideload from APKPure, set default via `adb shell cmd package set-home-activity` |
-| System tweaks | `./scripts/setup-adb.sh --tivimate-only` |
-| Firmware update | Ugoos Settings → OTA Update (2.0.6+) |
