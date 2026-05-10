@@ -108,7 +108,26 @@ IPTV providers tag channels with quality tiers — prefer in this order:
 
 ## Step 5: Add EPGenius for Better Channel Organization
 
-EPGenius gives you community-curated playlists with clean channel names, logos, organized categories, and significantly better EPG than the raw Strong 8K list. Same playlist works across all your devices.
+EPGenius is a community-curated *lens* on top of your Strong 8K subscription. You still pay Strong 8K for the actual streams — EPGenius doesn't replace anything. It just turns Strong 8K's raw 30,000-channel firehose into a clean, organized, well-labeled playlist.
+
+### What EPGenius does for you
+
+- **Cleans up channel names** — turns `US: ESPN HD ᴴᴰ ⁴ᴷ` into just `ESPN`. No more numbered duplicates, no spam, no random Unicode garbage.
+- **Adds proper logos** for every channel — your TiviMate guide actually looks good.
+- **Organizes channels into sensible categories** — Sports / News / Movies / Kids / Locals / etc. The raw Strong 8K list dumps everything into 40+ language and country groupings.
+- **Maps EPG (program guide) data correctly** — significantly better coverage than the raw feed. Most US/UK/AU/CA sports and live TV channels get a full guide so you can see what's on next, what's airing later tonight, etc.
+- **Auto-updates over time** — when Strong 8K swaps stream URLs, adds new channels, or fixes broken ones, EPGenius rebuilds the playlist automatically. Your TiviMate keeps loading from the same Google Drive URL forever, no manual maintenance.
+- **Same playlist works across every device** — your TiviMate on the box, Chillio on Mac/iPad/iPhone all see the identical channel list and organization.
+
+### What EPGenius does NOT do for you
+
+- **No movies or TV shows (VOD)** — EPGenius is **live TV only**. For movies and series, keep the raw Strong 8K Xtream Codes playlist as a second playlist (you'll have both in TiviMate).
+- **No international / non-English channels** — focused on USA, UK, Australia, Canada English-language live TV. If you watch foreign-language sports or news, the raw Strong 8K list still has them; EPGenius just won't curate them.
+- **Doesn't sync your favorites or hidden groups** — EPGenius gives you the same channel *list* on every device, but favorites, hidden groups, and sort order are local to each app. Set up favorites once per device.
+- **Doesn't replace Strong 8K** — you still need an active Strong 8K subscription. EPGenius reads your Strong 8K credentials and outputs a curated playlist; without Strong 8K, no streams.
+- **Requires registration** — the playlist must be registered in their Discord or it gets deactivated. Jeremy can do this for you (see below).
+
+### Set Up the EPGenius Playlist
 
 ### Set Up the EPGenius Playlist
 

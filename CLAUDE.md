@@ -102,10 +102,27 @@ EPG / Playlist Update Interval → 4 hours; Past EPG Days to Keep → 1; Logos �
 
 ## EPGenius Quick Notes
 
+### What EPGenius does (explain this to the user before walking through setup)
+
+- Cleans up channel names (no more `US: ESPN HD ᴴᴰ ⁴ᴷ` — just `ESPN`)
+- Adds proper logos to every channel
+- Organizes into sensible categories (Sports/News/Movies/Locals) instead of Strong 8K's 40+ language groupings
+- Maps EPG (program guide) data with much better coverage than raw Strong 8K
+- Auto-updates over time as Strong 8K swaps streams — user never has to manually refresh
+- Same playlist works on every device (TiviMate, Chillio, etc.)
+
+### What EPGenius does NOT do
+
+- **No movies/TV shows (VOD)** — live TV only. User keeps the raw Strong 8K playlist as a second playlist for movies.
+- **No international channels** — focused on USA/UK/AU/CA English-language live TV.
+- **Doesn't sync favorites/hidden groups across devices** — those are local to each app.
+- **Doesn't replace Strong 8K** — user still needs an active Strong 8K subscription. EPGenius is just a curated lens on top.
+
+### Setup details
+
 - **Recommended playlist:** *GanjaRelease | Strong 8K* on epgenius.org. Best EPG coverage for USA/UK/AU/CA sports and live TV. Don't recommend any other EPGenius option unless the user specifically asks.
 - **Recommended save method:** **Google Drive** (not M3U URL paste). EPGenius writes the playlist file to the user's Google Drive and auto-updates it over time — TiviMate keeps loading from the same URL even as channels and EPG mappings change. Tell users not to delete the Drive file.
 - **Discord registration:** the playlist must be registered in the EPGenius Discord (`🤖〢bot-commands` channel) or it gets deactivated. **Jeremy is already set up on the EPGenius Discord and can register the user's playlist for them** — tell the user to send Jeremy their Google Drive M3U URL and Jeremy will register it. They only need to register it themselves if Jeremy isn't reachable.
-- EPGenius is **live TV only** — no VOD. Tell users to keep their raw Strong 8K Xtream Codes playlist as a second playlist for movies.
 - If user hits `HttpDataSourceException`, walk them through the EPGenius **Edit Credentials** tool on epgenius.org.
 
 ## Common Issues You'll Help Debug
