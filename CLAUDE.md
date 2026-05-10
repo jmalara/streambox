@@ -1,186 +1,126 @@
 # Streambox — Claude Code Project Instructions
 
-This repo contains setup instructions and configuration files for a Ugoos AM9 Pro streaming box running TiviMate with Strong 8K IPTV and EPGenius curated playlists.
+This repo is a setup guide for getting **TiviMate + Strong 8K + EPGenius** running on any Android TV box. Tested on **Ugoos AM9 Pro** and **Superbox**, but applies to most Android TV boxes.
+
+## How You Help
+
+The user has [Claude Code](https://docs.anthropic.com/en/docs/claude-code) installed. They'll typically open this repo and say something like *"walk me through setting up TiviMate / Strong 8K / EPGenius on my Superbox"* or *"help me set up my streaming box."*
+
+When that happens, **walk them through one step at a time**. Don't dump the whole README at them.
+
+### Walkthrough flow (default behavior)
+
+1. **First message:** confirm scope before starting:
+   - Which box do they have? (Ugoos AM9 Pro / Superbox / other Android TV box)
+   - Are they starting fresh, or partway through?
+   - Have they already been added to Jeremy's TiviMate Companion account, or do they need to message him? (If not, tell them to message Jeremy now while they continue setup.)
+
+2. **Walk them through the steps from `README.md` in order.** Read it end-to-end before starting so you have full context. For each step:
+   - Tell them what they're about to do and why (one sentence)
+   - Give the actions to perform on the box, in order, no extras
+   - Wait for them to confirm "done" or report an issue before moving to the next step
+   - If they report an issue, look it up in the Common Issues table below before guessing
+
+3. **Skip irrelevant box-specific sections.** If they're on Superbox, don't walk them through the Ugoos display tweaks, FLauncher swap, or ADB system tweaks — those don't apply.
+
+4. **Call out the two free wins early:**
+   - Get added to Jeremy's TiviMate Companion account → free TiviMate Premium
+   - 6-month Strong 8K sub via my8k.org (not 1-month, not yearly)
+
+### Credentials handling
+
+If the user shares Strong 8K credentials (server URL, username, password) for troubleshooting: **do not echo them back, do not log them, do not save them to any file.** Use them only in-memory to help diagnose. After the diagnosis is done, they're forgotten.
 
 ## Project Context
 
-- **Device:** Ugoos AM9 Pro (Amlogic S905X5-J, Android 14 AOSP, 4GB RAM, 64GB storage)
-- **IPTV Player:** TiviMate (ar.tvplayer.tv) — gold standard IPTV player for Android
-- **IPTV Service:** Strong 8K (~$2-5/month via resellers, Xtream Codes credentials)
-- **Curated Playlists:** EPGenius (epgenius.org) — community-curated channel lists with better EPG mapping
-- **Target Display:** LG C5 OLED (Dolby Vision, HDR10, eARC)
-- **Launcher:** FLauncher (package: `me.efesser.flauncher`, replaces stock Ugoos launcher `com.uapplication.launcher`)
-- **Audio Receiver:** Onkyo RZ900 (ARC only, no eARC)
+- **Supported devices:**
+  - **Ugoos AM9 Pro** — Amlogic S905X5-J, Android 14 AOSP. Full ADB tweaks + FLauncher swap available.
+  - **Superbox** — locked-down stock firmware. TiviMate + Strong 8K + EPGenius all work, but ADB system tweaks and launcher swaps do NOT apply.
+  - Most other Android TV boxes work too — the steps in `README.md` are generic.
+- **IPTV Player:** TiviMate (`ar.tvplayer.tv`) — sideload from Uptodown
+- **TiviMate Premium:** Jeremy has a TiviMate Companion paid account. New users should reach out to be added to it → Premium for free, no subscription needed.
+- **IPTV Service:** Strong 8K — website is now [https://my8k.org](https://my8k.org) (formerly strong8k.app). ~$2-5/month via resellers. **Recommend 6-month subscription** as price/risk balance.
+- **Curated Playlists:** EPGenius (epgenius.org) — community-curated channel lists with better EPG. Free with Discord registration.
+- **Mac / iPad / iPhone player:** Chillio (Mac App Store / App Store). Same Strong 8K credentials work.
+
+## Common User Questions and How to Answer
+
+- **"How do I get TiviMate Premium?"** → Tell them to reach out to Jeremy and be added to his TiviMate Companion account. Free.
+- **"What box should I use?"** → Either Ugoos AM9 Pro or Superbox works. Ugoos has more configurability via ADB; Superbox is more locked-down but easier (less to tweak).
+- **"Should I get a 1-month or longer Strong 8K sub?"** → 6 months is the sweet spot. 1 month is more expensive per-month; full year is risky if the service disappears.
+- **"Why isn't TiviMate on the Play Store?"** → It's not distributed on Play Store for AOSP Android 14. Sideload from Uptodown.
+- **"What's the difference between TiviMate and TiviMate Companion?"** → Companion manages the subscription. TiviMate (`ar.tvplayer.tv`) is the actual player.
+
+## Box-Specific Notes
+
+### Ugoos AM9 Pro
+
+- ADB over WiFi works: enable Developer Options (Settings → About → tap Build Number 7 times) → Wireless Debugging → connect from Mac with `adb connect <ip>:5555`
+- Display settings need to be set manually: 4K 60Hz, YCbCr 4:2:2 12-bit, HDR + Dolby Vision on, AFR on
+- Stock launcher (`com.uapplication.launcher`) is cluttered. Optional: replace with FLauncher (`me.efesser.flauncher`) — sideload from APKPure, set as default with `adb shell cmd package set-home-activity me.efesser.flauncher/.MainActivity`
+- Firmware target version 2.0.6+ (fixes HDR/DV crashes)
+
+### Superbox
+
+- **Locked-down stock firmware.** ADB exists but most system tweaks (`settings put global ...`, `pm disable-user`, etc.) don't stick or get reverted on reboot. Skip the ADB section entirely on Superbox.
+- **Display, HDR, refresh rate** handled automatically by Superbox firmware. No manual YCbCr / 12-bit setup needed — skip the Ugoos display steps.
+- **Don't try to swap the launcher** — Superbox uses its own custom launcher and replacing it can break box functionality. Skip the FLauncher section.
+- **Firmware updates** come via Superbox's own OTA channel (in their launcher settings menu, not Android system settings).
+- **TiviMate install path on Superbox:**
+  1. **Try Play Store first** — most Superbox models have Play Store access and TiviMate may install directly. Have user search "TiviMate" before sideloading.
+  2. **Sideload fallback:** if Play Store rejects TiviMate, walk user through opening the built-in browser → going to `tivimate.en.uptodown.com/android/download` → downloading the APK → enabling "Install Unknown Apps" for that browser (Settings → Apps → Special Access → Install Unknown Apps → enable for the browser) → opening the APK to install.
+- **No Bluetooth pairing needed** — the Superbox remote works with TiviMate out of the box.
+- **Recording storage:** Superbox internal storage is fine for typical use. If user plans heavy recording (multiple games per week), suggest a USB drive — TiviMate's recording feature supports external USB storage.
+
+### Walkthrough script for Superbox users (typical happy path)
+
+If user says "I have a Superbox," default flow:
+
+1. **Step 1 — Power on + firmware:** Have them check for Superbox OTA updates via the Superbox launcher's settings menu.
+2. **Skip Ugoos display + ADB sections entirely.**
+3. **Step 2 — Strong 8K signup:** Direct them to my8k.org, push the 6-month subscription. Mention Jeremy's referral if they have one.
+4. **Step 3 — TiviMate install:** Try Play Store first. If that fails, walk through sideload from `tivimate.en.uptodown.com/android/download`.
+5. **Step 3.5 — TiviMate Premium:** Tell them to message Jeremy and ask to be added to his Companion account (free). They can keep using free TiviMate while waiting.
+6. **Step 4 — Configure TiviMate:** Add Playlist → Xtream Codes → enter Strong 8K credentials. Walk through the Player Settings list (especially Tunneled Playback OFF).
+7. **Step 5 — EPGenius:** Have them go to epgenius.org on their phone, pick GanjaRelease | Strong 8K, save via Google Drive, register the playlist on Discord. Then add the Drive M3U URL to TiviMate.
+8. **Step 6 (optional) — Chillio on Apple devices:** if they have a Mac, iPad, or iPhone and want IPTV there.
+9. **TV picture settings:** walk through the HDMI Deep Colour + motion-smoothing-off list on their TV.
+
+## TiviMate Setup Cheat Sheet
+
+If walking the user through TiviMate config, the player settings to set are:
+
+- Buffer Size → Small
+- Audio Passthrough → On
+- **Tunneled Playback → Off** (this one is critical — causes DecoderInitializationException if left on)
+- AFR (Auto Frame Rate) → On
+- AFR on VOD → Off
+- Switch 50/60fps only → On
+- Video Decoder → Hardware
+
+EPG / Playlist Update Interval → 4 hours; Past EPG Days to Keep → 1; Logos → Prefer logos from EPG.
+
+## EPGenius Quick Notes
+
+- **Recommended playlist:** *GanjaRelease | Strong 8K* on epgenius.org. Best EPG coverage for USA/UK/AU/CA sports and live TV. Don't recommend any other EPGenius option unless the user specifically asks.
+- **Recommended save method:** **Google Drive** (not M3U URL paste). EPGenius writes the playlist file to the user's Google Drive and auto-updates it over time — TiviMate keeps loading from the same URL even as channels and EPG mappings change. Tell users not to delete the Drive file.
+- User must register their playlist in the EPGenius Discord (`🤖〢bot-commands` channel) or it gets deactivated.
+- EPGenius is **live TV only** — no VOD. Tell users to keep their raw Strong 8K Xtream Codes playlist as a second playlist for movies.
+- If user hits `HttpDataSourceException`, walk them through the EPGenius **Edit Credentials** tool on epgenius.org.
+
+## Common Issues You'll Help Debug
+
+| Symptom | Fix |
+|---------|-----|
+| `DecoderInitializationException` | Tunneled Playback Off (Settings → Player). If still failing, Audio Passthrough Off. |
+| EPG empty | Settings → EPG → Clear EPG → Update EPG. Verify playlist has EPG URL. |
+| EPGenius `HttpDataSourceException` | epgenius.org → Edit Credentials → update → refresh playlist in TiviMate |
+| Channels load but won't play | Xtream Codes credentials wrong/expired — re-verify with Strong 8K |
+| All channels stop working at once | Settings → Playlists → Update Playlist. Server URL/port likely changed. |
+| Live sports look low-res | ESPN broadcasts at 720p, Fox Sports at 1080p — source, not IPTV |
+| TiviMate Companion isn't the player | Companion is subscription management only. Player is `ar.tvplayer.tv`. Sideload from Uptodown. |
 
 ## What This Repo Contains
 
-- `README.md` — Full step-by-step setup guide for TiviMate + Strong 8K + EPGenius
+- `README.md` — Step-by-step user-facing setup guide
 - `CLAUDE.md` — This file. Project context for Claude Code.
-- `.claude/agent.md` — Agent instructions for automated ADB-based setup
-- `scripts/setup-adb.sh` — Automated ADB setup script
-
-## ADB Access
-
-The Ugoos AM9 Pro supports ADB over USB and WiFi. When connected via ADB, Claude can:
-
-1. **Detect the device:** `adb devices`
-2. **Get root access:** `adb root` (Ugoos AOSP supports this)
-3. **Apply system tweaks:** `./scripts/setup-adb.sh --tivimate-only`
-4. **Swap launcher:** `adb shell cmd package set-home-activity me.efesser.flauncher/.MainActivity`
-5. **Fix long-press Home:** `adb shell settings put secure assistant me.efesser.flauncher/.MainActivity`
-6. **Disable stock launcher (fallback):** `adb shell pm disable-user --user 0 com.uapplication.launcher`
-7. **Launch TiviMate:** `adb shell monkey -p ar.tvplayer.tv -c android.intent.category.LAUNCHER 1`
-8. **Check firmware version:** `adb shell "getprop ro.build.display.id"`
-
-### Important ADB Notes
-
-- zsh on macOS interprets `!` in heredocs — use single-quoted heredocs (`'EOF'`) or escape with `\!`
-- The `/sdcard/` path often maps to `/data/media/0/` or `/storage/emulated/0/` — they are the same filesystem
-
-## TiviMate Setup
-
-- **Package:** `ar.tvplayer.tv`
-- **APK:** Sideload from Uptodown (`tivimate.en.uptodown.com/android/download`) — not available on Play Store for AOSP
-- **Premium:** ~$20/year — unlocks recording, multi-playlist, favorites management
-- **IPTV Service:** Strong 8K recommended (~$2-5/month via resellers, trial available)
-- **Alternative App:** Strong 8K has their own app (rebranded TiviMate v5.1.6) with pre-configured EPG
-
-### TiviMate Configuration
-
-1. Open TiviMate → Add Playlist → Xtream Codes
-2. Enter Server URL, Username, Password from IPTV provider
-3. Name the playlist (e.g., "Strong 8K")
-4. Connect → downloads channel list + EPG automatically
-5. Browse Sports category for ESPN, Fox Sports, SportsNet LA, etc.
-
-### TiviMate Player Settings
-
-- **Buffer Size** → Small (fast channel switching; bump to Medium if stuttering)
-- **Audio Passthrough** → On (sends audio directly to receiver/TV for best quality; turn off if decoder errors)
-- **Tunneled Playback** → Off (causes DecoderInitializationException on S905X5 with IPTV streams)
-- **AFR (Auto Frame Rate)** → On
-- **AFR on VOD** → Off (unnecessary flicker)
-- **Switch 50/60fps only** → On (only switches for sports broadcasts, avoids flicker on other content)
-- **Video Decoder** → Hardware
-
-### TiviMate EPG & Playlist Settings
-
-- EPG Update Interval → 4 hours
-- Playlist Update Interval → 4 hours
-- Past EPG Days to Keep → 1
-- Logos → Prefer logos from EPG
-
-### Channel Labels
-
-- **VIP** — premium/highest priority stream, most stable during peak hours
-- **8K** — higher bitrate stream (not actual 8K resolution)
-- **BK** — backup stream from different server, use as fallback
-- Prefer: VIP > 8K > standard > BK
-
-## EPGenius Curated Playlists
-
-EPGenius provides community-curated M3U playlists with clean channel names, proper logos, organized categories, and better EPG mapping than raw IPTV provider feeds.
-
-### Setup
-
-1. Go to `epgenius.org`, filter by IPTV provider (Strong 8K)
-2. Preview playlist → click Google Drive to set up
-3. Enter Xtream Codes credentials when prompted
-4. EPGenius saves curated M3U to Google Drive (auto-updates)
-5. In TiviMate: Add Playlist → M3U Playlist → paste Google Drive URL
-6. Register playlist in EPGenius Discord (`🤖〢bot-commands` channel) — required to keep it active
-
-### Credentials Edit Tool
-
-Update credentials at `epgenius.org` → Edit Credentials → Update DNS/username/password → Update Credentials → refresh playlist in TiviMate
-
-### Troubleshooting EPGenius
-
-- **HttpDataSourceException:** Update credentials via EPGenius Edit Credentials tool, refresh playlist. Run `/dns` in Discord to verify server URL.
-- **Channels load but won't play:** Credentials mismatch — verify with Edit Credentials tool
-- **EPG missing on some channels:** Long-press channel → EPG Source → manually map
-
-### IPTV Quality Notes
-
-- Live sports channels: 720p-1080p at source (ESPN = 720p, Fox Sports = 1080p)
-- "8K/4K" branding on IPTV services applies to VOD content, not live sports
-- Needs 50+ Mbps bandwidth (AM9 Pro's WiFi 6 at 850+ Mbps is more than enough)
-
-## Ugoos Recommended Settings
-
-- **Color Mode:** YCbCr 4:2:2 12-bit (best HDR/DV color depth within HDMI bandwidth)
-- **Resolution:** 4K 60Hz
-- **Automatic Frame Rate:** Enabled
-- **Dolby Vision:** Enabled
-- **HDR:** Enabled
-
-## ADB System Tweaks
-
-Applied via `scripts/setup-adb.sh`:
-
-```bash
-./scripts/setup-adb.sh --tivimate-only    # System tweaks only (recommended)
-./scripts/setup-adb.sh                     # Full setup (includes Kodi config if Kodi installed)
-./scripts/setup-adb.sh --dry-run
-```
-
-System tweaks applied:
-- Animations → 0 (instant UI)
-- WiFi sleep policy → never
-- Cloudflare DNS-over-TLS (`1dot1dot1dot1.cloudflare-dns.com`)
-- Telemetry disabled (send_action_app_error, netstats, app_standby)
-- Heads-up notifications disabled
-- HDR conversion mode → 0 (passthrough to TV)
-- TCP slow start after idle disabled
-- TCP buffer sizes increased (rmem_max/wmem_max → 2MB)
-- Bloatware disabled (printspooler, ugoosfirstrun)
-
-Not handled by script (manual UI setup):
-- FLauncher sideload + launcher swap (optional — stock launcher works fine)
-- TiviMate player settings (tunneled playback off, audio passthrough off, buffer small, AFR on)
-- EPGenius playlist setup
-
-## FLauncher
-
-- **Package:** `me.efesser.flauncher`
-- **Install:** Sideload from `apkpure.com/flauncher/me.efesser.flauncher` (Play Store incompatible on AOSP)
-- **Set default:** `adb shell cmd package set-home-activity me.efesser.flauncher/.MainActivity`
-- **Fix long-press Home:** `adb shell settings put secure assistant me.efesser.flauncher/.MainActivity`
-- **Disable stock launcher (fallback):** `adb shell pm disable-user --user 0 com.uapplication.launcher`
-- **Gear icon workaround:** Pair the Ugoos remote via Bluetooth (IR mode doesn't register clicks). Alternatively, use scrcpy from Mac to mouse-click.
-- **Wallpapers:** Download through Chrome on device (ADB media scanner unreliable on AOSP)
-
-## TV Picture Settings (LG C5 OLED)
-
-- HDMI Deep Colour → On
-- Picture Mode → Filmmaker Mode
-- Dynamic Tone Mapping → On
-- OLED Pixel Brightness → 100 (for HDR)
-- AI Brightness → Off
-- Energy Saving → Off
-- TruMotion → Off
-- Super Resolution / Noise Reduction / Sharpness → Off/0
-
-## Subscriptions & Costs
-
-| Service | Cost | Notes |
-|---------|------|-------|
-| TiviMate Premium | ~$20/year or ~$34 lifetime | IPTV player for Ugoos/Android. Renew in-app or via Companion app |
-| Strong 8K | ~$2-5/month (reseller) | IPTV service. Renew through reseller |
-| Chillio | Free or ~$2.49/month (~$100 lifetime) | IPTV player for Mac/Apple TV. App Store subscription |
-| MYTVOnline+ | Free with premium trial, then App Store sub | IPTV player for iPhone/iPad. App Store subscription |
-| EPGenius | $10 donation | Community-curated playlists (live TV only). Voluntary donation |
-
-## Common Issues
-
-- **TiviMate not on Play Store:** AOSP Android 14 doesn't have it. Sideload from Uptodown.
-- **TiviMate Companion vs TiviMate:** Companion is for subscription management only. Player is `ar.tvplayer.tv`.
-- **DecoderInitializationException:** Turn off Tunneled Playback in Settings → Player. If still happening, also try turning off Audio Passthrough.
-- **EPG empty/no program data:** Clear EPG then Update EPG. Try Strong 8K app for pre-configured EPG. Third-party: `myepg.top`.
-- **EPGenius HttpDataSourceException:** Update credentials via Edit Credentials tool on epgenius.org, refresh playlist. Run `/dns` in Discord.
-- **IPTV channels not loading:** Verify Xtream Codes credentials. Force-stop and restart TiviMate.
-- **Live sports quality:** ESPN = 720p, Fox Sports = 1080p (source limitation, not IPTV).
-- **FLauncher gear icon not responding:** Pair the Ugoos remote via Bluetooth (IR mode doesn't register clicks). Or use scrcpy to mouse-click it.
-- **FLauncher long-press Home goes to stock launcher:** `adb shell settings put secure assistant me.efesser.flauncher/.MainActivity`
-- **FLauncher wallpapers:** Download through Chrome on device, pick from FLauncher wallpaper settings.
-- **ADB media scanner unreliable:** Download files through Chrome on the device instead of ADB push.
