@@ -61,10 +61,9 @@ Then follow Steps 1-5 below (or let Claude Code drive — see above).
 
 You need an IPTV service that gives you Xtream Codes credentials (server URL + username + password).
 
-1. Go to [https://my8k.org](https://my8k.org) — Strong 8K's current site (formerly strong8k.app)
-2. **Get the 24-hour free trial first** — test during a live game before paying
-3. **Recommended subscription length: 6 months.** Best balance of price and risk. Avoid yearly upfront (services can disappear); monthly is meaningfully more expensive per month.
-4. Strong 8K emails you Xtream Codes credentials: **server URL, username, password**
+1. Go to [https://my8k.org](https://my8k.org) — Strong 8K's current site 
+2. **Recommended subscription length: 6 months.** Best balance of price and risk. Avoid yearly upfront (services can disappear); monthly is meaningfully more expensive per month.
+3. Strong 8K emails you Xtream Codes credentials: **server URL, username, password**
 
 Pricing: ~$2-5/month via resellers, $10-15/month direct.
 
