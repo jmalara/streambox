@@ -36,7 +36,7 @@ Follow README's steps in this order. Box-specific notes are below each one.
 2. **Strong 8K signup (Step 2).** On his phone or laptop while the box updates. Recommend the 6-month plan and the free 24-hour trial first.
 3. **Connect to the box (Step 3, Ugoos only).** See "ADB on a Ugoos" below. Superbox: skip.
 4. **Install TiviMate (Step 3).** Ugoos: you install it (below). Superbox or no ADB: he uses the Downloader app (code `272483`) or the browser (`https://tivimate.com/apk`) and allows Install Unknown Apps.
-5. **TiviMate Premium (Step 4).** He enters the activation code from Jeremy. While he waits for it, carry on: Step 5 and making the EPGenius playlist work on free TiviMate. Free TiviMate holds one playlist, so adding EPGenius as the second one needs Premium.
+5. **TiviMate Premium (Step 4).** He enters the activation code from Jeremy. While he waits for it, carry on with Step 5 and with making the EPGenius playlist on his phone. Free TiviMate holds one playlist, so only adding EPGenius to TiviMate as the second one has to wait for Premium.
 6. **Add Strong 8K to TiviMate (Step 5).** Walk the player settings; Tunneled Playback **Off** is the one that matters most.
 7. **EPGenius (Step 6).** Explain what it does and doesn't do (README has the list) before he starts. Recommend only **GanjaRelease | Strong 8K** saved with **Google Drive**, unless he asks about other options. Jeremy registers the playlist on Discord for him.
 8. **Picture (Step 7).** Ugoos: display settings, then TV settings. Superbox: TV settings only; the box handles HDR and refresh rate itself.
