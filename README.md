@@ -1,5 +1,7 @@
 # Streambox Setup Guide
 
+**Recommended box: the Ugoos AM9 Pro.** It's the one Jeremy uses and tested this guide on, it has the best picture (HDR and Dolby Vision), and it's the box Claude can set up for you over your home network. A Superbox works too, but you'll do more of the button pressing yourself.
+
 This guide gets live TV running on your Android TV box with three pieces:
 
 - TiviMate, the player app. It gives you a proper TV guide, favorites and recording.
@@ -39,9 +41,9 @@ claude
 
 Then say:
 
-> Walk me through setting up my Superbox.
+> Walk me through setting up my Ugoos.
 
-(Or "my Ugoos", if that's your box.)
+(Or "my Superbox", if that's your box.)
 
 On a Ugoos, Claude connects to the box over your home network and does the technical parts itself, like installing TiviMate. It asks before it installs or changes anything. On a Superbox, Claude can't reach the box, so you press the buttons and it tells you what to press. The Ugoos steps are tested on Jeremy's own box; the Superbox steps come from research, so a menu name may look a little different on yours.
 
