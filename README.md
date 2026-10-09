@@ -199,6 +199,22 @@ EPGenius is free. You can make an optional donation through their site or Discor
 
 Use EPGenius for everyday live TV and switch to the Strong 8K playlist for movies and shows.
 
+### Clean up the channel groups
+
+Out of the box your guide is crowded. Strong 8K alone has hundreds of groups for countries you'll never watch, and EPGenius still includes the UK, Canada, Australia, Ireland and New Zealand alongside the US. Hiding the groups you don't want makes the guide short and fast to scroll. Hidden groups aren't deleted: you can turn any of them back on later.
+
+How to hide groups in TiviMate:
+
+1. Open the TV guide and press left on the remote until the list of groups shows.
+2. Long-press OK on any group and choose **Manage groups**. (You can also get there from Settings: open Playlists, pick the playlist, then its groups.)
+3. Untick every group you don't want, then press Back to save.
+
+Each playlist has its own group list, so do this once for Strong 8K and once for EPGenius.
+
+**Strong 8K:** this is your movies and shows playlist, so you can hide almost all of its live TV groups. Most group names start with a country code (US, UK, CA, AU and so on), which makes the ones to hide easy to spot. Keep a couple of US sports groups as a backup in case an EPGenius channel is down. Movies and shows have their own group lists: go to Movies or Shows, long-press a group, and hide the foreign-language ones the same way.
+
+**EPGenius:** keep the US groups and hide the UK, Canadian, Australian, Irish and New Zealand ones unless you watch them. If you follow the Premier League or other UK sports, keep the UK sports groups, since that's where those games show up.
+
 ### Make TiviMate open to your favorites
 
 1. Long-press OK on a channel you like, choose **Add to Favorites**, and create a group such as "Sports".
@@ -248,6 +264,7 @@ Chillio is an IPTV player on the App Store; search for "Chillio". Sign in with t
 - A live sports channel plays without an error.
 - The TV guide shows what's on.
 - The EPGenius playlist plays, with clean names and logos.
+- The guide only shows the groups you want.
 - Premium is active, or the code is on its way.
 
 ## Superbox notes
