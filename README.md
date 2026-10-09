@@ -1,319 +1,303 @@
 # Streambox Setup Guide
 
-Simple setup guide for getting **TiviMate + Strong 8K + EPGenius** running on any Android TV box (designed and tested on **Ugoos AM9 Pro** and **Superbox**).
+This guide gets live TV running on your Android TV box with three pieces:
 
-Hand this repo to a friend with [Claude Code](https://docs.anthropic.com/en/docs/claude-code) installed and they can walk through the whole thing in under 30 minutes.
+- TiviMate, the player app. It gives you a proper TV guide, favorites and recording.
+- Strong 8K, the IPTV subscription. About 10,000 live channels, including all the sports networks.
+- EPGenius, a free community playlist that sits on top of Strong 8K and cleans up channel names, logos and the guide.
 
----
+It's written for a Ugoos AM9 Pro or a Superbox, and most other Android TV boxes work the same way. Plan on about 30 minutes, longer on a Superbox.
 
-## What You'll End Up With
+## The easy way: let Claude walk you through it
 
-- **TiviMate** — gold standard IPTV player with EPG, favorites, catch-up, and recording
-- **Strong 8K** — IPTV service with 30K+ channels including every sports network
-- **EPGenius** — community-curated playlists with clean channel names, logos, and EPG
+You don't have to read the rest of this. Claude Code can run the whole setup with you, one step at a time, and skip whatever doesn't apply to your box.
 
----
+### What you need
 
-## Easiest Path: Let Claude Code Walk You Through It
+- Claude Code, which needs a paid Claude plan. Install it on a Mac or Linux with:
 
-The whole setup is designed to be driven by [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — it'll ask which box you have, skip the steps that don't apply, and help debug anything that goes wrong. Works for **Superbox** or **Ugoos**.
+  ```bash
+  curl -fsSL https://claude.ai/install.sh | bash
+  ```
 
-**In Claude Code, paste this exactly:**
+  On Windows, in PowerShell:
 
-> Clone https://github.com/jmalara/streambox into a folder, then walk me through setting up TiviMate, Strong 8K, and EPGenius on my Superbox.
+  ```powershell
+  irm https://claude.ai/install.ps1 | iex
+  ```
 
-(Replace `Superbox` with `Ugoos` if that's your box.)
+  Docs are at [code.claude.com/docs](https://code.claude.com/docs).
+- Git. On a Mac, run `git --version` and accept the prompt to install it. On Windows, get it from [git-scm.com](https://git-scm.com).
 
-That's it. Claude will:
+### Start it
 
-1. Clone the repo into a folder
-2. Read the project context (`CLAUDE.md`, `.claude/agent.md`, `README.md`)
-3. Confirm which box you have and what you've already done
-4. Walk you through **one step at a time**, waiting for you to say "done" before moving on
-5. Skip the parts that don't apply to your box
-6. Debug issues using the Common Issues table
+```bash
+git clone https://github.com/jmalara/streambox
+cd streambox
+claude
+```
 
-The rest of this README is the manual version of the same steps — Claude follows it. You can read it for context or just let Claude drive.
+Then say:
 
----
+> Walk me through setting up my Superbox.
 
-## TL;DR for Existing Users
+(Or "my Ugoos", if that's your box.)
 
-Ask **Jeremy** for:
-1. A TiviMate Companion **activation code** → free TiviMate Premium (he generates it in his Companion phone app)
-2. To register your EPGenius playlist on Discord for you (once you have a Google Drive M3U URL from EPGenius — Step 5)
+On a Ugoos, Claude connects to the box over your home network and does the technical parts itself, like installing TiviMate. It asks before it installs or changes anything. On a Superbox, Claude can't reach the box, so you press the buttons and it tells you what to press. The Ugoos steps are tested on Jeremy's own box; the Superbox steps come from research, so a menu name may look a little different on yours.
 
-Then follow Steps 1-5 below (or let Claude Code drive — see above).
+Everything below is the manual version of the same steps. Claude follows it too.
 
----
+## Two things to ask Jeremy first
 
-## Step 1: Power On Your Box and Update Firmware
+Text Jeremy now so these are ready when you need them:
 
-1. Connect the box to your TV and to WiFi or ethernet (ethernet preferred for stable streams)
-2. Check for firmware updates and install whatever's pending
-   - **Ugoos:** Settings → About → OTA Update (target version 2.0.6+)
-   - **Superbox:** Settings menu in the Superbox launcher → check for updates
-3. While the box updates, sign up for an IPTV service (next step) on your phone or laptop
+1. An activation code for TiviMate Premium. He makes it in his TiviMate Companion app and it uses one of his 5 device slots, so you don't pay for Premium.
+2. Registering your EPGenius playlist on Discord. You'll send him a link in Step 6 and he does the rest.
 
----
+## Step 1: Power on and update
 
-## Step 2: Get an IPTV Service (Strong 8K)
+Updates first, so nothing crashes later.
 
-You need an IPTV service that gives you Xtream Codes credentials (server URL + username + password).
+1. Connect the box to your TV, and to your network. Ethernet is best for live sports; Wi-Fi works.
+2. Install any pending firmware update.
+   - Ugoos: in Settings, under About, open **OTA Update** and install the latest update (2.2.0 as of October 2026; anything 2.0.6 or newer fixes the HDR/Dolby Vision crashes).
+   - Superbox: open the settings menu in the Superbox launcher and check for updates there. Superbox updates don't come through the normal Android settings.
+3. While it updates, move on to Step 2 on your phone or laptop.
 
-1. Go to [https://my8k.org](https://my8k.org) — Strong 8K's current site 
-2. **Recommended subscription length: 6 months.** Best balance of price and risk. Avoid yearly upfront (services can disappear); monthly is meaningfully more expensive per month.
-3. Strong 8K emails you Xtream Codes credentials: **server URL, username, password**
+## Step 2: Sign up for Strong 8K
 
-Pricing: ~$2-5/month via resellers, $10-15/month direct.
+Strong 8K is where the channels come from. You get a server address, username and password that you'll type into TiviMate.
 
-> **Quality note:** Live sports run at the source broadcast resolution (ESPN 720p, Fox Sports 1080p). The "8K/4K" branding in service names refers to VOD content, not live sports. Looks great on any modern TV.
+1. Go to [my8k.org](https://my8k.org). That's the Strong 8K storefront Jeremy uses.
+2. Ask their support for the free 24-hour trial first, and test it during a live game before you pay.
+3. Pick the 6-month plan ($35, about $6 a month). Monthly costs more per month, and services like this can disappear, so don't prepay a full year.
+4. Your login arrives by email: server URL, username and password. Check spam if it isn't there in a few minutes. Save it somewhere you can copy from.
 
----
+Each plan covers one device. Live sports come through at the broadcaster's resolution (ESPN is 720p, Fox Sports is 1080p). The "8K" in the name is about movies, not live games, and it still looks great on a modern TV.
 
 ## Step 3: Install TiviMate
 
-TiviMate is not in any official app store on Superbox or most Android TV boxes — sideload it. Pick one of these install paths:
+TiviMate isn't in your box's app store. The Ugoos has Google Play, but TiviMate only shows up there on certified Android TV devices, and a Superbox has no Google Play at all. So you install the official app file from tivimate.com.
 
-### Easiest: Downloader app
+**Don't install "TiviMate Companion" on your box.** That's the phone app Jeremy uses to manage Premium. The player you want is **TiviMate IPTV Player** (`ar.tvplayer.tv`).
 
-1. On the box, install the **Downloader** app (search "Downloader" in your box's app store, or sideload from `aftvnews.com/downloader`)
-2. Open Downloader → enter the URL: `tivimate.en.uptodown.com/android/download`
-3. Download the latest TiviMate APK and install it
+### On a Ugoos: let Claude install it
 
-### Alternative: Built-in browser
+Claude installs TiviMate from your computer once you turn on network debugging on the box. You do this part with the remote:
 
-1. Open the box's built-in web browser (Chrome on Ugoos; Superbox has a stock browser)
-2. Go to `tivimate.en.uptodown.com/android/download`
-3. Download the APK
-4. **Allow Install Unknown Apps** for that browser when prompted — path depends on your Android version:
-   - Newer (Android 12+): Settings → Apps → Special Access → Install Unknown Apps → enable for the browser
-   - Older: Settings → Security → Unknown Sources → enable
-5. Open the downloaded APK to install
+1. Turn on Developer Options: in Settings, open About (on some firmware it's under Device Preferences) and click **Build** seven times.
+2. Turn on the Ugoos network debugging toggle. The exact name varies by firmware; look in Developer Options or the Ugoos settings for ADB debugging over the network.
+3. Find the box's IP address in its network settings and give it to Claude.
+4. If the TV asks whether to allow debugging, tick **Always allow** and accept.
 
-After installing, **open TiviMate at least once** and complete the welcome screen so it boots into the main app.
+Claude installs the ADB tool on your computer if it's missing (it asks first), connects, installs TiviMate and checks that it's there. If your firmware only has **Wireless debugging**, Claude walks you through pairing with a code instead.
 
-> **Don't install "TiviMate Companion" on your box.** That's a separate Android *phone* app that Jeremy uses on his end to manage device slots. The actual player is **"TiviMate IPTV Player"** (`ar.tvplayer.tv`) — that's the one you want.
+### On a Superbox, or if you'd rather do it by hand
 
-> ### Skip paying for TiviMate Premium — use Jeremy's account
->
-> Jeremy has a TiviMate Companion paid account that can host **up to 5 devices**. You can use one of those slots for free.
->
-> The flow:
->
-> 1. Install TiviMate on your box (steps above) and open it once
-> 2. Message Jeremy and ask for an **activation code** — he generates one in his TiviMate Companion phone app and sends it to you
-> 3. On your box, open TiviMate → **Settings → About → Unlock Premium** (or "Activate Premium")
-> 4. Enter the activation code Jeremy sent
-> 5. Premium features (recording, multi-playlist, favorites management, auto EPG updates) unlock immediately. No restart needed in most cases.
->
-> Otherwise: TiviMate Premium is ~$20/year or ~$34 lifetime via the in-app purchase.
+The Downloader app is the easiest way.
 
-> **Pro tip — buffering or decoder errors after install:** if TiviMate stutters or throws decoder errors on first playback, toggle **Settings → Player → Video Decoder** between Hardware and Software. Hardware is the right default but a few cores need Software on certain Android TV boxes.
+1. Install **Downloader**: search for it in your box's app store, or get it from `aftvnews.com/downloader`.
+2. Open Downloader and enter the code `272483` (or type the address `tivimate.com/apk`).
+3. When it asks, allow Downloader to install unknown apps, then install TiviMate.
 
----
+If you'd rather use the box's web browser, go to `https://tivimate.com/apk`, download the file and open it.
 
-## Step 4: Configure TiviMate with Strong 8K
+If the install is blocked, allow installs from unknown apps for whichever app downloaded the file. Where that lives depends on the box:
 
-1. Open TiviMate → **Add Playlist** → **Xtream Codes**
-2. Enter the **Server URL**, **Username**, and **Password** Strong 8K emailed you
-3. Name the playlist (e.g., "Strong 8K")
-4. **Connect** → it downloads channels and EPG
+- Android 12 and newer (including newer Superbox models): Settings > Apps > Special Access > Install Unknown Apps, then turn it on for Downloader or the browser.
+- Older boxes: Settings > Security > **Unknown Sources**.
 
-### Recommended Player Settings
+### Open it once
 
-In TiviMate → **Settings → Player**:
+Open TiviMate and get through the welcome screen. You need that before you can add Premium.
 
-- **Buffer Size** → **Small** (fast channel switching)
-- **Audio Passthrough** → **On**
-- **Tunneled Playback** → **Off** (causes decoder errors on most Android boxes)
-- **AFR (Auto Frame Rate)** → **On** (matches TV refresh rate to stream — important for sports)
-- **AFR on VOD** → **Off** (avoids screen flicker)
-- **Switch 50/60fps only** → **On**
-- **Video Decoder** → **Hardware**
+## Step 4: Unlock TiviMate Premium
 
-### Recommended EPG Settings
+Premium adds recording, multiple playlists, favorites management and automatic guide updates. You'll want it, because Step 6 adds a second playlist.
 
-In TiviMate → **Settings → EPG / Playlists**:
+1. Get your activation code from Jeremy.
+2. In TiviMate, open Settings and choose **Unlock Premium** (on some versions it's under Settings > About).
+3. Enter the code. Premium turns on right away.
 
-- **EPG Update Interval** → 4 hours
-- **Playlist Update Interval** → 4 hours
-- **Past Days to Keep** → 1
-- **Logos** → Prefer logos from EPG
+Still waiting on the code? Keep going. Step 5 and making the EPGenius playlist on your phone both work without it; you only need Premium to add EPGenius as a second playlist in TiviMate. If you'd rather buy it yourself, Premium is about $34 lifetime; the yearly price is shown in the app.
 
-### Channel Labels
+## Step 5: Add Strong 8K to TiviMate
 
-IPTV providers tag channels with quality tiers — prefer in this order:
+This loads every channel and movie from your subscription.
 
-- **VIP** — premium stream, most stable
-- **8K** — higher bitrate (not real 8K)
-- **standard**
-- **BK** — backup, fallback only
+1. In TiviMate, choose **Add Playlist**, then **Xtream Codes**.
+2. Enter the server URL, username and password from the Strong 8K email.
+3. Name it "Strong 8K" and connect. TiviMate downloads the channels and guide.
 
----
+### Player settings
 
-## Step 5: Add EPGenius for Better Channel Organization
+In Settings, under Player (called Playback on some versions), set:
 
-EPGenius is a community-curated *lens* on top of your Strong 8K subscription. You still pay Strong 8K for the actual streams — EPGenius doesn't replace anything. It just turns Strong 8K's raw 30,000-channel firehose into a clean, organized, well-labeled playlist.
+- Buffer Size: Small, for fast channel changes. If games stutter, raise it to Medium.
+- Audio Passthrough: On
+- Tunneled Playback: **Off**. This one matters most; leaving it on causes playback errors on most boxes.
+- AFR (Auto Frame Rate): On. It matches your TV's refresh rate to the stream, which makes sports smoother.
+- AFR on VOD: Off, to avoid flicker on movies.
+- Switch 50/60fps only: On
+- Video Decoder: Hardware
 
-### What EPGenius does for you
+### Guide and playlist settings
 
-- **Cleans up channel names** — turns `US: ESPN HD ᴴᴰ ⁴ᴷ` into just `ESPN`. No more numbered duplicates, no spam, no random Unicode garbage.
-- **Adds proper logos** for every channel — your TiviMate guide actually looks good.
-- **Organizes channels into sensible categories** — Sports / News / Movies / Kids / Locals / etc. The raw Strong 8K list dumps everything into 40+ language and country groupings.
-- **Maps EPG (program guide) data correctly** — significantly better coverage than the raw feed. Most US/UK/AU/CA sports and live TV channels get a full guide so you can see what's on next, what's airing later tonight, etc.
-- **Auto-updates over time** — when Strong 8K swaps stream URLs, adds new channels, or fixes broken ones, EPGenius rebuilds the playlist automatically. Your TiviMate keeps loading from the same Google Drive URL forever, no manual maintenance.
-- **Same playlist works across every device** — your TiviMate on the box, Chillio on Mac/iPad/iPhone all see the identical channel list and organization.
+In Settings, under EPG and Playlists, set:
 
-### What EPGenius does NOT do for you
+- EPG update interval: 4 hours
+- Playlist update interval: 4 hours
+- Past EPG days to keep: 1
+- Logos: prefer logos from EPG
 
-- **No movies or TV shows (VOD)** — EPGenius is **live TV only**. For movies and series, keep the raw Strong 8K Xtream Codes playlist as a second playlist (you'll have both in TiviMate).
-- **No international / non-English channels** — focused on USA, UK, Australia, Canada English-language live TV. If you watch foreign-language sports or news, the raw Strong 8K list still has them; EPGenius just won't curate them.
-- **Doesn't sync your favorites or hidden groups** — EPGenius gives you the same channel *list* on every device, but favorites, hidden groups, and sort order are local to each app. Set up favorites once per device.
-- **Doesn't replace Strong 8K** — you still need an active Strong 8K subscription. EPGenius reads your Strong 8K credentials and outputs a curated playlist; without Strong 8K, no streams.
-- **Requires registration** — the playlist must be registered in their Discord or it gets deactivated. Jeremy can do this for you (see below).
+### Channel labels
 
-### Set Up the EPGenius Playlist
+Strong 8K tags channels by stream quality. Pick them in this order: VIP (most stable), 8K (higher bitrate, not real 8K), the plain version, then BK (backup only).
 
-Do this on your phone or laptop, not the box itself.
+## Step 6: Add EPGenius
 
-1. Go to [https://epgenius.org](https://epgenius.org)
-2. Filter by **Strong 8K**
-3. Pick **GanjaRelease | Strong 8K** — the recommended one. Best EPG coverage for USA/UK/AU/CA sports and live TV.
-4. Click **Google Drive** to set up — this is the recommended option. Sign into Google when prompted.
-5. When asked for credentials, pick **Xtream Codes** and enter your Strong 8K server URL, username, password
-6. EPGenius writes the curated playlist to your Google Drive and gives you an M3U URL pointing at it. **Don't delete the file** — EPGenius auto-updates it (new channels, EPG fixes) and your TiviMate keeps loading from the same URL.
+The raw Strong 8K list is huge and messy: names like `US: ESPN HD ᴴᴰ ⁴ᴷ`, duplicates, and 40-plus language groups. EPGenius turns it into a clean playlist that's easy to browse.
 
-### Add It to TiviMate
+What it gives you:
 
-1. In TiviMate → **Add Playlist** → **M3U Playlist**
-2. Paste the Google Drive M3U URL EPGenius generated
-3. Name it "EPGenius"
-4. Let it download
+- Clean names (`ESPN` instead of the mess above) and a proper logo on every channel.
+- Sensible groups like Sports, News, Movies, Kids and Locals.
+- A much more complete TV guide for US, UK, Canada, Australia, Ireland and New Zealand channels.
+- Automatic updates. When Strong 8K moves or adds channels, EPGenius rebuilds your playlist and TiviMate keeps loading it from the same link.
 
-### Register on Discord (Required)
+What it doesn't do:
 
-EPGenius requires playlist registration on their Discord to keep it active.
+- No movies or shows. It's live TV only, so you keep the Strong 8K playlist from Step 5 for those.
+- No channels outside those six countries. They're still in the raw Strong 8K list.
+- It doesn't sync favorites or hidden groups between devices. Those stay in each app.
+- It doesn't replace Strong 8K. It reads your Strong 8K login and builds a playlist from it.
 
-> **Easy mode:** Jeremy is already set up on the EPGenius Discord and can register your playlist for you. Just send him your Google Drive M3U URL (the one EPGenius generated above) and he'll register it. You can skip the rest of this section.
+### Make the playlist
 
-If Jeremy isn't available, do it yourself:
+Do this on your phone or laptop, not the box.
 
-1. Join the EPGenius Discord (link on their website)
-2. Complete verification in the welcome channel
-3. In `🤖〢bot-commands`, click **Register Playlist** → paste your URL when prompted
+1. Go to [epgenius.org](https://epgenius.org) and filter by **Strong 8K**.
+2. Pick **GanjaRelease | Strong 8K**. It has the best guide coverage for live TV and sports.
+3. Choose **Google Drive** to save it, and sign in to Google.
+4. When it asks for your login, choose **Xtream Codes** and enter your Strong 8K server URL, username and password.
+5. EPGenius saves the playlist to your Google Drive and gives you a link. Copy it. Don't delete that Drive file: EPGenius keeps updating it.
 
-### Use Both Playlists
+### Register it
 
-EPGenius is **live TV only** — no movies/VOD. Keep your raw Strong 8K Xtream Codes playlist for VOD. TiviMate Premium supports multiple playlists. Set EPGenius as your main daily-driver, fall back to Strong 8K for movies.
+EPGenius deactivates playlists that aren't registered on its Discord. Send Jeremy the Google Drive link and he'll register it for you.
 
-### Set TiviMate to Open to Favorites
+If Jeremy isn't around, do it yourself: join the EPGenius Discord (the invite is on epgenius.org), complete the verification in the welcome channel, then in `🤖〢bot-commands` click **Register Playlist** and paste your link.
 
-After your channels are loaded:
+EPGenius is free. You can make an optional donation through their site or Discord.
 
-1. Long-press OK on a channel you like → **Add to Favorites** → **Create Group** ("Sports", etc.)
-2. Add channels to your custom groups
-3. **Settings → General → Startup → Favorites** so TiviMate boots into your curated list
+### Add it to TiviMate
 
----
+1. In TiviMate, choose **Add Playlist**, then **M3U Playlist**.
+2. Paste the Google Drive link and name it "EPGenius".
+3. Let it load.
 
-## Step 6: Watch on Your Mac, iPad, or iPhone (Optional)
+Use EPGenius for everyday live TV and switch to the Strong 8K playlist for movies and shows.
 
-**Chillio** is the best IPTV player for macOS, iPadOS, and iOS — same Strong 8K credentials, same EPGenius playlist, on every Apple device.
+### Make TiviMate open to your favorites
 
-1. Install **Chillio IPTV Smart Player** from the Mac App Store / App Store
-2. **Settings → Accounts → Add Account → Xtream Codes** → enter your Strong 8K credentials
-3. Optionally also add the EPGenius M3U URL: Add Account → **M3U** → paste the Google Drive URL
+1. Long-press OK on a channel you like, choose **Add to Favorites**, and create a group such as "Sports".
+2. Add more channels to your groups.
+3. In Settings, find the startup option (usually under General) and set it to open to **Favorites**.
 
-Chillio is free with basic features; **Chillio Premium** (~$2.49/month or ~$100 lifetime) unlocks profiles and customization.
+## Step 7: Get the best picture
 
-> Customizations (favorites, hidden groups, sort order) are local to each app on each device — they don't sync across TiviMate, Chillio, etc. The channel list itself stays consistent because EPGenius gives you the same curated playlist everywhere.
+A few settings make a big difference, especially for HDR.
 
----
+### Ugoos display settings
 
-## Box-Specific Differences
+In Settings > Display, set:
 
-Most of the steps above are identical on any Android TV box. Hardware-specific bits:
+- Color Mode: YCbCr 4:2:2 12-bit
+- Resolution: 4K 60Hz
+- HDR: On
+- Dolby Vision: On
+- Automatic Frame Rate: On
 
-### Ugoos AM9 Pro
+A Superbox handles HDR, Dolby Vision and refresh rate on its own, so skip this part.
 
-- **Display:** Settings → Display → set **Color Mode = YCbCr 4:2:2 12-bit**, **Resolution = 4K 60Hz**, enable **HDR**, **Dolby Vision**, **Automatic Frame Rate**
-- **Firmware target:** version 2.0.6+ (fixes crashes and HDR/DV color issues)
-- **Optional:** replace the cluttered stock launcher with FLauncher — sideload from `apkpure.com/flauncher/me.efesser.flauncher`. To set as default via ADB: `adb shell cmd package set-home-activity me.efesser.flauncher/.MainActivity`
+### TV settings (any box)
 
-### Superbox
+On your TV, for the HDMI input the box is plugged into:
 
-- **No Google Play Store.** Superbox uses its own custom OS (BigdroidOS on newer S6/S7 models) with its own app store — TiviMate is NOT there. **Sideload is the only path** (Downloader app or built-in browser, see Step 3).
-- **Display:** Superbox handles HDR / Dolby Vision / refresh rate automatically through its own settings menu — no manual YCbCr / 12-bit override needed.
-- **Firmware:** check for OTA updates from the Superbox launcher's settings menu — apply pending updates before installing apps.
-- **Launcher:** Superbox uses its own custom locked-down launcher (LauncherX / BigdroidOS launcher) — **don't try to swap it.** Replacement is not officially supported and can break box functionality.
-- **Install Unknown Apps location varies by Superbox model / firmware version:**
-  - **Newer (Android 12+, BigdroidOS):** Settings → Apps → Special Access → Install Unknown Apps → enable for whichever browser/Downloader you used
-  - **Older:** Settings → Security → **Unknown Sources** (global toggle)
-- **ADB:** Superbox firmware is locked down. Developer Options + ADB are restricted, and any system tweaks generally won't stick or revert on reboot. Skip the ADB tweaks above entirely. The Claude Code walkthrough automatically skips them if you tell Claude you're on Superbox.
-- **Storage:** Superbox internal storage is fine for TiviMate + light recording. For heavy recording (multiple games per week), plug in a USB drive — TiviMate Recording supports external storage.
-- **Remote:** Superbox ships a dual-mode IR + Bluetooth remote. Out of the box it works in IR mode — TiviMate basic navigation is fine. **Voice search and some advanced shortcuts require Bluetooth pairing**: hold **OK + Return** for ~8-12 seconds until the LED flashes, then complete pairing in Settings → Bluetooth.
-- **Factory reset warning:** If you ever factory-reset the Superbox, sideloaded apps (including TiviMate) get wiped. You'll need to reinstall TiviMate via the same sideload path, then re-activate Premium with the activation code from Jeremy.
+- HDMI Deep Color (some TVs call it "HDMI Ultra HD Deep Color"): **On**. Without it the TV caps the signal at 8-bit and HDR won't work.
+- Picture Mode: Filmmaker Mode or Cinema.
+- OLED Pixel Brightness: 100 (OLED TVs only).
+- Motion Smoothing or TruMotion: Off. This gets rid of the "soap opera" look.
+- Sharpness: 0
+- Noise Reduction: Off
 
-### TV Picture Settings (Any Box)
+## Step 8: Optional extras
 
-On the HDMI input your box is plugged into, on your TV:
+### A cleaner home screen on a Ugoos
 
-- **HDMI Deep Colour** (or "HDMI Ultra HD Deep Color") → **On** — without this the TV caps the signal at 8-bit
-- **Picture Mode** → Filmmaker Mode or Cinema (most accurate)
-- **OLED Pixel Brightness** → 100 (OLED TVs only, for HDR)
-- **Motion Smoothing / TruMotion** → **Off** (eliminates soap opera effect)
-- **Sharpness** → 0
-- **Noise Reduction** → Off
+The stock Ugoos home screen is cluttered. FLauncher is a simple grid of your apps. Claude can install it and make it your home screen. It uses a maintained community version of FLauncher (the original lives at gitlab.com/flauncher/flauncher), and Claude shows you the download link and waits for your OK first. Don't try this on a Superbox: swapping its launcher can break the box.
 
----
+### Watch on your iPhone or Apple TV
 
-## Common Issues
+Chillio is an IPTV player on the App Store; search for "Chillio". Sign in with the same Strong 8K login (Xtream Codes), and add your EPGenius link if you want the same clean list there. Favorites don't carry over between apps.
 
-| Issue | Fix |
-|-------|-----|
-| TiviMate not on Play Store | Sideload from `tivimate.en.uptodown.com/android/download` |
-| Confused by TiviMate vs TiviMate Companion | Companion is for managing your subscription. The player is "TiviMate IPTV Player" (`ar.tvplayer.tv`) |
-| `DecoderInitializationException` on playback | Settings → Player → turn **Tunneled Playback** OFF. If still failing, also turn **Audio Passthrough** OFF |
-| EPG empty / no program data | Settings → EPG → **Clear EPG** then **Update EPG**. Make sure your playlist has an EPG URL |
-| EPGenius `HttpDataSourceException` | epgenius.org → **Edit Credentials** → update DNS/username/password → refresh playlist in TiviMate |
-| Channels load but won't play | Verify Xtream Codes credentials are correct — credentials may have expired or changed |
-| Channels suddenly all stop working | Settings → Playlists → [your playlist] → **Update Playlist**. Server URL/port may have changed |
-| Live sports look low-res | ESPN broadcasts at 720p, Fox Sports at 1080p — that's the source, not an IPTV limitation |
+## Step 9: Check that everything works
 
----
+- TiviMate opens and your Strong 8K channels load.
+- A live sports channel plays without an error.
+- The TV guide shows what's on.
+- The EPGenius playlist plays, with clean names and logos.
+- Premium is active, or the code is on its way.
 
-## Subscriptions & Costs
+## Superbox notes
+
+- Remote: it works out of the box, but voice search and some shortcuts need Bluetooth. Hold **OK** and **Return** together for about 8-12 seconds until the light flashes, then finish pairing in Settings > Bluetooth.
+- Recording: internal storage is fine for the odd game. If you record a lot, plug in a USB drive and save recordings there.
+- Launcher: keep the Superbox home screen. Replacing it isn't supported.
+- Factory reset: a reset wipes TiviMate. Reinstall it the same way (Step 3) and ask Jeremy for a new activation code.
+
+## Common issues
+
+| Problem | Fix |
+|---------|-----|
+| TiviMate isn't in Google Play | Expected. Install the official app from `tivimate.com/apk` (Step 3) |
+| Not sure whether you have TiviMate or TiviMate Companion | The player is TiviMate IPTV Player (`ar.tvplayer.tv`). Companion is Jeremy's phone app and doesn't belong on the box |
+| `DecoderInitializationException` when a channel plays | Turn Tunneled Playback off. Still failing: turn Audio Passthrough off. Still failing: switch Video Decoder between Hardware and Software |
+| Games stutter | Raise Buffer Size from Small to Medium |
+| The guide is empty | In TiviMate's EPG settings, clear the EPG, then update it. Make sure the playlist has a guide source |
+| EPGenius shows `HttpDataSourceException` | On epgenius.org, use **Edit Credentials** to update your server, username and password, then refresh the playlist in TiviMate |
+| Channels load but won't play | Your login is wrong or expired. Re-enter it from the Strong 8K email |
+| Every channel stops at once | Update the playlist in TiviMate's playlist settings. The server address may have changed |
+| Sports look low resolution | That's the source: ESPN broadcasts at 720p, Fox Sports at 1080p |
+| The Strong 8K email never came | Check spam. Still nothing after 30 minutes: contact Strong 8K support through my8k.org |
+| EPGenius playlist stopped working | It was never registered on Discord. Send the Google Drive link to Jeremy |
+
+## What it costs
 
 | Service | Cost | Notes |
 |---------|------|-------|
-| **TiviMate Premium** | **Free via Jeremy's account** (else ~$20/year or ~$34 lifetime) | Reach out to Jeremy first |
-| **Strong 8K** | ~$2-5/month (reseller) | [https://my8k.org](https://my8k.org). Recommend 6-month sub |
-| **Chillio** (Mac / iPad / iPhone) | Free or ~$2.49/month premium | Optional, only if you want IPTV on Apple devices |
-| **EPGenius** | Donation-supported | Optional ~$10 donation via their Discord/website |
+| Strong 8K | 1 month $10, 3 months $22, 6 months $35, 12 months $52 | At [my8k.org](https://my8k.org). The 6-month plan works out to about $6 a month |
+| TiviMate Premium | Free with Jeremy's activation code | Otherwise about $34 lifetime; the yearly price is shown in the app |
+| EPGenius | Free | Optional donation |
 
-Roughly **$5/month total** for the IPTV service after Jeremy's TiviMate account covers the player.
+All in, about $6 a month for Strong 8K, and nothing else.
 
----
+## Network tips
 
-## Network Tips
+- Ethernet is the most stable for live sports. The Ugoos AM9 Pro and Superbox both have gigabit ethernet.
+- On Wi-Fi, use the 5GHz band, not 2.4GHz.
+- Plan on about 50 Mbps for smooth HD sports.
+- You usually don't need a VPN. If streams buffer at busy times while a speed test looks fine, your internet provider may be slowing IPTV, and a VPN to a nearby server fixes it. Surfshark and Mullvad both work well.
 
-- **Ethernet** is the most stable for live sports. Both Ugoos AM9 Pro and Superbox have gigabit ethernet.
-- If on WiFi, use the **5GHz** band, not 2.4GHz
-- IPTV needs ~50 Mbps for reliable HD sports streams
-- **VPN:** generally not needed. If your ISP throttles IPTV (streams buffer at peak hours but speed test is fine), a VPN to a nearby server fixes it. Surfshark or Mullvad are solid picks.
-
----
-
-## Quick Reference
+## Quick reference
 
 | What | Where |
 |------|-------|
-| Strong 8K signup | [https://my8k.org](https://my8k.org) — get Xtream Codes credentials |
-| TiviMate APK | `tivimate.en.uptodown.com/android/download` |
-| TiviMate Premium | Get added to Jeremy's TiviMate Companion account (free) |
-| EPGenius playlists | [https://epgenius.org](https://epgenius.org) → filter by Strong 8K → GanjaRelease |
-| Chillio (Mac/iPad/iPhone) | Mac App Store / App Store — "Chillio IPTV Smart Player" |
-| TiviMate setup | Add Playlist → Xtream Codes → enter Strong 8K credentials |
-| EPGenius setup | Add Playlist → M3U Playlist → paste Google Drive URL |
-| Player settings | Tunneled Playback OFF, Audio Passthrough ON, Buffer Small, AFR ON |
+| Strong 8K | [my8k.org](https://my8k.org) |
+| TiviMate | `https://tivimate.com/apk`, or code `272483` in Downloader |
+| TiviMate Premium | Activation code from Jeremy, entered at Settings > Unlock Premium |
+| EPGenius | [epgenius.org](https://epgenius.org), filter by Strong 8K, pick GanjaRelease, save to Google Drive |
+| Add Strong 8K | Add Playlist > Xtream Codes |
+| Add EPGenius | Add Playlist > M3U Playlist > paste the Google Drive link |
+| Key player settings | Tunneled Playback off, Audio Passthrough on, Buffer Small, AFR on |
+| Chillio (iPhone, Apple TV) | Search "Chillio" on the App Store |
