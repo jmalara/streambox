@@ -38,7 +38,7 @@ Follow README's steps in this order. Box-specific notes are below each one.
 4. **Install TiviMate (Step 3).** Ugoos: you install it (below). Superbox or no ADB: he uses the Downloader app (code `272483`) or the browser (`https://tivimate.com/apk`) and allows Install Unknown Apps.
 5. **TiviMate Premium (Step 4).** He enters the activation code from Jeremy. While he waits for it, carry on with Step 5 and with making the EPGenius playlist on his phone. Free TiviMate holds one playlist, so only adding EPGenius to TiviMate as the second one has to wait for Premium.
 6. **Add Strong 8K to TiviMate (Step 5).** Walk the player settings; Tunneled Playback **Off** is the one that matters most.
-7. **EPGenius (Step 6).** Explain what it does and doesn't do (README has the list) before he starts. Recommend only **GanjaRelease | Strong 8K** saved with **Google Drive**, unless he asks about other options. Then walk him through registering it on the EPGenius Discord (join from epgenius.org, verify in the welcome channel, **Register Playlist** in `🤖〢bot-commands`).
+7. **EPGenius (Step 6).** Explain what it does and doesn't do (README has the list) before he starts. Recommend only **GanjaRelease | Strong 8K** saved with **Google Drive**, unless he asks about other options. Then walk him through registering it on the EPGenius Discord (join from epgenius.org, verify in the welcome channel, **Register Playlist** in `🤖〢bot-commands`). Once both playlists are in TiviMate, walk him through "Clean up the channel groups" in README: ask which countries and sports he actually watches, then have him hide the rest in each playlist's Manage groups screen. Suggest hiding nearly all Strong 8K live groups (keep a US sports group or two as backup) since EPGenius is his live TV list.
 8. **Picture (Step 7).** Ugoos: display settings, then TV settings. Superbox: TV settings only; the box handles HDR and refresh rate itself.
 9. **Optional extras (Step 8).** Mention them in one line. FLauncher is Ugoos only, and only if he wants a cleaner home screen. Chillio is for an iPhone or Apple TV: tell him to search "Chillio" on the App Store; give no links, IDs or prices.
 10. **Verify (Step 9).** Run the checklist below with him.
@@ -114,6 +114,7 @@ After every command, tell him in one line what just happened and what he should 
 - [ ] The EPGenius playlist plays, with clean names and logos
 - [ ] EPG and playlist update intervals are set to 4 hours
 - [ ] TiviMate Premium is active (or he knows the code is on its way)
+- [ ] Unwanted country groups are hidden in both playlists
 - [ ] TiviMate opens to Favorites, if he made favorites groups
 - [ ] Ugoos: HDR content looks right after the display and TV settings
 
