@@ -49,12 +49,9 @@ On a Ugoos, Claude connects to the box over your home network and does the techn
 
 Everything below is the manual version of the same steps. Claude follows it too.
 
-## Two things to ask Jeremy first
+## Ask Jeremy for a TiviMate code first
 
-Text Jeremy now so these are ready when you need them:
-
-1. An activation code for TiviMate Premium. He makes it in his TiviMate Companion app and it uses one of his 5 device slots, so you don't pay for Premium.
-2. Registering your EPGenius playlist on Discord. You'll send him a link in Step 6 and he does the rest.
+Text Jeremy now and ask for a TiviMate Premium activation code, so it's ready by Step 4. He makes it in his TiviMate Companion app and it uses one of his 5 device slots, so you don't pay for Premium.
 
 ## Step 1: Power on and update
 
@@ -186,9 +183,11 @@ Do this on your phone or laptop, not the box.
 
 ### Register it
 
-EPGenius deactivates playlists that aren't registered on its Discord. Send Jeremy the Google Drive link and he'll register it for you.
+EPGenius turns off playlists that aren't registered on its Discord, so do this right after you make it:
 
-If Jeremy isn't around, do it yourself: join the EPGenius Discord (the invite is on epgenius.org), complete the verification in the welcome channel, then in `🤖〢bot-commands` click **Register Playlist** and paste your link.
+1. Join the EPGenius Discord. The invite link is on epgenius.org.
+2. Complete the verification in the welcome channel.
+3. Open the `🤖〢bot-commands` channel, click **Register Playlist**, and paste your Google Drive link.
 
 EPGenius is free. You can make an optional donation through their site or Discord.
 
@@ -272,7 +271,7 @@ Chillio is an IPTV player on the App Store; search for "Chillio". Sign in with t
 | Every channel stops at once | Update the playlist in TiviMate's playlist settings. The server address may have changed |
 | Sports look low resolution | That's the source: ESPN broadcasts at 720p, Fox Sports at 1080p |
 | The Strong 8K email never came | Check spam. Still nothing after 30 minutes: contact Strong 8K support through my8k.org |
-| EPGenius playlist stopped working | It was never registered on Discord. Send the Google Drive link to Jeremy |
+| EPGenius playlist stopped working | It was never registered on Discord. Register it in `🤖〢bot-commands` (Step 6) |
 
 ## What it costs
 
