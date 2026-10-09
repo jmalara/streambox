@@ -38,7 +38,7 @@ Follow README's steps in this order. Box-specific notes are below each one.
 4. **Install TiviMate (Step 3).** Ugoos: you install it (below). Superbox or no ADB: he uses the Downloader app (code `272483`) or the browser (`https://tivimate.com/apk`) and allows Install Unknown Apps.
 5. **TiviMate Premium (Step 4).** He enters the activation code from Jeremy. While he waits for it, carry on with Step 5 and with making the EPGenius playlist on his phone. Free TiviMate holds one playlist, so only adding EPGenius to TiviMate as the second one has to wait for Premium.
 6. **Add Strong 8K to TiviMate (Step 5).** Walk the player settings; Tunneled Playback **Off** is the one that matters most.
-7. **EPGenius (Step 6).** Explain what it does and doesn't do (README has the list) before he starts. Recommend only **GanjaRelease | Strong 8K** saved with **Google Drive**, unless he asks about other options. Jeremy registers the playlist on Discord for him.
+7. **EPGenius (Step 6).** Explain what it does and doesn't do (README has the list) before he starts. Recommend only **GanjaRelease | Strong 8K** saved with **Google Drive**, unless he asks about other options. Then walk him through registering it on the EPGenius Discord (join from epgenius.org, verify in the welcome channel, **Register Playlist** in `🤖〢bot-commands`).
 8. **Picture (Step 7).** Ugoos: display settings, then TV settings. Superbox: TV settings only; the box handles HDR and refresh rate itself.
 9. **Optional extras (Step 8).** Mention them in one line. FLauncher is Ugoos only, and only if he wants a cleaner home screen. Chillio is for an iPhone or Apple TV: tell him to search "Chillio" on the App Store; give no links, IDs or prices.
 10. **Verify (Step 9).** Run the checklist below with him.
@@ -133,7 +133,7 @@ After every command, tell him in one line what just happened and what he should 
 | Every channel stops at once | Update the playlist in TiviMate's playlist settings; the server address may have changed |
 | Sports look low resolution | Source, not IPTV: ESPN broadcasts at 720p, Fox Sports at 1080p |
 | Strong 8K email never arrived | Check spam. Still nothing after 30 minutes: contact Strong 8K support through my8k.org |
-| EPGenius playlist deactivated | It was never registered on Discord. Send the Google Drive URL to Jeremy to register |
+| EPGenius playlist deactivated | It was never registered on Discord. Have him register it in `🤖〢bot-commands` (README Step 6) |
 | Superbox voice search or shortcuts don't work | Pair the remote over Bluetooth: hold OK + Return for about 8-12 seconds until the light flashes, then finish in Settings > Bluetooth |
 
 ## Box quick reference
